@@ -7,10 +7,11 @@ export default function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="Home" element={<Home />} />
-        <Route path="Course" element={<Course />} />
-        <Route path="Course/:courseId" element={<CourseDetails />} />
+        <Route path="/" element={<Home />} />
+        
       </Routes>
     </BrowserRouter>
+    /**<Route path="Course" element={<Course />} />
+        <Route path="Course/:courseId" element={<CourseDetails />} /> */
   );
 }

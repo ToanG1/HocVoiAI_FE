@@ -1,8 +1,15 @@
-import logo from "./logo.svg";
-import "./App.css";
+import React from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Home from "./pages/Home/Home";
+import Course from "./pages/Course/Course";
 
-function App() {
-  return <div className="App"></div>;
+export default function App() {
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="Home" element={<Home />} />
+        <Route path="Course" element={<Course />} />
+      </Routes>
+    </BrowserRouter>
+  );
 }
-
-export default App;

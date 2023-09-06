@@ -1,25 +1,60 @@
-import React, { useState } from "react";
-import style from "./CourseDetails.scss";
+import React, { useEffect, useState } from "react";
+import styles from "./CourseDetails.scss";
 import { useParams } from "react-router";
+
+function removeActiveClass() {
+  document
+    .getElementById("overview-btn")
+    .classList.remove("course-details-active-btn");
+  document
+    .getElementById("curriculum-btn")
+    .classList.remove("course-details-active-btn");
+}
 
 export default function CourseDetails() {
   const param = useParams("courseId");
   const [page, setPage] = useState(0);
+  useEffect(() => {
+    switch (page) {
+      case 0:
+        removeActiveClass();
+        document
+          .getElementById("overview-btn")
+          .classList.add("course-details-active-btn");
+        break;
+      case 1:
+        removeActiveClass();
+        document
+          .getElementById("curriculum-btn")
+          .classList.add("course-details-active-btn");
+        break;
+      default:
+        removeActiveClass();
+        document
+          .getElementById("overview-btn")
+          .classList.add("course-details-active-btn");
+    }
+  }, [page]);
   return (
     <>
       <div className="course-details-container">
         <div className="course-details-content">
+          <div className="course-details-tag">Tech</div>
           <div className="course-details-title">
-            The Complete Android Java Developer Course
+            <p>The Complete Android Java Developer Course</p>
+            <p>created at 2023/08/25</p>
           </div>
-          <div className="course-details-pages">
+
+          <div className="course-details-nav">
             <button
+              id="overview-btn"
               className="course-details-page-button"
               onClick={() => setPage(0)}
             >
               Overview
             </button>
             <button
+              id="curriculum-btn"
               className="course-details-page-button"
               onClick={() => setPage(1)}
             >
@@ -36,8 +71,8 @@ export default function CourseDetails() {
         </div>
         <div className="course-details-sidebar">
           <div className="course-details-sidebar-header">
-            <button className="course-details-share-button">Share</button>
-            <button className="course-details-delete-button">Delete</button>
+            <button className="course-details-sidebar-button">Share</button>
+            <button className="course-details-sidebar-button">Delete</button>
           </div>
           <div className="course-details-sidebar-content">
             <img
@@ -48,7 +83,7 @@ export default function CourseDetails() {
             <p>If this help you, please rate me</p>
             <button className="course-details-rating-button">Rate me</button>
             <div className="course-details-short-description">
-              <p>This Course Includes:</p>
+              <h3>This Course Includes:</h3>
               <ul className="course-details-short-description-row">
                 <li className="course-details-short-description-key">
                   Course level

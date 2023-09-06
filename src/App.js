@@ -8,10 +8,9 @@ export default function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Home />} />
-        
+        <Route path="Course" element={<Course />} />
+        <Route path="Course/:courseId" element={<CourseDetails />} />
       </Routes>
     </BrowserRouter>
-    /**<Route path="Course" element={<Course />} />
-        <Route path="Course/:courseId" element={<CourseDetails />} /> */
   );
 }

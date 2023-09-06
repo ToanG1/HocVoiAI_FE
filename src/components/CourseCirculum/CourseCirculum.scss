@@ -1,0 +1,38 @@
+@use "../../common/sass/style";
+@use "../../common/sass/mixin";
+
+.course-details-curriculum {
+  margin-top: 40px;
+  .course-details-topic {
+    margin: 20px 0;
+    .course-details-topic-title {
+      display: flex;
+      justify-content: space-between;
+      background-color: style.$light2-bg;
+      border-radius: 10px;
+      padding: 0 30px;
+    }
+    .course-details-lesson {
+      padding: 0 30px;
+      display: flex;
+      justify-content: space-between;
+      color: style.$dark-gray-color;
+      border: none;
+      border-bottom: 1px solid style.$light-gray-color;
+    }
+    .course-details-lesson-list {
+      display: none;
+      border: 1px solid style.$light-gray-color;
+      border-radius: 0 0 10px 10px;
+    }
+    .course-details-lesson-list-active {
+      display: block !important;
+      border-radius: 1px solid style.$light-gray-color;
+    }
+    .course-details-topic-title-active {
+      background-color: style.$blue-color !important;
+      color: style.$white-color !important;
+      border-radius: 10px 10px 0 0;
+    }
+  }
+}

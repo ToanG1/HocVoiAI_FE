@@ -4,3 +4,19 @@
   border: 1px solid style.$light-gray-color;
   border-radius: 10px;
 }
+
+@mixin blue-rounded-btn {
+  border: none;
+  border-radius: 10px;
+  background-color: style.$blue-color;
+  font-size: 20px;
+  color: style.$white-color;
+}
+
+@mixin gray-rounded-btn {
+  border: none;
+  border-radius: 10px;
+  background-color: style.$light-gray-color;
+  font-size: 20px;
+  color: style.$white-color;
+}

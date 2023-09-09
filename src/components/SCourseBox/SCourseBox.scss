@@ -4,7 +4,7 @@
 :root {
   --percent: "0%";
 }
-.course-box-container {
+.small-course-box-container {
   height: calc(425px * 2 / 3);
   width: calc(321px * 2 / 3);
   color: blue;
@@ -15,6 +15,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    padding-top: 14px;
     .course-box-header {
       width: calc(271px * 2 / 3);
       height: calc(196px * 2 / 3);

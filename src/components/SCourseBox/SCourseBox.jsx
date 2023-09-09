@@ -5,7 +5,7 @@ export default function CourseBox() {
   root.style.setProperty("--percent", "75%");
 
   return (
-    <div className="course-box-container">
+    <div className="small-course-box-container">
       <div className="course-box-content">
         <div className="course-box-header">
           <img

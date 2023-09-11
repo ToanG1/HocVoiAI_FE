@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import styles from "./Course.scss";
-import { Link } from "react-router-dom";
 import CourseBox from "../../components/CourseBox/CourseBox";
 function clearActiveNavItem() {
   const elements = document.getElementsByClassName("course-nav-item");
@@ -95,7 +94,15 @@ export default function Course() {
           </div>
           <div className="course-list">
             {[1, 2, 3, 4, 5].map((item) => {
-              return <CourseBox key={item} className="course-grid-item" />;
+              return (
+                <>
+                  <CourseBox
+                    course={item}
+                    key={item}
+                    className="course-grid-item"
+                  />
+                </>
+              );
             })}
           </div>
         </div>

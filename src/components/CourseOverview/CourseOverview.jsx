@@ -53,7 +53,7 @@ export default function CourseOverview() {
             return (
               <>
                 <div>
-                  <SCourseBox key={item} />
+                  <SCourseBox course={item} key={item} />
                 </div>
               </>
             );

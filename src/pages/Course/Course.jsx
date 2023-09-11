@@ -95,7 +95,16 @@ export default function Course() {
           </div>
           <div className="course-list">
             {[1, 2, 3, 4, 5].map((item) => {
-              return <CourseBox key={item} className="course-grid-item" />;
+              return (
+                <>
+                  <Link
+                    to={`/Course/${item}`}
+                    style={{ textDecorationLine: "none" }}
+                  >
+                    <CourseBox key={item} className="course-grid-item" />
+                  </Link>
+                </>
+              );
             })}
           </div>
         </div>

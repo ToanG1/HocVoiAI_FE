@@ -1,4 +1,76 @@
-.course-title {
-  font-size: larger;
-  color: red;
+@use "../../common/sass/style";
+.course-container {
+  .course-header {
+    padding: 0 8%;
+    border-bottom: 1px solid style.$light-gray-color;
+    .course-user-info {
+      margin: 20px 0;
+      display: flex;
+      img {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+      }
+      div {
+        margin-left: 20px;
+        justify-content: center;
+        display: flex;
+        flex-direction: column;
+        p:first-child {
+          font-size: 28px;
+          font-weight: 700;
+        }
+        p:last-child {
+          color: style.$primary-color;
+        }
+      }
+    }
+    .course-skills {
+      margin-top: 10px;
+      font-size: 18px;
+      span {
+        margin-right: 40px;
+        color: style.$dark-gray-color;
+      }
+      span:last-child {
+        color: style.$primary-color;
+      }
+    }
+    #course-nav {
+      margin-top: 40px;
+      .course-nav-item {
+        display: inline-block;
+        padding: 10px 25px;
+        color: style.$s-text-color;
+        font-size: 18px;
+      }
+      .course-nav-item-activated {
+        border-bottom: 4px solid style.$primary-color;
+      }
+    }
+  }
+  .course-body {
+    padding: 40px 8%;
+    display: flex;
+    justify-content: space-between;
+    .course-side-nav {
+      width: 15%;
+      .course-side-nav-item {
+        padding: 10px 25px;
+        color: style.$s-text-color;
+        font-size: 18px;
+      }
+      .course-side-nav-item-activated {
+        border-left: 4px solid style.$primary-color;
+        padding-left: 21px;
+      }
+    }
+    .course-list {
+      width: 80%;
+      display: grid;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-gap: 20px;
+    }
+  }
 }

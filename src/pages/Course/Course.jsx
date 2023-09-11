@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import styles from "./Course.scss";
-import { Link } from "react-router-dom";
 import CourseBox from "../../components/CourseBox/CourseBox";
 function clearActiveNavItem() {
   const elements = document.getElementsByClassName("course-nav-item");
@@ -97,12 +96,11 @@ export default function Course() {
             {[1, 2, 3, 4, 5].map((item) => {
               return (
                 <>
-                  <Link
-                    to={`/Course/${item}`}
-                    style={{ textDecorationLine: "none" }}
-                  >
-                    <CourseBox key={item} className="course-grid-item" />
-                  </Link>
+                  <CourseBox
+                    course={item}
+                    key={item}
+                    className="course-grid-item"
+                  />
                 </>
               );
             })}

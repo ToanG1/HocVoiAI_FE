@@ -29,7 +29,7 @@ export default function CourseDetails() {
       const result = await response.blob();
       return result;
     }
-    query({ inputs: "horse running on beach" }).then((response) => {
+    query({ inputs: "girl riding bike" }).then((response) => {
       const imageObjectURL = URL.createObjectURL(response);
       setImg(imageObjectURL);
     });

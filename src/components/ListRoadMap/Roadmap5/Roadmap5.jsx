@@ -6,7 +6,7 @@ import Slider, { slickGoTo } from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
-export default function Roadmap5() {
+export default function Roadmap5({mode}) {
   const [speed, setSpeed] = useState(300);
 
   const settings = {

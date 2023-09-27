@@ -1,89 +1,132 @@
-import React from "react";
+import React, { ReactDOM } from "react";
 import styles from "./Roadmap1.scss";
 
-import { useEffect } from "react";
-
+import { useEffect, useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import gsap from "gsap";
 
+import { data } from "../../../api/data";
+
+function removeActiveOnContent(content) {
+  for (let i = 0; i < content.length; i++) {
+    content[i].classList.remove("active");
+  }
+}
+
+function addEventToContent() {
+  const content = document.getElementsByClassName("roadmap1-milestone-content");
+
+  for (let i = 0; i < content.length; i++) {
+    content[i].addEventListener("mouseenter", (e) => {
+      removeActiveOnContent(content);
+      content[i].classList.add("active");
+    });
+  }
+}
+
+function setAnimation() {
+  document.body.addEventListener("mousemove", (event) => {
+    const mouseX = event.clientX;
+    const mouseY = event.clientY;
+
+    gsap.set(".cursor", {
+      x: mouseX,
+      y: mouseY,
+    });
+
+    gsap.to(".shape", {
+      x: mouseX,
+      y: mouseY,
+      stagger: -0.05,
+    });
+  });
+}
+
 export default function Roadmap1() {
+  const [searchParams] = useSearchParams();
+  const mode = searchParams.get("mode");
+
+  const [roadmap, setRoadmap] = useState(data);
+  const [milestones, setMilestones] = useState([]);
+  const [milestonesContent, setMilestonesContent] = useState([]);
+
   useEffect(() => {
-    document.body.addEventListener("mousemove", (event) => {
-      const mouseX = event.clientX;
-      const mouseY = event.clientY;
+    setAnimation();
+    switch (mode) {
+      case "watch":
+        renderMilestone();
+        renderMilestoneContent(0);
+        break;
+      case "create":
+        break;
 
-      gsap.set(".cursor", {
-        x: mouseX,
-        y: mouseY,
-      });
-
-      gsap.to(".shape", {
-        x: mouseX,
-        y: mouseY,
-        stagger: -0.05,
-      });
-    });
-
-    const q1 = document.getElementById("q1");
-    const q2 = document.getElementById("q2");
-    const q3 = document.getElementById("q3");
-    const q4 = document.getElementById("q4");
-      
-    q1.addEventListener("mouseenter", (e) => {
-      q1.classList.add("active");
-
-      if (
-        q2.classList.contains("active") ||
-        q3.classList.contains("active") ||
-        q4.classList.contains("active")
-      ) {
-        q2.classList.remove("active");
-        q3.classList.remove("active");
-        q4.classList.remove("active");
-      }
-    });
-
-    q2.addEventListener("mouseenter", (e) => {
-      q2.classList.add("active");
-
-      if (
-        q1.classList.contains("active") ||
-        q3.classList.contains("active") ||
-        q4.classList.contains("active")
-      ) {
-        q1.classList.remove("active");
-        q3.classList.remove("active");
-        q4.classList.remove("active");
-      }
-    });
-
-    q3.addEventListener("mouseenter", (e) => {
-      q3.classList.add("active");
-
-      if (
-        q1.classList.contains("active") ||
-        q2.classList.contains("active") ||
-        q4.classList.contains("active")
-      ) {
-        q1.classList.remove("active");
-        q2.classList.remove("active");
-        q4.classList.remove("active");
-      }
-    });
-
-    q4.addEventListener("mouseenter", (e) => {
-      q4.classList.add("active");
-      if (
-        q1.classList.contains("active") ||
-        q2.classList.contains("active") ||
-        q3.classList.contains("active")
-      ) {
-        q1.classList.remove("active");
-        q2.classList.remove("active");
-        q3.classList.remove("active");
-      }
-    });
+      default:
+        renderMilestone();
+        renderMilestoneContent(0);
+    }
   }, []);
 
+  function renderMilestone() {
+    if (roadmap.milestones !== undefined)
+      setMilestones(
+        roadmap.milestones.map((item, index) => {
+          return (
+            <li
+              className={
+                index === 0 ? "active roadmap1-milestone" : "roadmap1-milestone"
+              }
+              id={index}
+              onClick={(e) => {
+                handleActiveMilestone(e);
+              }}
+              key={index}
+            >
+              {item.name}
+            </li>
+          );
+        })
+      );
+  }
+
+  function handleActiveMilestone(e) {
+    const elements = document.getElementsByClassName("roadmap1-milestone");
+    for (let i = 0; i < elements.length; i++) {
+      elements[i].classList.remove("active");
+    }
+    e.target.classList.add("active");
+    renderMilestoneContent(e.target.id);
+  }
+
+  function renderMilestoneContent(index) {
+    if (roadmap.milestones !== undefined) {
+      setMilestonesContent(
+        roadmap.milestones[index].content.map((item, index) => {
+          return (
+            <div className="w-25 quarter roadmap1-milestone-content" id={index}>
+              <div className="quarter-title">
+                <h2>{item.name}</h2>
+              </div>
+              <div className="quarter-content">
+                <h4>{item.name}</h4>
+                <ul>
+                  {item.description.map((item) => {
+                    return (
+                      <li>
+                        <p>{item}</p>
+                      </li>
+                    );
+                  })}
+                </ul>
+              </div>
+            </div>
+          );
+        })
+      );
+    }
+  }
+  useEffect(() => {
+    if (milestonesContent.length > 0) addEventToContent();
+  }, [milestonesContent]);
   return (
     <>
       <div className="roadmap1">
@@ -101,142 +144,13 @@ export default function Roadmap1() {
             <div className="title-container">
               <div className="title w-50">
                 <p>Roadmap</p>
-                <h2>Future Plans</h2>
+                <h2>{roadmap.title}</h2>
               </div>
               <div className="years w-50">
-                <ul>
-                  <li className="active">2021</li>
-                  <li>2022</li>
-                  <li>2023</li>
-                </ul>
+                <ul>{milestones}</ul>
               </div>
             </div>
-            <div className="roadmap-content">
-              <div className="w-25 quarter" id="q1">
-                <div className="quarter-title">
-                  <h2>Q1</h2>
-                  <h2>2022</h2>
-                </div>
-                <div className="quarter-content">
-                  <h4>Q1 - 2022</h4>
-                  <ul>
-                    <li>
-                      <p>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                      </p>
-                    </li>
-                    <li>
-                      <p>
-                        In risus risus, placerat quis augue in, iaculis dictum
-                        purus.
-                      </p>
-                    </li>
-                    <li>
-                      <p>Fusce non augue id velit faucibus pharetra.</p>
-                    </li>
-                    <li>
-                      <p>
-                        Quisque laoreet orci a urna scelerisque accumsan ac ut
-                        mauris.
-                      </p>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-              <div className="w-25 quarter" id="q2">
-                <div className="quarter-title">
-                  <h2>Q2</h2>
-                  <h2>2022</h2>
-                </div>
-                <div className="quarter-content">
-                  <h4>Q2 - 2022</h4>
-                  <ul>
-                    <li>
-                      <p>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                      </p>
-                    </li>
-                    <li>
-                      <p>
-                        In risus risus, placerat quis augue in, iaculis dictum
-                        purus.
-                      </p>
-                    </li>
-                    <li>
-                      <p>Fusce non augue id velit faucibus pharetra.</p>
-                    </li>
-                    <li>
-                      <p>
-                        Quisque laoreet orci a urna scelerisque accumsan ac ut
-                        mauris.
-                      </p>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-              <div className="w-25 quarter" id="q3">
-                <div className="quarter-title">
-                  <h2>Q3</h2>
-                  <h2>2022</h2>
-                </div>
-                <div className="quarter-content">
-                  <h4>Q3 - 2022</h4>
-                  <ul>
-                    <li>
-                      <p>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                      </p>
-                    </li>
-                    <li>
-                      <p>
-                        In risus risus, placerat quis augue in, iaculis dictum
-                        purus.
-                      </p>
-                    </li>
-                    <li>
-                      <p>Fusce non augue id velit faucibus pharetra.</p>
-                    </li>
-                    <li>
-                      <p>
-                        Quisque laoreet orci a urna scelerisque accumsan ac ut
-                        mauris.
-                      </p>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-              <div className="w-25 quarter" id="q4">
-                <div className="quarter-title">
-                  <h2>Q4</h2>
-                  <h2>2022</h2>
-                </div>
-                <div className="quarter-content">
-                  <h4>Q4 - 2022</h4>
-                  <ul>
-                    <li>
-                      <p>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                      </p>
-                    </li>
-                    <li>
-                      <p>
-                        In risus risus, placerat quis augue in, iaculis dictum
-                        purus.
-                      </p>
-                    </li>
-                    <li>
-                      <p>Fusce non augue id velit faucibus pharetra.</p>
-                    </li>
-                    <li>
-                      <p>
-                        Quisque laoreet orci a urna scelerisque accumsan ac ut
-                        mauris.
-                      </p>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </div>
+            <div className="roadmap-content">{milestonesContent}</div>
           </div>
         </div>
       </div>

@@ -3,7 +3,7 @@ import styles from "./Roadmap3.scss";
 
 import { useEffect } from "react";
 
-export default function Roadmap6() {
+export default function Roadmap3({mode}) {
   function isElementInViewport(el) {
     var rect = el.getBoundingClientRect();
     return (
@@ -34,7 +34,7 @@ export default function Roadmap6() {
 
   return (
     <>
-      <div id="timeline-container">
+      <div class="timeline-container">
         <section className="timeline">
           <ul>
             <li>

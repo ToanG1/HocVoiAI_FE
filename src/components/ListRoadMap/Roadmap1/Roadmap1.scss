@@ -51,7 +51,7 @@
   }
 
   .roadmap1-container {
-    max-width: 1400px;
+    width: 1400px;
     height: auto;
     position: relative;
     margin: auto;
@@ -108,9 +108,9 @@
 
     .background {
       position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
+      // top: 50%;
+      // left: 50%;
+      transform: translate(-250px, 0);
       z-index: 1;
     }
 
@@ -159,7 +159,7 @@
     }
 
     .roadmap-section {
-      height: 1400px;
+      height: 100vh;
       z-index: 10;
       position: relative;
     }
@@ -182,7 +182,6 @@
     }
 
     .years ul {
-      width: 100%;
       display: inline-flex;
       justify-content: flex-end;
     }
@@ -241,6 +240,9 @@
     .quarter-content {
       opacity: 0;
       transition: all 0.8s ease;
+      ul li {
+        margin-bottom: 10px;
+      }
     }
 
     .active .quarter-title {

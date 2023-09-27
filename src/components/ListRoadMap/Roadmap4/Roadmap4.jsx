@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "./Roadmap4.scss";
 
-export default function Roadmap4() {
+export default function Roadmap4({mode}) {
   return (
     <>
       <div className="roadmap4-container">

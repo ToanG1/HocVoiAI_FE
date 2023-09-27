@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "./Roadmap2.scss";
 import { useEffect } from "react";
-export default function Roadmap2() {
+export default function Roadmap2({mode}) {
   var total,
     $slide,
     $slider,

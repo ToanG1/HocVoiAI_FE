@@ -64,7 +64,6 @@ export default function Loading() {
     .add(leafsTimeline)
     .add(flowersTimeline)
     .to(".replay-text", 0.5, { opacity: 1 });
-  console.log(tl);
   useEffect(() => {
     document
       .getElementById("loading-container")

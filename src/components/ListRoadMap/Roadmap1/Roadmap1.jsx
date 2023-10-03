@@ -7,20 +7,10 @@ import gsap from "gsap";
 
 import { data } from "../../../api/data";
 
-function removeActiveOnContent(content) {
+function removeActiveOnContent() {
+  const content = document.getElementsByClassName("roadmap1-milestone-content");
   for (let i = 0; i < content.length; i++) {
     content[i].classList.remove("active");
-  }
-}
-
-function addEventToContent() {
-  const content = document.getElementsByClassName("roadmap1-milestone-content");
-
-  for (let i = 0; i < content.length; i++) {
-    content[i].addEventListener("mouseenter", (e) => {
-      removeActiveOnContent(content);
-      content[i].classList.add("active");
-    });
   }
 }
 
@@ -42,11 +32,14 @@ function setAnimation() {
   });
 }
 
-export default function Roadmap1() {
+export default function Roadmap1({ mode }) {
   const [searchParams] = useSearchParams();
-  const mode = searchParams.get("mode");
-
-  const [roadmap, setRoadmap] = useState(data);
+  console.log(mode);
+  const [roadmap, setRoadmap] = useState({
+    title: "How to cook cookies",
+    milestones: [],
+  });
+  // const [roadmap, setRoadmap] = useState(data);
   const [milestones, setMilestones] = useState([]);
   const [milestonesContent, setMilestonesContent] = useState([]);
 
@@ -54,18 +47,22 @@ export default function Roadmap1() {
     setAnimation();
     switch (mode) {
       case "watch":
+        setRoadmap(data);
         renderMilestone();
         renderMilestoneContent(0);
         break;
       case "create":
+        handleCreateMilestone();
         break;
-
+      case "edit":
+        break;
       default:
         renderMilestone();
         renderMilestoneContent(0);
     }
   }, []);
 
+  // Render milestones in watch mode
   function renderMilestone() {
     if (roadmap.milestones !== undefined)
       setMilestones(
@@ -87,22 +84,92 @@ export default function Roadmap1() {
         })
       );
   }
-
+  // Render milestones in create mode and add input to create new milestone
+  function handleCreateMilestone() {
+    if (roadmap.milestones !== undefined)
+      setMilestones(
+        roadmap.milestones
+          .map((item, index) => {
+            return (
+              <li
+                className={
+                  index === 0
+                    ? "active roadmap1-milestone"
+                    : "roadmap1-milestone"
+                }
+                id={index}
+                onClick={(e) => {
+                  handleActiveMilestone(e);
+                }}
+                key={index}
+              >
+                {item.name}
+              </li>
+            );
+          })
+          .concat(
+            <textarea
+              type="text"
+              cols={15}
+              className="milestone-input"
+              placeholder="New Milestone"
+              onChange={(e) => {
+                if (e.target.value.length > 36) {
+                  e.target.value = e.target.value.slice(0, 36);
+                  window.alert("Please enter less than 36 characters");
+                }
+              }}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  setRoadmap({
+                    ...roadmap,
+                    milestones: [
+                      ...roadmap.milestones,
+                      { name: e.target.value, content: [] },
+                    ],
+                  });
+                }
+              }}
+            />
+          )
+      );
+  }
+  // Handel active milestone
   function handleActiveMilestone(e) {
     const elements = document.getElementsByClassName("roadmap1-milestone");
     for (let i = 0; i < elements.length; i++) {
       elements[i].classList.remove("active");
     }
     e.target.classList.add("active");
-    renderMilestoneContent(e.target.id);
+    switch (mode) {
+      case "watch":
+        renderMilestoneContent(e.target.id);
+        break;
+      case "create":
+        handleCreateMilestoneContent(e.target.id);
+        break;
+      default:
+        renderMilestoneContent(e.target.id);
+    }
   }
 
+  // Render milestones content in watch mode
   function renderMilestoneContent(index) {
-    if (roadmap.milestones !== undefined) {
+    if (roadmap.milestones[index] !== undefined) {
       setMilestonesContent(
         roadmap.milestones[index].content.map((item, index) => {
           return (
-            <div className="w-25 quarter roadmap1-milestone-content" id={index}>
+            <div
+              className="w-25 quarter roadmap1-milestone-content"
+              id={index}
+              onMouseEnter={(e) => {
+                removeActiveOnContent();
+                e.target.classList.add("active");
+              }}
+              onMouseLeave={(e) => {
+                e.target.classList.remove("active");
+              }}
+            >
               <div className="quarter-title">
                 <h2>{item.name}</h2>
               </div>
@@ -124,9 +191,95 @@ export default function Roadmap1() {
       );
     }
   }
+
+  // hanlde milestones content in create mode
+  function handleCreateMilestoneContent(index) {
+    if (roadmap.milestones[index] !== undefined) {
+      setMilestonesContent(
+        roadmap.milestones[index].content
+          .map((item, index) => {
+            return (
+              <div
+                className="w-25 quarter roadmap1-milestone-content"
+                id={index}
+                onMouseEnter={(e) => {
+                  removeActiveOnContent();
+                  e.target.classList.add("active");
+                }}
+                onMouseLeave={(e) => {
+                  e.target.classList.remove("active");
+                }}
+              >
+                <div className="quarter-title">
+                  <h2>{item.name}</h2>
+                </div>
+                <div className="quarter-content">
+                  <h4>{item.name}</h4>
+                  <ul>
+                    {item.description
+                      .map((item) => {
+                        return (
+                          <li>
+                            <p>{item}</p>
+                          </li>
+                        );
+                      })
+                      .concat(<input type="text" />)}
+                  </ul>
+                </div>
+              </div>
+            );
+          })
+          .concat(
+            <div
+              className="w-25 quarter roadmap1-new-milestone active"
+              id={roadmap.milestones.length}
+            >
+              <div className="quarter-content">
+                <input
+                  type="text"
+                  placeholder="New Content"
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") {
+                      setRoadmap({
+                        ...roadmap,
+                        milestones: roadmap.milestones.map((item, i) => {
+                          if (i == index)
+                            return {
+                              name: item.name,
+                              content: [
+                                ...item.content,
+                                { name: e.target.value, description: [] },
+                              ],
+                            };
+                          return item;
+                        }),
+                      });
+                    }
+                  }}
+                ></input>
+                <ul></ul>
+              </div>
+            </div>
+          )
+      );
+    }
+  }
+
   useEffect(() => {
-    if (milestonesContent.length > 0) addEventToContent();
-  }, [milestonesContent]);
+    if (mode === "create") {
+      handleCreateMilestone();
+    }
+  }, [roadmap]);
+
+  useEffect(() => {
+    const element = document.getElementsByClassName(
+      "roadmap1-milestone active"
+    )[0];
+    if (mode === "create" && element !== undefined) {
+      handleCreateMilestoneContent(element.id);
+    }
+  }, [roadmap.milestones]);
   return (
     <>
       <div className="roadmap1">

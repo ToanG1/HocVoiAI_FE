@@ -1,9 +1,8 @@
 export const data = {
   title: "Cooking cookies",
   milestones: [
-    // limit below 5
     {
-      name: "What is cookies",
+      name: "cookies",
       content: [
         {
           name: "What is cookies1",

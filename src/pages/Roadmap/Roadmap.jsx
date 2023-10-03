@@ -1,10 +1,4 @@
-import React, {
-  useState,
-  lazy,
-  Suspense,
-  useEffect,
-  useLayoutEffect,
-} from "react";
+import React, { lazy, Suspense } from "react";
 import styles from "./Roadmap.scss";
 import { useParams } from "react-router";
 import Loading from "../../components/Loading/Loading";

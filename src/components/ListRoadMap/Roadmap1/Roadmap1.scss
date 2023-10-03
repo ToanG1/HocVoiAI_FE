@@ -181,12 +181,30 @@
       align-items: center;
     }
 
+    .years {
+      overflow-x: scroll;
+    }
+    .years::-webkit-scrollbar {
+      height: 8px;
+    }
+    /* Track */
+    .years::-webkit-scrollbar-track {
+      background-color: #071129;
+    }
+
+    /* Handle */
+    .years::-webkit-scrollbar-thumb {
+      background: #092c7c;
+    }
+
     .years ul {
+      padding-left: 25px;
       display: inline-flex;
       justify-content: flex-end;
     }
 
     .years ul li {
+      height: 74px;
       padding-right: 50px;
       width: auto;
       font-family: "Lexend", sans-serif;
@@ -251,6 +269,39 @@
 
     .active .quarter-content {
       opacity: 1;
+    }
+    .milestone-input {
+      outline: none;
+      padding: 5px;
+      border: 2px solid #848b9f;
+      border-radius: 10px;
+      background-color: #b4b8c45c;
+      resize: none;
+      font-family: "Lexend", sans-serif;
+      color: #848b9f;
+      font-size: 20px;
+      font-weight: 400;
+      line-height: 30px;
+      transition: all 0.8s ease;
+      cursor: pointer;
+    }
+    .roadmap1-new-milestone {
+      border: 2px solid #848b9f;
+      border-radius: 10px;
+      background-color: #b4b8c45c;
+      padding: 40px 0;
+
+      input {
+        outline: none;
+        border: none;
+        background-color: transparent;
+        color: #848b9f;
+        padding: 5px;
+        width: 60%;
+        font-size: 30px;
+        font-weight: 400;
+        line-height: 40px;
+      }
     }
   }
   @media only screen and (max-width: 1440px) {

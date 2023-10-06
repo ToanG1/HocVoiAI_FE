@@ -163,11 +163,10 @@ export default function Roadmap1({ mode }) {
               className="w-25 quarter roadmap1-milestone-content"
               id={index}
               onMouseEnter={(e) => {
-                removeActiveOnContent();
-                e.target.classList.add("active");
+                e.currentTarget.classList.add("active");
               }}
               onMouseLeave={(e) => {
-                e.target.classList.remove("active");
+                removeActiveOnContent();
               }}
             >
               <div className="quarter-title">
@@ -197,17 +196,16 @@ export default function Roadmap1({ mode }) {
     if (roadmap.milestones[index] !== undefined) {
       setMilestonesContent(
         roadmap.milestones[index].content
-          .map((item, index) => {
+          .map((item, i) => {
             return (
               <div
                 className="w-25 quarter roadmap1-milestone-content"
-                id={index}
+                id={i}
                 onMouseEnter={(e) => {
-                  removeActiveOnContent();
-                  e.target.classList.add("active");
+                  e.currentTarget.classList.add("active");
                 }}
                 onMouseLeave={(e) => {
-                  e.target.classList.remove("active");
+                  removeActiveOnContent();
                 }}
               >
                 <div className="quarter-title">
@@ -215,7 +213,7 @@ export default function Roadmap1({ mode }) {
                 </div>
                 <div className="quarter-content">
                   <h4>{item.name}</h4>
-                  <ul>
+                  <ul className="milestone-content">
                     {item.description
                       .map((item) => {
                         return (
@@ -224,43 +222,94 @@ export default function Roadmap1({ mode }) {
                           </li>
                         );
                       })
-                      .concat(<input type="text" />)}
+                      .concat(
+                        <div className="mls-input-wrapper">
+                          <textarea
+                            type="text"
+                            cols={15}
+                            rows={5}
+                            id={`milestone-content-input` + i}
+                          />
+                          <button
+                            class="milestone-content-submit"
+                            onClick={() => {
+                              setRoadmap({
+                                ...roadmap,
+                                milestones: roadmap.milestones.map(
+                                  (item, j) => {
+                                    if (j == index) {
+                                      return {
+                                        ...item,
+                                        content: item.content.map(
+                                          (content, k) => {
+                                            if (k === i) {
+                                              return {
+                                                name: content.name,
+                                                description:
+                                                  content.description.concat(
+                                                    document
+                                                      .getElementById(
+                                                        `milestone-content-input` +
+                                                          i
+                                                      )
+                                                      .value.split("\n")
+                                                  ),
+                                              };
+                                            } else return content;
+                                          }
+                                        ),
+                                      };
+                                    } else return item;
+                                  }
+                                ),
+                              });
+                              console.log(roadmap);
+                            }}
+                          >
+                            Done
+                          </button>
+                          ;
+                        </div>
+                      )}
                   </ul>
                 </div>
               </div>
             );
           })
           .concat(
-            <div
-              className="w-25 quarter roadmap1-new-milestone active"
-              id={roadmap.milestones.length}
-            >
-              <div className="quarter-content">
-                <input
-                  type="text"
-                  placeholder="New Content"
-                  onKeyDown={(e) => {
-                    if (e.key === "Enter") {
-                      setRoadmap({
-                        ...roadmap,
-                        milestones: roadmap.milestones.map((item, i) => {
-                          if (i == index)
-                            return {
-                              name: item.name,
-                              content: [
-                                ...item.content,
-                                { name: e.target.value, description: [] },
-                              ],
-                            };
-                          return item;
-                        }),
-                      });
-                    }
-                  }}
-                ></input>
-                <ul></ul>
-              </div>
-            </div>
+            roadmap.milestones[index].content.length < 5 ? (
+              <input
+                className="active roadmap1-new-content"
+                type="text"
+                placeholder="New Content"
+                onChange={(e) => {
+                  if (e.target.value.length > 36) {
+                    e.target.value = e.target.value.slice(0, 46);
+                    window.alert("Please enter less than 36 characters");
+                  }
+                }}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    setRoadmap({
+                      ...roadmap,
+                      milestones: roadmap.milestones.map((item, i) => {
+                        if (i == index)
+                          return {
+                            name: item.name,
+                            content: [
+                              ...item.content,
+                              { name: e.target.value, description: [] },
+                            ],
+                          };
+                        return item;
+                      }),
+                    });
+                  }
+                }}
+              ></input>
+            ) : (
+              <div></div>
+            )
           )
       );
     }

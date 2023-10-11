@@ -1,9 +1,11 @@
 export const data = {
   title: "Cooking cookies",
   milestones: [
+    // topics
     {
       name: "cookies",
       content: [
+        // content
         {
           name: "What is cookies1",
           description: [

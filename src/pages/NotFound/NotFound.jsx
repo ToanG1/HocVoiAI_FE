@@ -10,7 +10,7 @@ export default function NotFound() {
   }, []);
 
   return (
-    <>
+    <section className="notfound-container">
       <div className="about">
         <a
           className="bg_links social portfolio"
@@ -107,6 +107,6 @@ export default function NotFound() {
           </div>
         </div>
       </section>
-    </>
+    </section>
   );
 }

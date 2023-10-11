@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import styles from "./Home.scss";
 import { Link } from "react-router-dom";
 
@@ -233,6 +233,9 @@ export default function Home() {
         });
       });
   }, []);
+
+  const [topics, setTopics] = useState([]);
+
   return (
     <section className="home-container">
       <div className="home-header">
@@ -259,17 +262,32 @@ export default function Home() {
             </strong>
           </p>
           <div className="home-input">
-            <input type="text" placeholder="Enter your topics" />
+            <input
+              type="text"
+              placeholder="Enter your topics"
+              onKeyDown={(e) => {
+                if (topics.length >= 5) {
+                  e.target.value = "";
+                  alert("You can only enter 5 topics");
+                } else if (e.key === "Enter") {
+                  setTopics([...topics, e.target.value]);
+                  e.target.value = "";
+                }
+              }}
+            />
+            <div className="home-topics">
+              {topics.map((item) => {
+                return (
+                  <div className="home-topic" key={item}>
+                    {item}
+                  </div>
+                );
+              })}
+            </div>
           </div>
           <div className="overlay__btns">
             <button className="overlay__btn overlay__btn--transparent">
-              <a
-                href="https://georgefrancis.dev/writing/create-a-generative-landing-page-and-webgl-powered-background/"
-                target="_blank"
-                rel="noreferrer"
-              >
-                Let go!
-              </a>
+              <Link>Let go!</Link>
             </button>
 
             <button className="overlay__btn2 overlay__btn--colors">

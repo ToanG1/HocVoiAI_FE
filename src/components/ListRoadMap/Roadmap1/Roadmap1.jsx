@@ -343,7 +343,7 @@ export default function Roadmap1({ mode }) {
             </div>
           </div>
           <div className="roadmap-section">
-            <div className="title-container">
+            <div className="roadmap-title-container">
               <div className="title w-50">
                 <p>Roadmap</p>
                 <h2>{roadmap.title}</h2>

@@ -1,0 +1,17 @@
+.app {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+.title-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 12px;
+  color: hsl(210, 8%, 25%);
+  font-family: Arial, sans-serif;
+}
+.content {
+  padding-top: 20px;
+}

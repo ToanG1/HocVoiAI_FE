@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
 import styles from "./Course.scss";
 import CourseBox from "../../components/CourseBox/CourseBox";
+
+import { getAllRoadmap } from "../../api/roadmap";
+
 function clearActiveNavItem() {
   const elements = document.getElementsByClassName("course-nav-item");
   for (let i = 0; i < elements.length; i++) {
@@ -14,6 +17,14 @@ function clearActiveSideNavItem() {
   }
 }
 export default function Course() {
+  getAllRoadmap()
+    .then((res) => {
+      console.log(res);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+
   function ActiveNavItem(e) {
     clearActiveNavItem();
     e.target.classList.add("course-nav-item-activated");

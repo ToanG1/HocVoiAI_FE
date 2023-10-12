@@ -8,7 +8,8 @@
   height: 425px;
   width: 321px;
   color: blue;
-  @include mixin.gray-thin-border;
+  background-color: style.$white-color;
+  border-radius: 10px;
   .course-box-content {
     display: flex;
     flex-direction: column;

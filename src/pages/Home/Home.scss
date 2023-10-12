@@ -127,8 +127,24 @@ html {
       font-weight: 400;
       color: var(--dark-color);
       outline: none;
-      padding-inline-start: 20px;
+      padding-inline: 20px;
       background-color: transparent;
+    }
+    .home-topics {
+      margin-top: 0.5rem;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-rows: repeat(2, 1fr);
+      gap: 10px;
+      .home-topic {
+        width: fit-content;
+        height: fit-content;
+        text-transform: capitalize;
+        padding: 10px 30px;
+        background-color: rgba(237, 237, 237, 0.567);
+        box-shadow: 0 0.75rem 2rem 0 rgba(0, 0, 0, 0.1);
+        border-radius: 20px;
+      }
     }
   }
 

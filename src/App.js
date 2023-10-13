@@ -8,12 +8,14 @@ import Signup from "./pages/Signup/Signup";
 import Roadmap from "./pages/Roadmap/Roadmap";
 import Question from "./pages/Question/Question";
 import QuestionDetail from "./pages/QuestionDetail/QuestionDetail";
+import Features from "./pages/Features/Features";
 import NotFound from "./pages/NotFound/NotFound";
 export default function App() {
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="features" element={<Features />} />
         <Route path="course" element={<Course />} />
         <Route path="course/:courseId" element={<CourseDetails />} />
         <Route path="login" element={<Login />} />

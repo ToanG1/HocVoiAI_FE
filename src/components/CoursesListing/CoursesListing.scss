@@ -1,9 +1,12 @@
 .coursesListing-container {
-  
   font-family: "Roboto", sans-serif;
   -webkit-font-smoothing: antialiased;
   padding: 20px 0;
-
+  .feature-title {
+    margin: 40px 5%;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #ddd;
+  }
   .band {
     width: 90%;
     max-width: 1240px;

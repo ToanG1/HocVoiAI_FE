@@ -4,6 +4,8 @@ import styles from "./CoursesListing.scss";
 export default function CoursesListing() {
   return (
     <section className="coursesListing-container">
+      <h2 className="feature-title">New Recommended To You</h2>
+
       <div className="support-grid"></div>
       <div className="band">
         {/* Big Card */}

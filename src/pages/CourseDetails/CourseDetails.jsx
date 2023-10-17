@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import styles from "./CourseDetails.scss";
 import { useParams } from "react-router";
 
+import Header from "../../components/Header/Header";
+import Footer from "../../components/Footer/Footer";
 import CourseOverview from "../../components/CourseOverview/CourseOverview";
 import CourseCirculum from "../../components/CourseCirculum/CourseCirculum";
 function removeActiveClass() {
@@ -59,6 +61,7 @@ export default function CourseDetails() {
   }, [page]);
   return (
     <>
+      <Header />
       <div className="course-details-container">
         <div className="course-details-content">
           <div className="course-details-tag">Tech</div>
@@ -142,6 +145,7 @@ export default function CourseDetails() {
           </div>
         </div>
       </div>
+      <Footer />
     </>
   );
 }

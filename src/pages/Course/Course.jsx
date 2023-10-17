@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import styles from "./Course.scss";
 import CourseBox from "../../components/CourseBox/CourseBox";
-
+import Header from "../../components/Header/Header";
+import Footer from "../../components/Footer/Footer";
 import { getAllRoadmap } from "../../api/roadmap";
 
 function clearActiveNavItem() {
@@ -36,6 +37,7 @@ export default function Course() {
 
   return (
     <>
+      <Header />
       <div className="course-container">
         <div className="course-header">
           <div className="course-user-info">
@@ -118,6 +120,7 @@ export default function Course() {
           </div>
         </div>
       </div>
+      <Footer />
     </>
   );
 }

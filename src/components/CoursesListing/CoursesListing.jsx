@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import styles from "./CoursesListing.scss";
 
 export default function CoursesListing() {
@@ -10,10 +11,7 @@ export default function CoursesListing() {
       <div className="band">
         {/* Big Card */}
         <div className="item-1">
-          <a
-            href="https://design.tutsplus.com/articles/international-artist-feature-malaysia--cms-26852"
-            className="card"
-          >
+          <Link to={"/course/1"} className="card">
             <div
               className="thumb"
               style={{
@@ -24,16 +22,13 @@ export default function CoursesListing() {
               <h1>International Artist Feature: Malaysia</h1>
               <span>Mary Winkler</span>
             </article>
-          </a>
+          </Link>
         </div>
         {/* Small Cards */}
         {[1, 2, 3, 4, 5, 6].map((item) => {
           return (
             <div className="item-2">
-              <a
-                href="https://webdesign.tutsplus.com/articles/how-to-conduct-remote-usability-testing--cms-27045"
-                className="card"
-              >
+              <Link to={"/course/" + item} className="card">
                 <div
                   className="thumb"
                   style={{
@@ -44,7 +39,7 @@ export default function CoursesListing() {
                   <h1>How to Conduct Remote Usability Testing</h1>
                   <span>Harry Brignull</span>
                 </article>
-              </a>
+              </Link>
             </div>
           );
         })}

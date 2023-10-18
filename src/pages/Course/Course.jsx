@@ -4,6 +4,7 @@ import CourseBox from "../../components/CourseBox/CourseBox";
 import Header from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
 import { getAllRoadmap } from "../../api/roadmap";
+import BgComp from "../../components/BgComp/BgComp";
 
 function clearActiveNavItem() {
   const elements = document.getElementsByClassName("course-nav-item");
@@ -38,6 +39,7 @@ export default function Course() {
   return (
     <>
       <Header />
+      <BgComp />
       <div className="course-container">
         <div className="course-header">
           <div className="course-user-info">

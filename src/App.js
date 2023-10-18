@@ -10,6 +10,7 @@ import Question from "./pages/Question/Question";
 import QuestionDetail from "./pages/QuestionDetail/QuestionDetail";
 import Features from "./pages/Features/Features";
 import NotFound from "./pages/NotFound/NotFound";
+import Profile from "./components/Profile/Profile";
 export default function App() {
   return (
     <BrowserRouter>
@@ -23,6 +24,7 @@ export default function App() {
         <Route path="roadmap/:roadmapId" element={<Roadmap />} />
         <Route path="questions" element={<Question />} />
         <Route path="questions/:questionId" element={<QuestionDetail />} />
+        <Route path="profile" element={<Profile />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>

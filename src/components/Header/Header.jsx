@@ -1,13 +1,17 @@
 import React from "react";
 import styles from "./Header.scss";
-
+import { Link } from "react-router-dom";
 export default function Header() {
   return (
     <header className="header-container">
       <div className="header-logo">logo</div>
       <div className="nav-container">
-        <div className="nav-item">Features</div>
-        <div className="nav-item">Asking</div>
+        <Link to="/features" className="nav-item">
+          Features
+        </Link>
+        <Link to="/questions" className="nav-item">
+          Asking
+        </Link>
         <div className="nav-item">Social</div>
       </div>
       <div className="header-user">

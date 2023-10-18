@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "./Footer.scss";
-
+import { Link } from "react-router-dom";
 export default function Footer() {
   return (
     <section className="footer">
@@ -17,7 +17,9 @@ export default function Footer() {
           <div className="footer-item">
             <h1 className="footer-item-title">About us</h1>
             <ul>
-              <li>Home</li>
+              <Link to="/">
+                <li>Home</li>
+              </Link>
               <li>Story</li>
               <li>Get in touch</li>
             </ul>
@@ -25,8 +27,12 @@ export default function Footer() {
           <div className="footer-item">
             <h1 className="footer-item-title">Our Product</h1>
             <ul>
-              <li>Roadmaps</li>
-              <li>Asking</li>
+              <Link to="/features">
+                <li>Roadmaps</li>
+              </Link>
+              <Link to="/questions">
+                <li>Asking</li>
+              </Link>
               <li>Social</li>
             </ul>
           </div>

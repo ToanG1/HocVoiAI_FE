@@ -1,42 +1,42 @@
-import React, { useState } from 'react'
-import { useCallback } from 'react'
-import Select from 'react-select'
-import styles from './Question.scss'
+import React, { useState } from "react";
+import { useCallback } from "react";
+import Select from "react-select";
+import styles from "./Question.scss";
 
 const topics = [
-  { value: 'Tuition', label: 'Tuition' },
-  { value: 'Pronunciation', label: 'Pronunciation' },
-  { value: 'Grammar', label: 'Grammar' },
-]
+  { value: "Tuition", label: "Tuition" },
+  { value: "Pronunciation", label: "Pronunciation" },
+  { value: "Grammar", label: "Grammar" },
+];
 
 function AskQuestion({ onSubmit }) {
-  const [selectedTopic, setSelectedTopic] = useState(null)
-  const [newQuestion, setNewQuestion] = useState('')
-  const [newTitle, setNewTitle] = useState('')
-  const [isTopicSelected, setIsTopicSelected] = useState(false)
-  const [isTitleEntered, setIsTitleEntered] = useState(false)
+  const [selectedTopic, setSelectedTopic] = useState(null);
+  const [newQuestion, setNewQuestion] = useState("");
+  const [newTitle, setNewTitle] = useState("");
+  const [isTopicSelected, setIsTopicSelected] = useState(false);
+  const [isTitleEntered, setIsTitleEntered] = useState(false);
 
   const handleInputChange = (event) => {
-    setNewQuestion(event.target.value)
-  }
+    setNewQuestion(event.target.value);
+  };
   const handleTitleInputChange = (event) => {
-    setNewTitle(event.target.value)
-    setIsTitleEntered(true)
-  }
+    setNewTitle(event.target.value);
+    setIsTitleEntered(true);
+  };
   const handleTopicChange = (selectedOption) => {
-    setSelectedTopic(selectedOption)
-    setIsTopicSelected(true)
-  }
+    setSelectedTopic(selectedOption);
+    setIsTopicSelected(true);
+  };
 
   const handleSubmit = useCallback(() => {
-    if (newQuestion.trim() === '' || newTitle.trim() === '' || !selectedTopic)
-      return
+    if (newQuestion.trim() === "" || newTitle.trim() === "" || !selectedTopic)
+      return;
     onSubmit({
       topic: selectedTopic.label,
       title: newTitle,
       content: newQuestion,
-    })
-  }, [newTitle, newQuestion, selectedTopic])
+    });
+  }, [newTitle, newQuestion, selectedTopic]);
 
   return (
     <div className="ask-question">
@@ -77,13 +77,17 @@ function AskQuestion({ onSubmit }) {
             onChange={handleInputChange}
             disabled={!isTitleEntered} // Disable if a title is not entered
           ></textarea>
-          <button type="submit" onClick={handleSubmit}>
+          <button
+            type="submit"
+            onClick={handleSubmit}
+            style={{ padding: "5px 10px", fontSize: "15px" }}
+          >
             Submit
           </button>
         </div>
       </div>
     </div>
-  )
+  );
 }
 
-export default AskQuestion
+export default AskQuestion;

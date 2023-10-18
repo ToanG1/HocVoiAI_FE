@@ -10,7 +10,6 @@
   color: blue;
   background-color: style.$white-color;
   @include mixin.gray-thin-border;
-  margin-right: 40px;
   .course-box-content {
     display: flex;
     flex-direction: column;

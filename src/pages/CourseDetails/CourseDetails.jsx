@@ -101,7 +101,9 @@ export default function CourseDetails() {
               className="course-details-sidebar-image"
               alt="course-img"
             />
-            <p>If this help you, please rate me</p>
+            <p style={{ marginBottom: "10px" }}>
+              If this help you, please rate me
+            </p>
             <button className="course-details-rating-button">Rate me</button>
             <div className="course-details-short-description">
               <h3>This Course Includes:</h3>

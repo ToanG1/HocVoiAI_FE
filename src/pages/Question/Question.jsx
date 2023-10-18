@@ -9,6 +9,7 @@ import { MOCK_QUESTIONS } from "./const";
 import ReactPaginate from "react-paginate";
 import Header from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
+import BgComp from "../../components/BgComp/BgComp";
 
 const topics = [
   { value: "Tuition", label: "Tuition" },
@@ -72,6 +73,7 @@ function Question() {
   return (
     <>
       <Header />
+      <BgComp />
       <div className="questions-container">
         <header className="header">
           <div className="title-row">

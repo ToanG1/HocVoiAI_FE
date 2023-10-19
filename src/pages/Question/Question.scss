@@ -92,9 +92,7 @@ button:active {
   margin-top: 10px;
   margin-bottom: 10px;
 }
-.question-form {
-  padding-right: 20px;
-}
+
 .context-container {
   padding: 10px;
   border-style: solid;
@@ -113,11 +111,12 @@ button:active {
 .title-form {
   padding-right: 10px;
 }
-.title-textarea {
-  width: 100%;
+.title-input {
+  width: calc(100% - 22px);
   height: 30px;
   padding: 10px;
   margin-bottom: 10px;
+  font-size: 18px;
   border-style: solid;
   border-width: 1px;
   border-color: hsl(210, 8%, 75%);

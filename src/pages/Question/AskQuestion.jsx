@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useCallback } from "react";
 import Select from "react-select";
 import styles from "./Question.scss";
+import Editor from "../../components/Editor/Editor";
 
 const topics = [
   { value: "Tuition", label: "Tuition" },
@@ -13,19 +14,12 @@ function AskQuestion({ onSubmit }) {
   const [selectedTopic, setSelectedTopic] = useState(null);
   const [newQuestion, setNewQuestion] = useState("");
   const [newTitle, setNewTitle] = useState("");
-  const [isTopicSelected, setIsTopicSelected] = useState(false);
-  const [isTitleEntered, setIsTitleEntered] = useState(false);
 
-  const handleInputChange = (event) => {
-    setNewQuestion(event.target.value);
-  };
   const handleTitleInputChange = (event) => {
     setNewTitle(event.target.value);
-    setIsTitleEntered(true);
   };
   const handleTopicChange = (selectedOption) => {
     setSelectedTopic(selectedOption);
-    setIsTopicSelected(true);
   };
 
   const handleSubmit = useCallback(() => {
@@ -56,13 +50,13 @@ function AskQuestion({ onSubmit }) {
           Be specific and imagine you’re asking a question to another person.
         </div>
         <div class="question-form">
-          <textarea
-            class="title-textarea"
+          <input
+            class="title-input"
+            type="text"
             placeholder="Type your title here..."
             value={newTitle}
             onChange={handleTitleInputChange}
-            disabled={!isTopicSelected} // Disable if a topic is not selected
-          ></textarea>
+          ></input>
         </div>
       </div>
       <div class="context-container">
@@ -71,12 +65,7 @@ function AskQuestion({ onSubmit }) {
           Introduce the problem and expand on what you put in the title.
         </div>
         <div class="question-form">
-          <textarea
-            placeholder="Type your question here..."
-            value={newQuestion}
-            onChange={handleInputChange}
-            disabled={!isTitleEntered} // Disable if a title is not entered
-          ></textarea>
+          <Editor setData={setNewQuestion} />
           <button
             type="submit"
             onClick={handleSubmit}

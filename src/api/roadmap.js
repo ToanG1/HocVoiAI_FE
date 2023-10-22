@@ -1,24 +1,24 @@
 import axios from "axios";
-import { RoadmapApiUrl } from "./BaseUrl";
+import { BASE_URL } from "./BaseUrl";
 
 function getRoadmap(roadmapId) {
-  return axios.get(`${RoadmapApiUrl}/roadmap?id=${roadmapId}`);
+  return axios.get(`${BASE_URL}/roadmap?id=${roadmapId}`);
 }
 
 async function getAllRoadmap(roadmapId) {
-  return await axios.get(`${RoadmapApiUrl}/roadmap`);
+  return await axios.get(`${BASE_URL}/roadmap`);
 }
 
 function createRoadmap(roadmap) {
-  return axios.post(`${RoadmapApiUrl}/roadmap`, roadmap);
+  return axios.post(`${BASE_URL}/roadmap`, roadmap);
 }
 
 function updateRoadmap(roadmap) {
-  return axios.put(`${RoadmapApiUrl}/roadmap`, roadmap);
+  return axios.put(`${BASE_URL}/roadmap`, roadmap);
 }
 
 function deleteRoadmap(roadmapId) {
-  return axios.delete(`${RoadmapApiUrl}/roadmap?id=${roadmapId}`);
+  return axios.delete(`${BASE_URL}/roadmap?id=${roadmapId}`);
 }
 
 export {

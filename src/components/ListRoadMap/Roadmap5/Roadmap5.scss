@@ -256,11 +256,12 @@ $timelineTriangleSize: $timelineBubbleSize * 2;
     opacity: 0.6;
     transition: all 0.3s;
     transition-delay: 0.15s;
-
-    .timeline__item--active &,
-    .timeline__link:hover + .timeline__item__content & {
-      transform: scale(1);
-      opacity: 1;
+  }
+  .timeline__item--active,
+  .timeline__item:hover {
+    .timeline__item__content,
+    .timeline__item__year {
+      opacity: 1 !important;
     }
   }
 

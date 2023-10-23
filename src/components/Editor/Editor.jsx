@@ -2,7 +2,7 @@ import React from "react";
 import styles from "./Editor.scss";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
-import { RoadmapApiUrl, IMG_URL } from "../../api/BaseUrl";
+import { BASE_URL, IMG_URL } from "../../api/API";
 
 export default function Editor({ setData }) {
   const UPLOAD_ENDPOINT = "minio/image";
@@ -16,7 +16,7 @@ export default function Editor({ setData }) {
             body.append("image", file);
             let headers = new Headers();
             headers.append("Origin", "http://localhost:3000");
-            fetch(`${RoadmapApiUrl}/${UPLOAD_ENDPOINT}`, {
+            fetch(`${BASE_URL}/${UPLOAD_ENDPOINT}`, {
               headers: headers,
               method: "post",
               body: body,

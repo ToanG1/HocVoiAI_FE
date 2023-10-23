@@ -1,12 +1,12 @@
 import axios from "axios";
-import { RoadmapApiUrl } from "./BaseUrl";
+import { BASE_URL } from "./API";
 
 async function uploadImage(file) {
   return new Promise((resolve, reject) => {
     const formData = new FormData();
     formData.append("image", file);
     axios
-      .post(`${RoadmapApiUrl}/minio/image`, formData)
+      .post(`${BASE_URL}/minio/image`, formData)
       .then((res) => {
         console.log(res);
         resolve(res.data.url);

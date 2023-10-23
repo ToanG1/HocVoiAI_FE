@@ -1,5 +1,5 @@
 import axios from "axios";
-import { BASE_URL } from "./BaseUrl";
+import { BASE_URL } from "./API";
 
 function getRoadmap(roadmapId) {
   return axios.get(`${BASE_URL}/roadmap?id=${roadmapId}`);

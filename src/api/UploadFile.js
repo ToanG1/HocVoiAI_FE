@@ -1,5 +1,5 @@
 import axios from "axios";
-import { BASE_URL } from "./BaseUrl";
+import { BASE_URL } from "./API";
 
 async function uploadImage(file) {
   return new Promise((resolve, reject) => {

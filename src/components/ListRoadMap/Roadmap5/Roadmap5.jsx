@@ -5,8 +5,9 @@ import { useState, useEffect, useRef } from "react";
 import Slider, { slickGoTo } from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import catImg from "../../../assets/images/cat-img.png";
 
-export default function Roadmap5({mode}) {
+export default function Roadmap5({ mode }) {
   const [speed, setSpeed] = useState(300);
 
   const settings = {
@@ -94,59 +95,47 @@ export default function Roadmap5({mode}) {
       <div className="roadmap5-container">
         <div className="page">
           <Slider ref={sliderRef} {...settings} className="views">
-            <div className="view view--1">
-              <div className="view__inner">
-                <h2 style={{ fontSize: "100px" }}>2000</h2>
-              </div>
-            </div>
-            <div className="view view--1">
-              <div className="view__inner">
-                <h2 style={{ fontSize: "100px" }}>2001</h2>
-              </div>
-            </div>
+            {[1, 2, 3, 4, 5, 6, 7].map((item) => {
+              return (
+                <div className="view" key={item}>
+                  <div className="view__inner">
+                    <h2 style={{ fontSize: "100px" }}>200{item}</h2>
+                  </div>
+                </div>
+              );
+            })}
           </Slider>
           <div className="timeline__wrapper">
             <div className="timeline">
               <ul className="timeline__list">
-                <li
-                  onClick={(e) => {
-                    handleClickTimeLine(e, 0);
-                  }}
-                  className="timeline__item timeline__item--active"
-                >
-                  <a className="timeline__link" href="#">
-                    <div className="timeline__item__point"></div>
-                  </a>
-                  <div className="timeline__item__content">
-                    <img
-                      className="timeline__item__thumb"
-                      src="http://testuje.cz/timeline-car-thumbnail.png"
-                      alt="timeline__item__thumb"
-                    />
-                    <div className="timeline__item__shadow"></div>
-                  </div>
-                  <div className="timeline__item__year">2000</div>
-                </li>
-
-                <li
-                  onClick={(e) => {
-                    handleClickTimeLine(e, 1);
-                  }}
-                  className="timeline__item"
-                >
-                  <a className="timeline__link" href="#">
-                    <div className="timeline__item__point"></div>
-                  </a>
-                  <div className="timeline__item__content">
-                    <img
-                      className="timeline__item__thumb"
-                      src="http://testuje.cz/timeline-car-thumbnail.png"
-                      alt="timeline__item__thumb"
-                    />
-                    <div className="timeline__item__shadow"></div>
-                  </div>
-                  <div className="timeline__item__year">2001</div>
-                </li>
+                {[1, 2, 3, 4, 5, 6, 7].map((item) => {
+                  return (
+                    <li
+                      onClick={(e) => {
+                        handleClickTimeLine(e, item - 1);
+                      }}
+                      className="timeline__item"
+                    >
+                      <a className="timeline__link">
+                        <div className="timeline__item__point"></div>
+                      </a>
+                      <div className="timeline__item__content">
+                        <img
+                          className="timeline__item__thumb"
+                          src={catImg}
+                          style={{
+                            width: "100px",
+                            height: "100px",
+                            objectFit: "cover",
+                          }}
+                          alt="timeline__item__thumb"
+                        />
+                        <div className="timeline__item__shadow"></div>
+                      </div>
+                      <div className="timeline__item__year">200{item}</div>
+                    </li>
+                  );
+                })}
               </ul>
 
               <div className="timeline__path">

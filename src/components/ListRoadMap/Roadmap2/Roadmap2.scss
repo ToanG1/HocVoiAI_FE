@@ -3,11 +3,14 @@
 .roadmap2-container {
   background: linear-gradient(#15306c, #14142f);
   margin: 0;
-  padding: 0;
+  padding: 0 0;
   width: 100vw;
   height: 100vh;
   overflow: hidden;
-
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
   h1,
   h2,
   h3,
@@ -28,6 +31,7 @@
     width: 100%;
     text-align: center;
     color: #ffffff;
+    font-size: 44px;
   }
   .slider {
     margin: 80px 0;

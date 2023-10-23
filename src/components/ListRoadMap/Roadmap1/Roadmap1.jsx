@@ -32,11 +32,11 @@ function setAnimation() {
   });
 }
 
-export default function Roadmap1({ mode }) {
+export default function Roadmap1({ mode, title }) {
   const [searchParams] = useSearchParams();
   console.log(mode);
   const [roadmap, setRoadmap] = useState({
-    title: "How to cook cookies",
+    title: title,
     milestones: [],
   });
   // const [roadmap, setRoadmap] = useState(data);

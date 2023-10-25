@@ -7,6 +7,9 @@ import video2 from "../../assets/videos/roadmap2-video.mp4";
 import video3 from "../../assets/videos/roadmap3-video.mp4";
 import video4 from "../../assets/videos/roadmap4-video.mp4";
 import video5 from "../../assets/videos/roadmap5-video.mp4";
+
+import { createRoadmap } from "../../api/roadmap";
+
 const types = [
   { value: 1, label: "Roadmap 1", video: video1 },
   { value: 2, label: "Roadmap 2", video: video2 },
@@ -28,11 +31,25 @@ export default function CreateRoadmapModal() {
   }, [type]);
 
   const navigate = useNavigate();
-  function handleRedirect(e) {
-    console.log(e.target.value);
-    navigate("/roadmap/0", {
-      state: { title: e.currentTarget.value, type: type.value },
-    });
+  async function handleRedirect(e) {
+    e.preventDefault();
+    createRoadmap({
+      title: e.currentTarget.value,
+      type: type.value,
+    })
+      .then((res) => {
+        console.log(res);
+        navigate(`/roadmap/${res.data.id}`, {
+          state: {
+            content: res.data,
+            type: type.value,
+            mode: "create",
+          },
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
   return (
     <>
@@ -50,7 +67,7 @@ export default function CreateRoadmapModal() {
             type="text"
             placeholder="Roadmap Name"
             onKeyDown={(e) => {
-              if (e.key === "Enter") {
+              if (e.key === "Enter" && e.currentTarget.value !== "") {
                 handleRedirect(e);
               }
             }}

@@ -1,6 +1,12 @@
 import axios from "axios";
 import { BASE_URL } from "./API";
 
+const token = localStorage.getItem("HOCVOIAI_TOKEN");
+
+const config = {
+  headers: { Authorization: `Bearer ${token}` },
+};
+
 function getRoadmap(roadmapId) {
   return axios.get(`${BASE_URL}/roadmap?id=${roadmapId}`);
 }
@@ -9,12 +15,17 @@ async function getAllRoadmap(roadmapId) {
   return await axios.get(`${BASE_URL}/roadmap`);
 }
 
-function createRoadmap(roadmap) {
-  return axios.post(`${BASE_URL}/roadmap`, roadmap);
+async function createRoadmap(roadmap) {
+  return await axios.post(`${BASE_URL}/roadmap`, roadmap, config);
 }
 
-function updateRoadmap(roadmap) {
-  return axios.put(`${BASE_URL}/roadmap`, roadmap);
+function updateRoadmap(roadmap, rmId) {
+  const roadmapDto = {
+    title: roadmap.title,
+    milestones: JSON.stringify(roadmap.milestones),
+  };
+
+  return axios.patch(`${BASE_URL}/roadmap/${rmId}`, roadmapDto, config);
 }
 
 function deleteRoadmap(roadmapId) {

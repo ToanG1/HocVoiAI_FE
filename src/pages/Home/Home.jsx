@@ -241,10 +241,10 @@ export default function Home() {
         <div className="home-header">
           <p>Logo</p>
           <div className="log-btn">
-            <Link to={"/login"}>Login</Link>
+            <Link to="/login">Login</Link>
           </div>
           <div className="log-btn">
-            <Link to={"/signup"}>Signup</Link>
+            <Link to="/signup">Signup</Link>
           </div>
         </div>
         <canvas className="orb-canvas"></canvas>

@@ -1,8 +1,8 @@
 import React, { lazy, Suspense } from "react";
 import { useLocation } from "react-router-dom";
 import styles from "./Roadmap.scss";
-import { useParams } from "react-router";
 import Loading from "../../components/Loading/Loading";
+import { data } from "../../api/data";
 
 const Roadmap1 = lazy(() =>
   import("../../components/ListRoadMap/Roadmap1/Roadmap1")
@@ -20,30 +20,38 @@ const Roadmap5 = lazy(() =>
   import("../../components/ListRoadMap/Roadmap5/Roadmap5")
 );
 
-function loadRoadmap(index, mode, title) {
+function loadRoadmap(index, mode, content) {
   switch (index) {
     case 1:
-      return <Roadmap1 mode={mode} title={title} />;
+      return <Roadmap1 mode={mode} content={content} />;
     case 2:
-      return <Roadmap2 mode={mode} title={title} />;
+      return <Roadmap2 mode={mode} content={content} />;
     case 3:
-      return <Roadmap3 mode={mode} title={title} />;
+      return <Roadmap3 mode={mode} content={content} />;
     case 4:
-      return <Roadmap4 mode={mode} title={title} />;
+      return <Roadmap4 mode={mode} content={content} />;
     case 5:
-      return <Roadmap5 mode={mode} title={title} />;
+      return <Roadmap5 mode={mode} content={content} />;
     default:
-      return <Roadmap1 mode={mode} title={title} />;
+      return <Roadmap1 mode={mode} content={content} />;
   }
 }
 
 export default function Roadmap() {
   const { state } = useLocation();
-  const id = useParams();
-  const mode = "create";
 
-  const roadmapType = state.type || 1;
-  const renderRoamap = loadRoadmap(roadmapType, mode, state.title);
+  const content = state.content;
+
+  const roadmap = {
+    title: content.title || "Roadmap Title",
+    milestones: content.milestones || [],
+  };
+
+  const renderRoamap = loadRoadmap(
+    state.type || 1,
+    state.mode || "view",
+    roadmap || data
+  );
   return (
     <>
       <Suspense fallback={<Loading />}>{renderRoamap}</Suspense>

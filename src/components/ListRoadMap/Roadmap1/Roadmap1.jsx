@@ -1,11 +1,10 @@
 import React, { ReactDOM } from "react";
 import styles from "./Roadmap1.scss";
-
 import { useEffect, useState } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useParams } from "react-router";
 import gsap from "gsap";
 
-import { data } from "../../../api/data";
+import { udpateRoadmap, updateRoadmap } from "../../../api/roadmap";
 
 function removeActiveOnContent() {
   const content = document.getElementsByClassName("roadmap1-milestone-content");
@@ -32,14 +31,9 @@ function setAnimation() {
   });
 }
 
-export default function Roadmap1({ mode, title }) {
-  const [searchParams] = useSearchParams();
-  console.log(mode);
-  const [roadmap, setRoadmap] = useState({
-    title: title,
-    milestones: [],
-  });
-  // const [roadmap, setRoadmap] = useState(data);
+export default function Roadmap1({ mode, content }) {
+  const { roadmapId } = useParams();
+  const [roadmap, setRoadmap] = useState(content);
   const [milestones, setMilestones] = useState([]);
   const [milestonesContent, setMilestonesContent] = useState([]);
 
@@ -47,7 +41,7 @@ export default function Roadmap1({ mode, title }) {
     setAnimation();
     switch (mode) {
       case "watch":
-        setRoadmap(data);
+        setRoadmap(content);
         renderMilestone();
         renderMilestoneContent(0);
         break;
@@ -111,6 +105,7 @@ export default function Roadmap1({ mode, title }) {
             <textarea
               type="text"
               cols={15}
+              rows={2}
               className="milestone-input"
               placeholder="New Milestone"
               onChange={(e) => {
@@ -315,6 +310,17 @@ export default function Roadmap1({ mode, title }) {
     }
   }
 
+  // handle update content of roadmap
+  async function handleUpdateContent() {
+    updateRoadmap(roadmap, roadmapId)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
   useEffect(() => {
     if (mode === "create") {
       handleCreateMilestone();
@@ -329,13 +335,13 @@ export default function Roadmap1({ mode, title }) {
       handleCreateMilestoneContent(element.id);
     }
   }, [roadmap.milestones]);
+
   return (
     <>
       <div className="roadmap1">
         <div className="roadmap1-container">
           <div className="background">
             <div className="cursor"></div>
-
             <div className="shapes">
               <div className="shape shape-1"></div>
               <div className="shape shape-2"></div>
@@ -344,9 +350,14 @@ export default function Roadmap1({ mode, title }) {
           </div>
           <div className="roadmap-section">
             <div className="roadmap-title-container">
+              {mode === "create" || mode === "edit" ? (
+                <div className="create-btn" onClick={handleUpdateContent}>
+                  Complete Edit
+                </div>
+              ) : null}
               <div className="title w-50">
                 <p>Roadmap</p>
-                <h2>{roadmap.title}</h2>
+                <h2>{content.title}</h2>
               </div>
               <div className="years w-50">
                 <ul>{milestones}</ul>

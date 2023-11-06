@@ -180,6 +180,8 @@ class Orb {
 }
 
 export default function Home() {
+  const [level, setLevel] = useState("beginner");
+  const [language, setLanguage] = useState("english");
   const [topics, setTopics] = useState([]);
 
   useEffect(() => {
@@ -235,16 +237,33 @@ export default function Home() {
         });
       });
   }, []);
+
+  const handleSaveTopics = () => {
+    localStorage.setItem("toGenTopics", JSON.stringify(checkLeftoverTopics()));
+  };
+
+  function checkLeftoverTopics() {
+    if (document.getElementById("topic-input").value !== "") {
+      return topics.concat([
+        {
+          topic: document.getElementById("topic-input").value,
+          level: document.getElementById("level").value,
+          language: document.getElementById("language").value,
+        },
+      ]);
+    } else return topics;
+  }
+
   return (
     <>
       <section className="home-container">
         <div className="home-header">
           <p>Logo</p>
           <div className="log-btn">
-            <Link to={"/login"}>Login</Link>
+            <Link to="/login">Login</Link>
           </div>
           <div className="log-btn">
-            <Link to={"/signup"}>Signup</Link>
+            <Link to="/signup">Signup</Link>
           </div>
         </div>
         <canvas className="orb-canvas"></canvas>
@@ -262,32 +281,69 @@ export default function Home() {
               </strong>
             </p>
             <div className="home-input">
-              <input
-                type="text"
-                placeholder="Enter your topics"
-                onKeyDown={(e) => {
-                  if (topics.length >= 5) {
-                    e.target.value = "";
-                    alert("You can only enter 5 topics");
-                  } else if (e.key === "Enter") {
-                    setTopics([...topics, e.target.value]);
-                    e.target.value = "";
-                  }
-                }}
-              />
+              <div className="input-container">
+                <input
+                  id="topic-input"
+                  type="text"
+                  placeholder="Enter your topics"
+                  onKeyDown={(e) => {
+                    if (topics.length >= 5) {
+                      e.target.value = "";
+                      alert("You can only enter 5 topics");
+                    } else if (e.key === "Enter" && e.target.value !== "") {
+                      setTopics([
+                        ...topics,
+                        {
+                          topic: e.target.value,
+                          level: level,
+                          language: language,
+                        },
+                      ]);
+                      e.target.value = "";
+                    }
+                  }}
+                />
+                <select
+                  onChange={(e) => setLevel(e.target.value)}
+                  value={level}
+                  name="level"
+                  id="level"
+                  className="home-input__select"
+                >
+                  <option value="beginner">Beginner</option>
+                  <option value="intermediate">Intermediate</option>
+                  <option value="advanced">Advanced</option>
+                </select>
+                <select
+                  onChange={(e) => setLanguage(e.target.value)}
+                  value={language}
+                  name="language"
+                  id="language"
+                  className="home-input__select"
+                >
+                  <option value="vietnamese">Vietnamese</option>
+                  <option value="english">English</option>
+                  <option value="japan">Japan</option>
+                  <option value="chinese">Chinese</option>
+                </select>
+              </div>
               <div className="home-topics">
-                {topics.map((item) => {
+                {topics.map((item, i) => {
                   return (
-                    <div className="home-topic" key={item}>
-                      {item}
+                    <div className="home-topic" key={i}>
+                      {item.topic}
                     </div>
                   );
                 })}
               </div>
             </div>
+
             <div className="overlay__btns">
-              <button className="overlay__btn overlay__btn--transparent">
-                <Link>Let go!</Link>
+              <button
+                onClick={handleSaveTopics}
+                className="overlay__btn overlay__btn--transparent"
+              >
+                <Link to="/signup">Let go!</Link>
               </button>
 
               <button className="overlay__btn2 overlay__btn--colors">

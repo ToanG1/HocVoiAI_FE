@@ -28,13 +28,12 @@ export default function Header() {
               <Link to="/profile">Profile Information</Link>
             </li>
             <li>
-              <Link>Change Password</Link>
+              <Link to="/course">Library</Link>
             </li>
             <li>
-              <Link>
-                Become <b>PRO</b>
-              </Link>
+              <Link>Change Password</Link>
             </li>
+
             <li>
               <Link>Help</Link>
             </li>

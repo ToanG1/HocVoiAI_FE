@@ -16,23 +16,29 @@
   }
 }
 .create-roadmap-container {
-  display: flex;
-  justify-content: space-between;
   padding: 80px 30px;
-  div {
-    margin-right: 20px;
+  .roadmap-info {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px 0;
     div {
       margin: 0;
     }
     h1 {
       margin-bottom: 20px;
     }
+    .select {
+      margin-bottom: 10px;
+    }
     input {
       background-color: style.$light2-bg;
       border-radius: 5px;
       padding: 10px;
       font-size: 16px;
-      margin-top: 10px;
+    }
+    label {
+      font-size: 14px;
+      padding-right: 10px;
     }
   }
 }

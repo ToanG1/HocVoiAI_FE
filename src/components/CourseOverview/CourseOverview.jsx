@@ -4,57 +4,20 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import SCourseBox from "../../components/SCourseBox/SCourseBox";
-export default function CourseOverview() {
+export default function CourseOverview({ detail }) {
   const settings = {
     dots: false,
     autoplay: true,
     infinite: true,
     speed: 500,
-    slidesToShow: 5,
+    slidesToShow: 3,
     slidesToScroll: 1,
     arrows: true,
   };
   return (
     <>
       <div className="course-details-description">
-        <div>
-          <h1>Course Description</h1>
-          <span>
-            Maximus Ligula Eleifend Id Nisl Quis Interdum. Sed Malesuada Tortor
-            Non Turpis Semper Bibendum. Ut Ac Nisi Porta, Malesuada Risus Non
-            Viverra Dolor. Vestibulum Ante Ipsum Primis In Faucibus Orci Luctus
-            Et Ultrices Posuere Cubilia Curae In Tristique Libero, Quis Ultrices
-            Diam Praesent Varius Diam Dui. Class Aptent Taciti Sociosqu Ad
-            Litora Torquent Per Conubia Nostra. Maximus Ligula Eleifend Id Nisl
-            Quis Interdum. Sed Malesuada Tortor Non Turpis Semper Bibendum. Ut
-            Ac Nisi Porta, Malesuada Risus Non Viverra Dolor. Vestibulum Ante
-            Ipsum Primis In Faucibus Orci Luctus Et Ultrices Posuere Cubilia
-            Curae In Tristique Libero, Quis Ultrices Diam Praesent Varius Diam
-            Dui. Class Aptent Taciti Sociosqu Ad Litora Torquent Per Conubia
-            Nostra.
-          </span>
-        </div>
-        <div>
-          <h1>What Will You Learn From This Course?</h1>
-          <span>
-            Maximus Ligula Eleifend Id Nisl Quis Interdum. Sed Malesuada Tortor
-            Non Turpis Semper Bibendum. Ut Ac Nisi Porta, Malesuada Risus Non
-            Viverra Dolor. Vestibulum Ante Ipsum Primis In Faucibus Orci Luctus
-            Et Ultrices Posuere.
-          </span>
-          <div className="course-details-benefits">
-            <ul>
-              <li>Becom smarter</li>
-              <li>Becom harder</li>
-              <li>Becom better</li>
-            </ul>
-            <ul>
-              <li>Get a job</li>
-              <li>Get respect</li>
-              <li>Get more money</li>
-            </ul>
-          </div>
-        </div>
+        {detail.description || "There are no description"}
         <div
           className="course-details-relative-courses-header"
           style={{ marginBottom: "30px" }}

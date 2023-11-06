@@ -1,11 +1,15 @@
 import React, { useEffect, useState } from "react";
 import styles from "./CourseDetails.scss";
 import { useParams } from "react-router";
+import moment from "moment";
 
 import Header from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
 import CourseOverview from "../../components/CourseOverview/CourseOverview";
 import CourseCirculum from "../../components/CourseCirculum/CourseCirculum";
+
+import { createImg } from "../../api/AIGenImg";
+import { getRoadmap } from "../../api/roadmap";
 function removeActiveClass() {
   document
     .getElementById("overview-btn")
@@ -15,28 +19,24 @@ function removeActiveClass() {
     .classList.remove("course-details-active-btn");
 }
 export default function CourseDetails() {
+  const { courseId } = useParams("courseId");
   const [img, setImg] = useState("");
+  const [detail, setDetail] = useState({});
   useEffect(() => {
-    async function query(data) {
-      const response = await fetch(
-        "https://api-inference.huggingface.co/models/runwayml/stable-diffusion-v1-5",
-        {
-          headers: {
-            Authorization: "Bearer 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",
-          },
-          method: "POST",
-          body: JSON.stringify(data),
-        }
-      );
-      const result = await response.blob();
-      return result;
-    }
-    query({ inputs: "girl riding bike" }).then((response) => {
-      const imageObjectURL = URL.createObjectURL(response);
-      setImg(imageObjectURL);
+    createImg("tech").then((res) => {
+      setImg(res);
     });
+    getRoadmap(courseId)
+      .then((res) => {
+        setDetail(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }, []);
-  const param = useParams("courseId");
+
+  console.log(detail);
+
   const [page, setPage] = useState(0);
   useEffect(() => {
     switch (page) {
@@ -64,10 +64,12 @@ export default function CourseDetails() {
       <Header />
       <div className="course-details-container">
         <div className="course-details-content">
-          <div className="course-details-tag">Tech</div>
+          {detail.category ? (
+            <div className="course-details-tag">{detail.category.name}</div>
+          ) : null}
           <div className="course-details-title">
-            <p>The Complete Android Java Developer Course</p>
-            <p>created at 2023/08/25</p>
+            <p>{detail.title}</p>
+            <p>created at {moment(detail.createdAt).format("DD/MM/YYYY")}</p>
           </div>
 
           <div className="course-details-nav">
@@ -87,7 +89,11 @@ export default function CourseDetails() {
             </button>
           </div>
           <div className="course-details-body">
-            {page === 0 ? <CourseOverview /> : <CourseCirculum />}
+            {page === 0 ? (
+              <CourseOverview detail={detail} />
+            ) : (
+              <CourseCirculum />
+            )}
           </div>
         </div>
         <div className="course-details-sidebar">
@@ -112,7 +118,7 @@ export default function CourseDetails() {
                   Course level
                 </li>
                 <li className="course-details-short-description-value">
-                  Intermediate
+                  {detail.level || "not updated"}
                 </li>
               </ul>
               <ul className="course-details-short-description-row">
@@ -120,19 +126,17 @@ export default function CourseDetails() {
                   Duration
                 </li>
                 <li className="course-details-short-description-value">
-                  30 hours
+                  {detail.topics ? detail.topics + " topics" : "not updated"}
                 </li>
-              </ul>
-              <ul className="course-details-short-description-row">
-                <li className="course-details-short-description-key">
-                  Lessons
-                </li>
-                <li className="course-details-short-description-value">8</li>
               </ul>
               <ul className="course-details-short-description-row">
                 <li className="course-details-short-description-key">Tag</li>
                 <li className="course-details-short-description-value">
-                  Development
+                  {detail.tag
+                    ? detail.tag.map((item) => {
+                        return item.name + " ";
+                      })
+                    : "not updated"}
                 </li>
               </ul>
               <ul className="course-details-short-description-row">
@@ -140,7 +144,7 @@ export default function CourseDetails() {
                   Language
                 </li>
                 <li className="course-details-short-description-value">
-                  English
+                  {detail.language || "not updated"}
                 </li>
               </ul>
             </div>

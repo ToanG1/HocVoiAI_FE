@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import styles from "./Login.scss";
 
 import { login } from "../../api/auth";
+import { ToastContainer, toast } from "react-toastify";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -11,13 +12,25 @@ export default function Login() {
 
   const navigate = useNavigate();
   async function handleLogin() {
-    (await login(email, pass))
-      ? navigate("/features")
-      : alert("something wrong");
+    login(email, pass).then((res) => {
+      res
+        ? navigate("/features")
+        : toast.error("Email or password may be incorrect", {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light"
+          });
+    });
   }
   return (
     <>
       <div className="login-section">
+        <ToastContainer />
         <div class="form-box">
           <div class="form-value">
             <form

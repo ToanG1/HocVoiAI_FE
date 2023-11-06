@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
 import styles from "./Course.scss";
+
 import CourseBox from "../../components/CourseBox/CourseBox";
 import Header from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
-import { getAllRoadmap } from "../../api/roadmap";
 import BgComp from "../../components/BgComp/BgComp";
+
+import { getAllPrivilege } from "../../api/roadmap";
 
 function clearActiveNavItem() {
   const elements = document.getElementsByClassName("course-nav-item");
@@ -19,13 +21,16 @@ function clearActiveSideNavItem() {
   }
 }
 export default function Course() {
-  getAllRoadmap()
-    .then((res) => {
-      console.log(res);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+  const [data, setData] = useState([]);
+  useEffect(() => {
+    getAllPrivilege()
+      .then((res) => {
+        setData(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
 
   function ActiveNavItem(e) {
     clearActiveNavItem();
@@ -108,12 +113,12 @@ export default function Course() {
             </div>
           </div>
           <div className="course-list">
-            {[1, 2, 3, 4, 5].map((item) => {
+            {data.map((item, i) => {
               return (
                 <>
                   <CourseBox
                     course={item}
-                    key={item}
+                    key={i}
                     className="course-grid-item"
                   />
                 </>

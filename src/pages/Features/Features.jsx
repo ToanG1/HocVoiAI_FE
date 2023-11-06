@@ -1,5 +1,5 @@
 import React from "react";
-import { useState, useCallback } from "react";
+import { useState, useEffect, useCallback } from "react";
 import styles from "./Features.scss";
 
 import Header from "../../components/Header/Header";
@@ -11,6 +11,8 @@ import BgComp from "../../components/BgComp/BgComp";
 import "react-responsive-modal/styles.css";
 import { Modal } from "react-responsive-modal";
 
+import { useWebSocket } from "../../websocket/context";
+
 export default function Features() {
   const [isOpenModal, setIsOpenModal] = useState(false);
 
@@ -21,6 +23,18 @@ export default function Features() {
   const handleOnCloseModal = useCallback(() => {
     setIsOpenModal(false);
   }, []);
+
+  const socket = useWebSocket();
+
+  useEffect(() => {
+    if (socket) {
+      // Use the socket to send and receive WebSocket messages
+      socket.on("generate", (data) => {
+        console.log("Received data from WebSocket:", data);
+      });
+    }
+  }, [socket]);
+
   return (
     <>
       <Header />

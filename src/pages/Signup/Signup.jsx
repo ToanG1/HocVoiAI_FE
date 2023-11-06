@@ -4,6 +4,8 @@ import { Link, useNavigate } from "react-router-dom";
 import styles from "./Signup.scss";
 
 import { signup } from "../../api/auth";
+import { useWebSocket } from "../../websocket/context";
+import { ToastContainer, toast } from "react-toastify";
 
 export default function Signup() {
   const [name, setName] = useState("");
@@ -25,17 +27,48 @@ export default function Signup() {
   }, [password1, password2]);
 
   const navigate = useNavigate();
-  async function handleSignup() {
-    (await signup(email, pass, name))
-      ? navigate("/features")
-      : alert("something wrong");
+  function handleSignup() {
+    signup(email, pass, name).then((res) => {
+      if (res) {
+        handleGenerateRoadmap();
+        navigate("/features");
+      } else
+        toast.error("Email or password may be incorrect", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light"
+        });
+    });
   }
+  const socket = useWebSocket();
+
+  function handleGenerateRoadmap() {
+    const topics = JSON.parse(localStorage.getItem("toGenTopics"));
+    localStorage.removeItem("toGenTopics");
+    // Send a message to the server
+    socket.emit("generate", {
+      topics: topics,
+      userId: JSON.parse(localStorage.getItem("USER_INFO")).userId
+    });
+  }
+
   return (
     <>
       <div className="signup-section">
+        <ToastContainer />
         <div class="form-box">
           <div class="form-value">
-            <form onSubmit={() => handleSignup()}>
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                handleSignup();
+              }}
+            >
               <h2>Signup</h2>
               <div class="inputbox">
                 <input

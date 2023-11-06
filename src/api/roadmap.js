@@ -8,7 +8,11 @@ const config = {
 };
 
 function getRoadmap(roadmapId) {
-  return axios.get(`${BASE_URL}/roadmap?id=${roadmapId}`);
+  return axios.get(`${BASE_URL}/roadmap/${roadmapId}`, config);
+}
+
+function getAllPrivilege() {
+  return axios.get(`${BASE_URL}/roadmap/user`, config);
 }
 
 async function getAllRoadmap(roadmapId) {
@@ -35,6 +39,7 @@ function deleteRoadmap(roadmapId) {
 export {
   getRoadmap,
   getAllRoadmap,
+  getAllPrivilege,
   createRoadmap,
   updateRoadmap,
   deleteRoadmap,

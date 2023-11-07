@@ -19,7 +19,7 @@ export default function Editor({ setData }) {
             fetch(`${BASE_URL}/${UPLOAD_ENDPOINT}`, {
               headers: headers,
               method: "post",
-              body: body,
+              body: body
             })
               .then((res) => res.json())
               .then((res) => {
@@ -30,7 +30,7 @@ export default function Editor({ setData }) {
               });
           });
         });
-      },
+      }
     };
   }
 
@@ -43,13 +43,9 @@ export default function Editor({ setData }) {
     <div className="editor-container">
       <CKEditor
         config={{
-          extraPlugins: [uploadPlugin],
+          extraPlugins: [uploadPlugin]
         }}
         editor={ClassicEditor}
-        onReady={(editor) => {
-          // You can store the "editor" and use when it is needed.
-          console.log("Editor is ready to use!", editor);
-        }}
         onChange={(event, editor) => {
           const data = editor.getData();
           setData(data);

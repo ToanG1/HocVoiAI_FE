@@ -10,11 +10,13 @@ import ReactPaginate from "react-paginate";
 import Header from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
 import BgComp from "../../components/BgComp/BgComp";
+import { ToastContainer, toast } from "react-toastify";
 
+import "react-toastify/dist/ReactToastify.css";
 const topics = [
   { value: "Tuition", label: "Tuition" },
   { value: "Pronunciation", label: "Pronunciation" },
-  { value: "Grammar", label: "Grammar" },
+  { value: "Grammar", label: "Grammar" }
 ];
 const months = [
   { value: "1", label: "1" },
@@ -28,13 +30,13 @@ const months = [
   { value: "9", label: "9" },
   { value: "10", label: "10" },
   { value: "11", label: "11" },
-  { value: "12", label: "12" },
+  { value: "12", label: "12" }
 ];
 const years = [
   { value: "2020", label: "2020" },
   { value: "2021", label: "2021" },
   { value: "2022", label: "2022" },
-  { value: "2023", label: "2023" },
+  { value: "2023", label: "2023" }
 ];
 
 const itemsPerPage = 10;
@@ -57,9 +59,32 @@ function Question() {
     setItemOffset(newOffset);
   };
 
-  const addQuestion = (newQuestion) => {
-    console.log(newQuestion);
-    setQuestions([...questions, newQuestion]);
+  const handleSubmitQuestion = (data) => {
+    setIsOpenModal(false);
+    if (data.code === 200) {
+      setQuestions([...questions, data.data]);
+      toast.success("Your question is submitted successfully", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light"
+      });
+    } else {
+      toast.error("Something wrong !", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light"
+      });
+    }
   };
 
   const handleAskQuestion = useCallback(() => {
@@ -75,7 +100,9 @@ function Question() {
       <Header />
       <BgComp />
       <div className="questions-container">
-        <header className="header">
+        <ToastContainer />
+
+        <div className="header">
           <div className="title-row">
             <h2>All Questions</h2>
             <button
@@ -114,11 +141,11 @@ function Question() {
               />
             </div>
           </div>
-        </header>
-        <main className="main">
+        </div>
+        <div className="main">
           <QuestionList questions={questions} />
-        </main>
-        <footer className="footer">
+        </div>
+        <div className="footer">
           <ReactPaginate
             nextLabel="next >"
             onPageChange={handlePageClick}
@@ -139,16 +166,16 @@ function Question() {
             activeClassName="active"
             renderOnZeroPageCount={null}
           />
-        </footer>
+        </div>
         <Modal
           open={isOpenModal}
           onClose={handleOnCloseModal}
           center
           classNames={{
-            modal: "customModal",
+            modal: "customModal"
           }}
         >
-          <AskQuestion onSubmit={addQuestion} />
+          <AskQuestion onSubmit={handleSubmitQuestion} />
         </Modal>
       </div>
       <Footer />

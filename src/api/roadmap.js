@@ -1,18 +1,12 @@
 import axios from "axios";
-import { BASE_URL } from "./API";
-
-const token = localStorage.getItem("HOCVOIAI_TOKEN");
-
-const config = {
-  headers: { Authorization: `Bearer ${token}` },
-};
+import { BASE_URL, bearerConfig } from "./API";
 
 function getRoadmap(roadmapId) {
-  return axios.get(`${BASE_URL}/roadmap/${roadmapId}`, config);
+  return axios.get(`${BASE_URL}/roadmap/${roadmapId}`, bearerConfig);
 }
 
 function getAllPrivilege() {
-  return axios.get(`${BASE_URL}/roadmap/user`, config);
+  return axios.get(`${BASE_URL}/roadmap/user`, bearerConfig);
 }
 
 async function getAllRoadmap(roadmapId) {
@@ -20,16 +14,16 @@ async function getAllRoadmap(roadmapId) {
 }
 
 async function createRoadmap(roadmap) {
-  return await axios.post(`${BASE_URL}/roadmap`, roadmap, config);
+  return await axios.post(`${BASE_URL}/roadmap`, roadmap, bearerConfig);
 }
 
 function updateRoadmap(roadmap, rmId) {
   const roadmapDto = {
     title: roadmap.title,
-    milestones: JSON.stringify(roadmap.milestones),
+    milestones: JSON.stringify(roadmap.milestones)
   };
 
-  return axios.patch(`${BASE_URL}/roadmap/${rmId}`, roadmapDto, config);
+  return axios.patch(`${BASE_URL}/roadmap/${rmId}`, roadmapDto, bearerConfig);
 }
 
 function deleteRoadmap(roadmapId) {
@@ -42,5 +36,5 @@ export {
   getAllPrivilege,
   createRoadmap,
   updateRoadmap,
-  deleteRoadmap,
+  deleteRoadmap
 };

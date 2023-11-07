@@ -18,15 +18,15 @@ function setAnimation() {
     const mouseX = event.clientX;
     const mouseY = event.clientY;
 
-    gsap.set(".cursor", {
-      x: mouseX,
-      y: mouseY,
-    });
+    // gsap.set(".cursor", {
+    //   x: mouseX,
+    //   y: mouseY,
+    // });
 
     gsap.to(".shape", {
       x: mouseX,
       y: mouseY,
-      stagger: -0.05,
+      stagger: -0.05
     });
   });
 }
@@ -120,8 +120,8 @@ export default function Roadmap1({ mode, content }) {
                     ...roadmap,
                     milestones: [
                       ...roadmap.milestones,
-                      { name: e.target.value, content: [] },
-                    ],
+                      { name: e.target.value, content: [] }
+                    ]
                   });
                 }
               }}
@@ -248,15 +248,15 @@ export default function Roadmap1({ mode, content }) {
                                                           i
                                                       )
                                                       .value.split("\n")
-                                                  ),
+                                                  )
                                               };
                                             } else return content;
                                           }
-                                        ),
+                                        )
                                       };
                                     } else return item;
                                   }
-                                ),
+                                )
                               });
                               console.log(roadmap);
                             }}
@@ -293,11 +293,11 @@ export default function Roadmap1({ mode, content }) {
                             name: item.name,
                             content: [
                               ...item.content,
-                              { name: e.target.value, description: [] },
-                            ],
+                              { name: e.target.value, description: [] }
+                            ]
                           };
                         return item;
-                      }),
+                      })
                     });
                   }
                 }}

@@ -4,8 +4,9 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import gsap from "gsap";
 
-import { udpateRoadmap, updateRoadmap } from "../../../api/roadmap";
+import { updateRoadmap } from "../../../api/roadmap";
 
+import { ToastContainer, toast } from "react-toastify";
 function removeActiveOnContent() {
   const content = document.getElementsByClassName("roadmap1-milestone-content");
   for (let i = 0; i < content.length; i++) {
@@ -18,10 +19,10 @@ function setAnimation() {
     const mouseX = event.clientX;
     const mouseY = event.clientY;
 
-    // gsap.set(".cursor", {
-    //   x: mouseX,
-    //   y: mouseY,
-    // });
+    gsap.set(".cursor", {
+      x: mouseX,
+      y: mouseY
+    });
 
     gsap.to(".shape", {
       x: mouseX,
@@ -31,13 +32,15 @@ function setAnimation() {
   });
 }
 
-export default function Roadmap1({ mode, content }) {
+export default function Roadmap1({ rMode, content }) {
+  const [mode, setMode] = useState(rMode);
   const { roadmapId } = useParams();
   const [roadmap, setRoadmap] = useState(content);
   const [milestones, setMilestones] = useState([]);
   const [milestonesContent, setMilestonesContent] = useState([]);
 
   useEffect(() => {
+
     setAnimation();
     switch (mode) {
       case "watch":
@@ -54,7 +57,7 @@ export default function Roadmap1({ mode, content }) {
         renderMilestone();
         renderMilestoneContent(0);
     }
-  }, []);
+  }, [mode]);
 
   // Render milestones in watch mode
   function renderMilestone() {
@@ -258,7 +261,6 @@ export default function Roadmap1({ mode, content }) {
                                   }
                                 )
                               });
-                              console.log(roadmap);
                             }}
                           >
                             Done
@@ -314,10 +316,29 @@ export default function Roadmap1({ mode, content }) {
   async function handleUpdateContent() {
     updateRoadmap(roadmap, roadmapId)
       .then((res) => {
-        console.log(res);
+        setMode("watch");
+        toast.success("Update roadmap successfuly!", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light"
+        });
       })
       .catch((err) => {
-        console.log(err);
+        toast.error("Something wrong happen, please try again", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light"
+        });
       });
   }
 
@@ -339,6 +360,7 @@ export default function Roadmap1({ mode, content }) {
   return (
     <>
       <div className="roadmap1">
+        <ToastContainer />
         <div className="roadmap1-container">
           <div className="background">
             <div className="cursor"></div>

@@ -1,28 +1,27 @@
-import React, { useCallback, useEffect, useState } from 'react'
-import styles from './QuestionDetail.scss'
-import { useLocation, useParams } from 'react-router-dom'
-import AskQuestion from '../Question/AskQuestion'
-import { Modal } from 'react-responsive-modal'
+import React, { useCallback, useEffect, useState } from "react";
+import styles from "./QuestionDetail.scss";
+import { useLocation, useParams } from "react-router-dom";
+import AskQuestion from "../Question/AskQuestion";
+import { Modal } from "react-responsive-modal";
 
 function QuestionDetail({}) {
-  const [questions, setQuestions] = useState([])
-  const { questionId } = useParams()
-  const location = useLocation()
-  const questionData = location.state.questionData
-  const [isOpenModal, setIsOpenModal] = useState(false)
+  const [questions, setQuestions] = useState([]);
+  const { questionId } = useParams();
+  const location = useLocation();
+  const questionData = location.state.questionData;
+  const [isOpenModal, setIsOpenModal] = useState(false);
 
   const addQuestion = (newQuestion) => {
-    console.log(newQuestion)
-    setQuestions([...questions, newQuestion])
-  }
+    setQuestions([...questions, newQuestion]);
+  };
 
   const handleAskQuestion = useCallback(() => {
-    setIsOpenModal(true)
-  }, [])
+    setIsOpenModal(true);
+  }, []);
 
   const handleOnCloseModal = useCallback(() => {
-    setIsOpenModal(false)
-  }, [])
+    setIsOpenModal(false);
+  }, []);
   return (
     <div className="app">
       <header className="header">
@@ -54,13 +53,13 @@ function QuestionDetail({}) {
         onClose={handleOnCloseModal}
         center
         classNames={{
-          modal: 'customModal',
+          modal: "customModal"
         }}
       >
         <AskQuestion onSubmit={addQuestion} />
       </Modal>
     </div>
-  )
+  );
 }
 
-export default QuestionDetail
+export default QuestionDetail;

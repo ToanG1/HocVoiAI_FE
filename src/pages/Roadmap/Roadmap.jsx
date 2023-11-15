@@ -20,20 +20,20 @@ const Roadmap5 = lazy(() =>
   import("../../components/ListRoadMap/Roadmap5/Roadmap5")
 );
 
-function loadRoadmap(index, mode, content) {
-  switch (index) {
+function loadRoadmap(type, mode, content) {
+  switch (type) {
     case 1:
-      return <Roadmap1 mode={mode} content={content} />;
+      return <Roadmap1 rMode={mode} content={content} />;
     case 2:
-      return <Roadmap2 mode={mode} content={content} />;
+      return <Roadmap2 rMode={mode} content={content} />;
     case 3:
-      return <Roadmap3 mode={mode} content={content} />;
+      return <Roadmap3 rMode={mode} content={content} />;
     case 4:
-      return <Roadmap4 mode={mode} content={content} />;
+      return <Roadmap4 rMode={mode} content={content} />;
     case 5:
-      return <Roadmap5 mode={mode} content={content} />;
+      return <Roadmap5 rMode={mode} content={content} />;
     default:
-      return <Roadmap1 mode={mode} content={content} />;
+      return <Roadmap1 rMode={mode} content={content} />;
   }
 }
 
@@ -44,7 +44,7 @@ export default function Roadmap() {
 
   const roadmap = {
     title: content.title || "Roadmap Title",
-    milestones: content.milestones || [],
+    milestones: content.milestones || []
   };
 
   const renderRoamap = loadRoadmap(

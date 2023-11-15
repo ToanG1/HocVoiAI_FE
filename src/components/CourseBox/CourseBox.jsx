@@ -17,20 +17,19 @@ export default function CourseBox({ course }) {
       });
     }
   }, []);
-
   return (
     <Link to={`${detail.id}`} style={{ textDecorationLine: "none" }}>
       <div className="course-box-container">
         <div className="course-box-content">
           <div className="course-box-header">
             <img src={img} className="course-box-image" alt="course-img" />
-            <p className="course-box-tag">tag</p>
+            <p className="course-box-tag">{detail.category.name}</p>
           </div>
           <div className="course-box-body">
             <p className="course-box-title">{detail.title}</p>
             <p className="course-box-time">{detail.topics} topics</p>
             <p className="course-box-description">
-              <span>{detail.description}</span>
+              <span>{detail.description.replace(/<[^>]+>/g, "")}</span>
               <div className="course-box-progessbar">
                 <div class="progress-bar" role="progressbar">
                   {course.progress}

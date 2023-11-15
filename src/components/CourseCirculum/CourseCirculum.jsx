@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./CourseCirculum.scss";
-import { ReactDOM } from "react";
-export default function CourseCirculum() {
+
+import { toast } from "react-toastify";
+import { getRoadmap } from "../../api/roadmap";
+
+export default function CourseCirculum({ id }) {
   const openTopic = (id) => {
-    console.log(id);
     document
       .getElementById("topic" + id)
       .classList.toggle("course-details-topic-title-active");
@@ -12,35 +14,55 @@ export default function CourseCirculum() {
       list[i].classList.toggle("course-details-lesson-list-active");
     }
   };
+  const [content, setContent] = useState([]);
+  useEffect(() => {
+    async function fecthData() {
+      const res = await getRoadmap(id);
+      if (res.data.code === 200) {
+        setContent(JSON.parse(res.data.data.roadmap.topics));
+      } else {
+        toast.error(res.data.message, {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light"
+        });
+      }
+    }
+    fecthData().catch((err) => {
+      console.log(err);
+    });
+  }, []);
 
   return (
     <>
       <div className="course-details-curriculum">
-        {[1, 2, 3, 4, 5].map((topicId) => {
+        {content.map((topic, index) => {
           return (
             <>
               <div
                 className="course-details-topic"
-                onClick={() => openTopic(topicId)}
+                onClick={() => openTopic(index)}
               >
                 <div
                   className="course-details-topic-title"
-                  id={"topic" + topicId}
+                  id={"topic" + index}
                 >
-                  <h2>Topic {topicId}</h2>
-                  <h2>0/5</h2>
+                  <h2>{topic.name}</h2>
+                  <h2>0/{topic.content.length}</h2>
                 </div>
-                <div className={`course-details-lesson-list list${topicId}`}>
-                  {[1, 2, 3].map((lessonId) => {
+                <div className={`course-details-lesson-list list${index}`}>
+                  {topic.content.map((item, index) => {
                     return (
                       <>
                         <div className="course-details-lesson">
-                          <p>
-                            Lesson {topicId}
-                            {lessonId}
-                          </p>
-                          <p>This lesson is abut</p>
-                          <p>14m</p>
+                          <p>Lesson {index}</p>
+                          <p>{item.name}</p>
+                          <p>0m</p>
                         </div>
                       </>
                     );

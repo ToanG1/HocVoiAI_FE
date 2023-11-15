@@ -1,8 +1,7 @@
-import axios from "axios";
-import { BASE_URL } from "./API";
+import { axiosInstance } from "./API";
 async function login(email, password) {
   try {
-    const res = await axios.post(`${BASE_URL}/auth/login`, {
+    const res = await axiosInstance.post("/auth/login", {
       email,
       password
     });
@@ -19,7 +18,7 @@ async function login(email, password) {
 
 async function signup(email, password, name) {
   try {
-    const res = await axios.post(`${BASE_URL}/auth/signup`, {
+    const res = await axiosInstance.post(`/auth/signup`, {
       email,
       password,
       name

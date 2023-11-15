@@ -1,11 +1,11 @@
 import React, { useCallback, useEffect, useState } from "react";
 import styles from "./Question.scss";
+
 import QuestionList from "./QuestionList";
 import AskQuestion from "./AskQuestion";
 import "react-responsive-modal/styles.css";
 import { Modal } from "react-responsive-modal";
 import Select from "react-select";
-import { MOCK_QUESTIONS } from "./const";
 import ReactPaginate from "react-paginate";
 import Header from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
@@ -13,6 +13,9 @@ import BgComp from "../../components/BgComp/BgComp";
 import { ToastContainer, toast } from "react-toastify";
 
 import "react-toastify/dist/ReactToastify.css";
+
+import { getAllQuestion } from "../../api/question";
+
 const topics = [
   { value: "Tuition", label: "Tuition" },
   { value: "Pronunciation", label: "Pronunciation" },
@@ -39,24 +42,28 @@ const years = [
   { value: "2023", label: "2023" }
 ];
 
-const itemsPerPage = 10;
-
 function Question() {
   const [questions, setQuestions] = useState([]);
-  const [pageCount, setPageCount] = useState(0); // index of page
-  const [itemOffset, setItemOffset] = useState(0);
+  const [page, setPage] = useState(1);
+  const [pageCount, setPageCount] = useState(1);
   const [isOpenModal, setIsOpenModal] = useState(false);
   const [selectedOption, setSelectedOption] = useState(null);
 
   useEffect(() => {
-    const endOffset = itemOffset + itemsPerPage;
-    setQuestions(MOCK_QUESTIONS.slice(itemOffset, endOffset));
-    setPageCount(Math.ceil(MOCK_QUESTIONS.length / itemsPerPage));
-  }, [itemOffset]);
+    async function fetchData() {
+      const res = await getAllQuestion(page);
+      if (res.data.code === 200) {
+        setQuestions(res.data.data);
+        setPageCount(Math.ceil(res.data.totalItems / res.data.limit));
+      } else console.log(res.data);
+    }
+    fetchData().catch((err) => {
+      console.log(err);
+    });
+  }, [page]);
 
   const handlePageClick = (event) => {
-    const newOffset = (event.selected * itemsPerPage) % MOCK_QUESTIONS.length;
-    setItemOffset(newOffset);
+    setPage(event.selected + 1);
   };
 
   const handleSubmitQuestion = (data) => {

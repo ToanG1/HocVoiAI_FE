@@ -1,8 +1,11 @@
-import axios from "axios";
-import { BASE_URL, bearerConfig } from "./API";
-
+import { axiosInstance, authedAxiosInstance } from "./API";
+import { ITEM_LIMIT } from "./constant";
 async function createQuestion(question) {
-  return axios.post(`${BASE_URL}/question`, question, bearerConfig);
+  return authedAxiosInstance.post(`/question`, question);
 }
 
-export { createQuestion };
+async function getAllQuestion(page) {
+  return axiosInstance.get(`/question?page=${page}&limit=${ITEM_LIMIT}`);
+}
+
+export { createQuestion, getAllQuestion };

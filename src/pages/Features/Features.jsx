@@ -7,9 +7,11 @@ import CoursesListing from "../../components/CoursesListing/CoursesListing";
 import CreateRoadmapModal from "./CreateRoadmapModal";
 import Footer from "../../components/Footer/Footer";
 import BgComp from "../../components/BgComp/BgComp";
-
-import "react-responsive-modal/styles.css";
 import { Modal } from "react-responsive-modal";
+import { ToastContainer } from "react-toastify";
+
+import "react-toastify/dist/ReactToastify.css";
+import "react-responsive-modal/styles.css";
 
 import { useWebSocket } from "../../websocket/context";
 
@@ -39,6 +41,7 @@ export default function Features() {
     <>
       <Header />
       <BgComp />
+      <ToastContainer />
 
       <div className="features-container">
         <div className="create-new">
@@ -55,7 +58,7 @@ export default function Features() {
         onClose={handleOnCloseModal}
         center
         classNames={{
-          modal: "customModal",
+          modal: "customModal"
         }}
       >
         <CreateRoadmapModal />

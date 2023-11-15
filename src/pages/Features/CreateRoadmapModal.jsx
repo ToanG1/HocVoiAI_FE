@@ -11,9 +11,7 @@ import video5 from "../../assets/videos/roadmap5-video.mp4";
 import { createRoadmap } from "../../api/roadmap";
 import { getAllCategory } from "../../api/category";
 import { useWebSocket } from "../../websocket/context";
-import { ToastContainer, toast } from "react-toastify";
-
-import "react-toastify/dist/ReactToastify.css";
+import { toast } from "react-toastify";
 
 const types = [
   { value: 1, label: "Roadmap 1", video: video1 },
@@ -105,7 +103,7 @@ export default function CreateRoadmapModal() {
       toast.success(
         "🦄 We are working now!, You will be noticed once roadmap is finished",
         {
-          position: "top-center",
+          position: "top-right",
           autoClose: 5000,
           hideProgressBar: false,
           closeOnClick: true,
@@ -157,7 +155,6 @@ export default function CreateRoadmapModal() {
   }
   return (
     <>
-      <ToastContainer />
       <section className="create-roadmap-container">
         <h1>Create Roadmap</h1>
 

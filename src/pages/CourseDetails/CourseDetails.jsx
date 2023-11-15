@@ -10,6 +10,9 @@ import CourseCirculum from "../../components/CourseCirculum/CourseCirculum";
 
 import { createImg } from "../../api/AIGenImg";
 import { getRoadmap } from "../../api/roadmap";
+
+import { ToastContainer } from "react-toastify";
+
 function removeActiveClass() {
   document
     .getElementById("overview-btn")
@@ -28,14 +31,14 @@ export default function CourseDetails() {
     });
     getRoadmap(courseId)
       .then((res) => {
-        setDetail(res.data);
+        console.log(res);
+        if (res.data.code === 200) setDetail(res.data.data);
       })
       .catch((err) => {
         console.log(err);
       });
   }, []);
 
-  console.log(detail);
 
   const [page, setPage] = useState(0);
   useEffect(() => {
@@ -47,6 +50,7 @@ export default function CourseDetails() {
           .classList.add("course-details-active-btn");
         break;
       case 1:
+        
         removeActiveClass();
         document
           .getElementById("curriculum-btn")
@@ -63,6 +67,7 @@ export default function CourseDetails() {
     <>
       <Header />
       <div className="course-details-container">
+        <ToastContainer />
         <div className="course-details-content">
           {detail.category ? (
             <div className="course-details-tag">{detail.category.name}</div>
@@ -92,7 +97,7 @@ export default function CourseDetails() {
             {page === 0 ? (
               <CourseOverview detail={detail} />
             ) : (
-              <CourseCirculum />
+              <CourseCirculum id={courseId} />
             )}
           </div>
         </div>

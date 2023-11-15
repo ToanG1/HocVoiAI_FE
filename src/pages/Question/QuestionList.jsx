@@ -1,26 +1,29 @@
-import React, { useCallback, useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import React, { useCallback, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import moment from "moment/moment";
 
 function QuestionList({ questions }) {
-  const [detailQuestion, setDetailQuestion] = useState(null)
-  const navigate = useNavigate()
+  const [detailQuestion, setDetailQuestion] = useState(null);
+  const navigate = useNavigate();
   const handleTitleClick = (question) => {
-    navigate(`/questions/${question.id}`, { state: { questionData: question } })
-  }
+    navigate(`/questions/${question.id}`, {
+      state: { questionData: question }
+    });
+  };
 
-  const [isHovered, setIsHovered] = useState(false)
+  const [isHovered, setIsHovered] = useState(false);
 
   const handleMouseEnter = () => {
-    setIsHovered(true)
-  }
+    setIsHovered(true);
+  };
 
   const handleMouseLeave = () => {
-    setIsHovered(false)
-  }
+    setIsHovered(false);
+  };
 
   const h3Style = {
-    cursor: isHovered ? 'pointer' : 'default',
-  }
+    cursor: isHovered ? "pointer" : "default"
+  };
 
   return (
     <div className="question-list">
@@ -36,12 +39,14 @@ function QuestionList({ questions }) {
             >
               {question.title}
             </div>
-            <p>{question.content}</p>
+            <p>{question.content.replace(/<[^>]+>/g, "").slice(0, 100)}</p>
             <div className="topic-row">
-              <div className="styled-box">{question.topic}</div>
+              <div className="styled-box ">{question.category.name}</div>
               <div className="info-user-container">
-                <p className="info-user-item">Chris Du</p>
-                <p className="info-user-item">10/06/2023</p>
+                <p className="info-user-item">by {question.user.name}</p>
+                <p className="info-user-item">
+                  {moment(question.createdAt).fromNow()}
+                </p>
               </div>
             </div>
             <hr></hr>
@@ -49,7 +54,7 @@ function QuestionList({ questions }) {
         ))}
       </div>
     </div>
-  )
+  );
 }
 
-export default QuestionList
+export default QuestionList;

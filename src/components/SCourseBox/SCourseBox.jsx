@@ -15,19 +15,14 @@ export default function CourseBox({ course }) {
               className="course-box-image"
               alt="course-img"
             />
-            <p className="course-box-tag">tag</p>
+            <p className="course-box-tag">{course.category.name}</p>
           </div>
           <div className="course-box-body">
-            <p className="course-box-title">
-              Title Of The Course Is Meaningful
-            </p>
-            <p className="course-box-time">15 weeks and 30 hours</p>
+            <p className="course-box-title">{course.title}</p>
+            <p className="course-box-time">{course.duration}</p>
             <p className="course-box-description">
               <span>
-                This is place where we put the description. User need this to
-                know what the course is about bla bla bla bla bla bla bla bla
-                bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla
-                bla bla bla
+                {course.description.replace(/<[^>]+>/g, "").slice(0, 50)}
               </span>
               <div className="course-box-progessbar">
                 <div class="progress-bar" role="progressbar">

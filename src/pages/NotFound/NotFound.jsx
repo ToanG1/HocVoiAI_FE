@@ -5,7 +5,6 @@ import Parallax from "parallax-js";
 export default function NotFound() {
   useEffect(() => {
     const scene = document.getElementById("scene");
-    console.log(scene);
     var parallax = new Parallax(scene);
   }, []);
 

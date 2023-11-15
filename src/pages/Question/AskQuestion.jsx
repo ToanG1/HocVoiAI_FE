@@ -1,19 +1,38 @@
-import React, { useState } from "react";
-import { useCallback } from "react";
+import React, { useState, useEffect } from "react";
 import Select from "react-select";
 import styles from "./Question.scss";
 import Editor from "../../components/Editor/Editor";
 
-const topics = [
-  { value: "Tuition", label: "Tuition" },
-  { value: "Pronunciation", label: "Pronunciation" },
-  { value: "Grammar", label: "Grammar" },
-];
+import { getAllCategory } from "../../api/category";
+import { createQuestion } from "../../api/question";
+import { toast } from "react-toastify";
 
 function AskQuestion({ onSubmit }) {
-  const [selectedTopic, setSelectedTopic] = useState(null);
+  const [topics, setTopics] = useState([]);
+
+  const [selectedTopic, setSelectedTopic] = useState({
+    value: 1,
+    label: "General"
+  });
   const [newQuestion, setNewQuestion] = useState("");
   const [newTitle, setNewTitle] = useState("");
+
+  useEffect(() => {
+    async function fetchCategory() {
+      const res = await getAllCategory();
+      setTopics(
+        res.data.map((item) => {
+          return {
+            value: item.id,
+            label: item.name
+          };
+        })
+      );
+    }
+    fetchCategory().catch((err) => {
+      console.log(err);
+    });
+  }, []);
 
   const handleTitleInputChange = (event) => {
     setNewTitle(event.target.value);
@@ -22,15 +41,33 @@ function AskQuestion({ onSubmit }) {
     setSelectedTopic(selectedOption);
   };
 
-  const handleSubmit = useCallback(() => {
-    if (newQuestion.trim() === "" || newTitle.trim() === "" || !selectedTopic)
-      return;
-    onSubmit({
-      topic: selectedTopic.label,
-      title: newTitle,
-      content: newQuestion,
-    });
-  }, [newTitle, newQuestion, selectedTopic]);
+  function handleSubmitQuestion() {
+    if (newQuestion === "" || newTitle === "") {
+      toast.warn("Please fill all the blank", {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light"
+      });
+    } else {
+      const question = {
+        title: newTitle,
+        content: newQuestion,
+        categoryId: selectedTopic.value
+      };
+      createQuestion(question)
+        .then((res) => {
+          onSubmit(res.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  }
 
   return (
     <div className="ask-question">
@@ -68,8 +105,8 @@ function AskQuestion({ onSubmit }) {
           <Editor setData={setNewQuestion} />
           <button
             type="submit"
-            onClick={handleSubmit}
-            style={{ padding: "5px 10px", fontSize: "15px" }}
+            onClick={handleSubmitQuestion}
+            style={{ padding: "5px 10px", marginTop: "20px", fontSize: "15px" }}
           >
             Submit
           </button>

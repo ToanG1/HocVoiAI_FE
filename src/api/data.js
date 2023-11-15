@@ -11,42 +11,52 @@ export const data = {
           description: [
             "Cookies are small text files that can be used by websites to make a user's experience more efficient.",
             "cookies",
-            "cookiesss",
+            "cookiesss"
           ],
+          startDate: new Date(),
+          endDate: new Date()
         },
         {
           name: "What is cookies2",
           description: [
             "Cookies are small text files that can be used by websites to make a user's experience more efficient.",
             "cookies",
-            "cookiesss",
+            "cookiesss"
           ],
+          startDate: new Date(),
+          endDate: new Date()
         },
         {
           name: "What is cookies3",
           description: [
             "Cookies are small text files that can be used by websites to make a user's experience more efficient.",
             "cookies",
-            "cookiesss",
+            "cookiesss"
           ],
+          startDate: new Date(),
+          endDate: new Date()
         },
         {
           name: "What is cookies4",
           description: [
             "Cookies are small text files that can be used by websites to make a user's experience more efficient.",
             "cookies",
-            "cookiesss",
+            "cookiesss"
           ],
+          startDate: new Date(),
+          endDate: new Date()
         },
         {
           name: "What is cookies5",
           description: [
             "Cookies are small text files that can be used by websites to make a user's experience more efficient.",
             "cookies",
-            "cookiesss",
+            "cookiesss"
           ],
-        },
-      ],
+          startDate: new Date(),
+          endDate: new Date()
+        }
+      ]
     },
     {
       name: "Let's go to kitchen",
@@ -56,42 +66,42 @@ export const data = {
           description: [
             "Cookies are small text files that can be used by websites to make a user's experience more efficient.",
             "cookies",
-            "cookiesss",
-          ],
+            "cookiesss"
+          ]
         },
         {
           name: "What is kitchen2",
           description: [
             "Cookies are small text files that can be used by websites to make a user's experience more efficient.",
             "cookies",
-            "cookiesss",
-          ],
+            "cookiesss"
+          ]
         },
         {
           name: "What is kitchen3",
           description: [
             "Cookies are small text files that can be used by websites to make a user's experience more efficient.",
             "cookies",
-            "cookiesss",
-          ],
+            "cookiesss"
+          ]
         },
         {
           name: "What is kitchen4",
           description: [
             "Cookies are small text files that can be used by websites to make a user's experience more efficient.",
             "cookies",
-            "cookiesss",
-          ],
+            "cookiesss"
+          ]
         },
         {
           name: "What is kitchen5",
           description: [
             "Cookies are small text files that can be used by websites to make a user's experience more efficient.",
             "cookies",
-            "cookiesss",
-          ],
-        },
-      ],
+            "cookiesss"
+          ]
+        }
+      ]
     },
     {
       name: "Recipe for cookies",
@@ -101,42 +111,42 @@ export const data = {
           description: [
             "Cookies are small text files that can be used by websites to make a user's experience more efficient.",
             "cookies",
-            "cookiesss",
-          ],
+            "cookiesss"
+          ]
         },
         {
           name: "What is Recipe2",
           description: [
             "Cookies are small text files that can be used by websites to make a user's experience more efficient.",
             "cookies",
-            "cookiesss",
-          ],
+            "cookiesss"
+          ]
         },
         {
           name: "What is Recipe3",
           description: [
             "Cookies are small text files that can be used by websites to make a user's experience more efficient.",
             "cookies",
-            "cookiesss",
-          ],
+            "cookiesss"
+          ]
         },
         {
           name: "What is Recipe4",
           description: [
             "Cookies are small text files that can be used by websites to make a user's experience more efficient.",
             "cookies",
-            "cookiesss",
-          ],
+            "cookiesss"
+          ]
         },
         {
           name: "What is Recipe5",
           description: [
             "Cookies are small text files that can be used by websites to make a user's experience more efficient.",
             "cookies",
-            "cookiesss",
-          ],
-        },
-      ],
+            "cookiesss"
+          ]
+        }
+      ]
     },
     {
       name: "Recipe for cookies",
@@ -146,42 +156,42 @@ export const data = {
           description: [
             "Cookies are small text files that can be used by websites to make a user's experience more efficient.",
             "cookies",
-            "cookiesss",
-          ],
+            "cookiesss"
+          ]
         },
         {
           name: "What is Recipe2",
           description: [
             "Cookies are small text files that can be used by websites to make a user's experience more efficient.",
             "cookies",
-            "cookiesss",
-          ],
+            "cookiesss"
+          ]
         },
         {
           name: "What is Recipe3",
           description: [
             "Cookies are small text files that can be used by websites to make a user's experience more efficient.",
             "cookies",
-            "cookiesss",
-          ],
+            "cookiesss"
+          ]
         },
         {
           name: "What is Recipe4",
           description: [
             "Cookies are small text files that can be used by websites to make a user's experience more efficient.",
             "cookies",
-            "cookiesss",
-          ],
+            "cookiesss"
+          ]
         },
         {
           name: "What is Recipe5",
           description: [
             "Cookies are small text files that can be used by websites to make a user's experience more efficient.",
             "cookies",
-            "cookiesss",
-          ],
-        },
-      ],
+            "cookiesss"
+          ]
+        }
+      ]
     },
     {
       name: "Recipe for cookies",
@@ -191,42 +201,42 @@ export const data = {
           description: [
             "Cookies are small text files that can be used by websites to make a user's experience more efficient.",
             "cookies",
-            "cookiesss",
-          ],
+            "cookiesss"
+          ]
         },
         {
           name: "What is Recipe2",
           description: [
             "Cookies are small text files that can be used by websites to make a user's experience more efficient.",
             "cookies",
-            "cookiesss",
-          ],
+            "cookiesss"
+          ]
         },
         {
           name: "What is Recipe3",
           description: [
             "Cookies are small text files that can be used by websites to make a user's experience more efficient.",
             "cookies",
-            "cookiesss",
-          ],
+            "cookiesss"
+          ]
         },
         {
           name: "What is Recipe4",
           description: [
             "Cookies are small text files that can be used by websites to make a user's experience more efficient.",
             "cookies",
-            "cookiesss",
-          ],
+            "cookiesss"
+          ]
         },
         {
           name: "What is Recipe5",
           description: [
             "Cookies are small text files that can be used by websites to make a user's experience more efficient.",
             "cookies",
-            "cookiesss",
-          ],
-        },
-      ],
-    },
-  ],
+            "cookiesss"
+          ]
+        }
+      ]
+    }
+  ]
 };

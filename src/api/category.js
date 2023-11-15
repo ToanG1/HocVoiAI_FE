@@ -1,7 +1,6 @@
-import axios from "axios";
-import { BASE_URL } from "./API";
+import { axiosInstance } from "./API";
 async function getAllCategory() {
-  return axios.get(`${BASE_URL}/category`);
+  return axiosInstance.get(`/category`);
 }
 
 export { getAllCategory };

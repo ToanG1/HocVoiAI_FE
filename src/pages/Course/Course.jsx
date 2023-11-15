@@ -25,7 +25,9 @@ export default function Course() {
   useEffect(() => {
     getAllPrivilege()
       .then((res) => {
-        setData(res.data);
+        if (res.data.code === 200) {
+          setData(res.data.data);
+        }
       })
       .catch((err) => {
         console.log(err);

@@ -55,6 +55,10 @@
         font-weight: 700;
         font-size: 18px;
         color: style.$p-text-color;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
       }
       .course-box-time {
         color: style.$gray-color;

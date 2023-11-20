@@ -37,13 +37,13 @@ export default function Profile() {
   const [image, setImage] = useState("");
   const [userInfo, setUserInfo] = useState({
     id: JSON.parse(localStorage.getItem("USER_INFO")).userId,
-    name: undefined,
-    about: undefined,
-    avartar: undefined,
-    facebook: undefined,
-    twitter: undefined,
-    instagram: undefined,
-    linkedin: undefined
+    name: "",
+    about: "",
+    avartar: "",
+    facebook: "",
+    twitter: "",
+    instagram: "",
+    linkedin: ""
   });
   const [data, setData] = useState({
     followers: [],
@@ -109,7 +109,7 @@ export default function Profile() {
 
   const [mode, setMode] = useState("view");
   function handleEditProfile() {
-    setMode("edit");
+    setMode(mode === "view" ? "edit" : "view");
   }
 
   const [selectedSocial, setselectedSocial] = useState("");
@@ -243,7 +243,7 @@ export default function Profile() {
               ) : null}
               <p>
                 {mode === "view"
-                  ? data.userInfo != null
+                  ? data.userInfo != null && data.userInfo.about
                     ? data.userInfo.about
                     : "Write down something here. So that people can know more about you."
                   : null}

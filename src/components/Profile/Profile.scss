@@ -33,14 +33,14 @@
 .profile-bg {
   position: absolute;
   bottom: 0;
-  right: -50px;
+  right: -120px;
+  padding-left: 70px;
   border-radius: 10px;
   background: white;
   box-shadow: 0 30px 50px -20px rgba(14, 0, 47, 0.21);
   width: calc(100% - 75px);
   height: calc(100% - 110px);
   z-index: -1;
-  min-height: 300px;
 }
 
 .profile-bg i {
@@ -91,8 +91,9 @@
 
 .profile-info {
   margin-top: 120px;
-  padding: 8% 2% 2% 8%;
+  padding: 8% 0 0 8%;
   position: relative;
+  min-width: 350px;
 }
 
 .profile-info h1 {
@@ -164,18 +165,24 @@ textarea {
 }
 
 .statistics {
-  margin-right: 10px;
   margin-left: 240px;
   line-height: 2rem;
   display: flex;
   flex-direction: row;
-  align-items: center;
 }
 
 .statistics p {
   margin: 3%;
   flex: auto;
   color: #f63d47;
+}
+
+.statistics button {
+  margin: 40px 20px 20px 200px;
+  padding: 10px 20px;
+  font-size: 16px;
+  color: white;
+  background-color: #f63d47;
 }
 
 .statistics p strong {

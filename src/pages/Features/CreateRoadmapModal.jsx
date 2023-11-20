@@ -52,7 +52,7 @@ const languages = [
     label: "Chinese"
   }
 ];
-export default function CreateRoadmapModal() {
+export default function CreateRoadmapModal({}) {
   const [level, setLevel] = useState({
     value: "beginner",
     label: "Beginner"
@@ -157,7 +157,6 @@ export default function CreateRoadmapModal() {
     <>
       <section className="create-roadmap-container">
         <h1>Create Roadmap</h1>
-
         <div className="roadmap-info">
           <div>
             <Select

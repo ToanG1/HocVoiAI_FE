@@ -15,4 +15,38 @@ const authedAxiosInstance = axios.create({
   }
 });
 
+authedAxiosInstance.interceptors.response.use(
+  (response) => {
+    // Any status code that lie within the range of 2xx cause this function to trigger
+    // Do something with successful response data
+    return response;
+  },
+  async (error) => {
+    const originalRequest = error.config;
+    if (error.response.status === 401 && !originalRequest._retry) {
+      originalRequest._retry = true;
+
+      const { data } = await refreshToken();
+      localStorage.removeItem("HOCVOIAI_TOKEN");
+      localStorage.setItem("HOCVOIAI_TOKEN", data.access_token);
+
+      // Update the Authorization header with the new token
+      authedAxiosInstance.defaults.headers.common[
+        "Authorization"
+      ] = `Bearer ${data.access_token}`;
+      return authedAxiosInstance(originalRequest);
+    }
+
+    return Promise.reject(error);
+  }
+);
+
+// Function to refresh the token (replace this with your actual token refresh logic)
+const refreshToken = async () => {
+  const refreshTokenId = localStorage.getItem("tokenId");
+  return axiosInstance.post(`/auth/refresh/${refreshTokenId}`, {
+    refreshToken: localStorage.getItem("HOCVOIAI_REFRESHTOKEN")
+  });
+};
+
 export { BASE_URL, IMG_URL, WS_SERVER, axiosInstance, authedAxiosInstance };

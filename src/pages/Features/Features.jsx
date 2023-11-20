@@ -28,22 +28,13 @@ export default function Features() {
 
   const socket = useWebSocket();
 
-  useEffect(() => {
-    if (socket) {
-      // Use the socket to send and receive WebSocket messages
-      socket.on("generate", (data) => {
-        console.log("Received data from WebSocket:", data);
-      });
-    }
-  }, [socket]);
-
   return (
     <>
       <Header />
       <BgComp />
-      <ToastContainer />
 
       <div className="features-container">
+        <ToastContainer />
         <div className="create-new">
           <button id="create-btn" onClick={handleAskQuestion}>
             Create New

@@ -4,6 +4,8 @@ import { useLocation, useParams } from "react-router-dom";
 import AskQuestion from "../Question/AskQuestion";
 import { Modal } from "react-responsive-modal";
 
+import { ToastContainer } from "react-toastify";
+
 function QuestionDetail({}) {
   const [questions, setQuestions] = useState([]);
   const { questionId } = useParams();
@@ -24,6 +26,7 @@ function QuestionDetail({}) {
   }, []);
   return (
     <div className="app">
+      <ToastContainer />
       <header className="header">
         <div className="title-row">
           <h2>{questionData.title}</h2>

@@ -6,6 +6,8 @@ import Header from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
 import BgComp from "../../components/BgComp/BgComp";
 
+import { ToastContainer } from "react-toastify";
+
 import { getAllPrivilege } from "../../api/roadmap";
 
 function clearActiveNavItem() {
@@ -48,6 +50,7 @@ export default function Course() {
       <Header />
       <BgComp />
       <div className="course-container">
+        <ToastContainer />
         <div className="course-header">
           <div className="course-user-info">
             <img src="https://picsum.photos/200/300" alt="user-img" />

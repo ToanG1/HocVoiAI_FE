@@ -25,6 +25,7 @@ export default function CourseDetails() {
   const { courseId } = useParams("courseId");
   const [img, setImg] = useState("");
   const [detail, setDetail] = useState({});
+  
   useEffect(() => {
     createImg("tech").then((res) => {
       setImg(res);

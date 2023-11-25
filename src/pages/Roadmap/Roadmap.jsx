@@ -4,6 +4,8 @@ import styles from "./Roadmap.scss";
 import Loading from "../../components/Loading/Loading";
 import { data } from "../../api/data";
 
+import { ToastContainer } from "react-toastify";
+
 const Roadmap1 = lazy(() =>
   import("../../components/ListRoadMap/Roadmap1/Roadmap1")
 );
@@ -54,6 +56,7 @@ export default function Roadmap() {
   );
   return (
     <>
+      <ToastContainer />
       <Suspense fallback={<Loading />}>{renderRoamap}</Suspense>
     </>
   );

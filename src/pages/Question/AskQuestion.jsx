@@ -104,7 +104,6 @@ function AskQuestion({ onSubmit }) {
         <div class="question-form">
           <Editor setData={setNewQuestion} />
           <button
-            type="submit"
             onClick={handleSubmitQuestion}
             style={{ padding: "5px 10px", marginTop: "20px", fontSize: "15px" }}
           >

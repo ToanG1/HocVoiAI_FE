@@ -29,6 +29,7 @@ export default function Signup() {
   const navigate = useNavigate();
   function handleSignup() {
     signup(email, pass, name).then((res) => {
+    console.log({email, pass, name})
       if (res) {
         handleGenerateRoadmap();
         navigate("/features");

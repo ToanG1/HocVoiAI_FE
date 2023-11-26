@@ -1,68 +1,205 @@
 import React, { useCallback, useEffect, useState } from "react";
 import styles from "./QuestionDetail.scss";
-import { useLocation, useParams } from "react-router-dom";
-import AskQuestion from "../Question/AskQuestion";
-import { Modal } from "react-responsive-modal";
+import CommentForm from "./CommentForm";
+import AnswerForm from "./AnswerForm";
 
-import { ToastContainer } from "react-toastify";
+const MOCK_QUESTIONS = {
+  title: "Question Title",
+  author: "User123",
+  date: "November 20, 2023",
+  content:
+    "So I am working with python boost. The goal for me is to be able to overload c++ functions from python modules. I have managed that, but I have observed a weird behavior when using aliases.",
+  comments: [
+    {
+      id: 1,
+      username: "User789",
+      date: "November 22, 2023",
+      commentText: "Lorem ipsum dolor sit amet, consectetur adipiscing elit...."
+    },
+    {
+      id: 2,
+      username: "User789",
+      date: "November 22, 2023",
+      commentText: "Another comment here...."
+    }
+    // Add more comments for the question as needed
+  ],
+  answers: [
+    {
+      id: 1,
+      username: "User456",
+      date: "November 21, 2023",
+      answerText: "Lorem ipsum dolor sit amet, consectetur adipiscing elit....",
+      comments: [
+        {
+          id: 1,
+          username: "User789",
+          date: "November 22, 2023",
+          commentText:
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit...."
+        },
+        {
+          id: 2,
+          username: "User789",
+          date: "November 22, 2023",
+          commentText:
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit...."
+        },
+        {
+          id: 3,
+          username: "User789",
+          date: "November 22, 2023",
+          commentText:
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit...."
+        },
+        {
+          id: 4,
+          username: "User789",
+          date: "November 22, 2023",
+          commentText:
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit...."
+        }
+      ]
+    },
+    {
+      id: 2,
+      username: "User456",
+      date: "November 21, 2023",
+      answerText: "Lorem ipsum dolor sit amet, consectetur adipiscing elit....",
+      comments: [
+        {
+          id: 1,
+          username: "User789",
+          date: "November 22, 2023",
+          commentText:
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit...."
+        },
+        {
+          id: 2,
+          username: "User789",
+          date: "November 22, 2023",
+          commentText:
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit...."
+        },
+        {
+          id: 3,
+          username: "User789",
+          date: "November 22, 2023",
+          commentText:
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit...."
+        },
+        {
+          id: 4,
+          username: "User789",
+          date: "November 22, 2023",
+          commentText:
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit...."
+        }
+      ]
+    }
+    // Add more answers as needed
+  ]
+};
 
-function QuestionDetail({}) {
-  const [questions, setQuestions] = useState([]);
-  const { questionId } = useParams();
-  const location = useLocation();
-  const questionData = location.state.questionData;
-  const [isOpenModal, setIsOpenModal] = useState(false);
-
-  const addQuestion = (newQuestion) => {
-    setQuestions([...questions, newQuestion]);
-  };
-
-  const handleAskQuestion = useCallback(() => {
-    setIsOpenModal(true);
-  }, []);
-
-  const handleOnCloseModal = useCallback(() => {
-    setIsOpenModal(false);
-  }, []);
+function QuestionDetail_({}) {
+  const [questionData, setQuestionData] = useState(MOCK_QUESTIONS);
   return (
     <div className="app">
-      <ToastContainer />
-      <header className="header">
-        <div className="title-row">
-          <h2>{questionData.title}</h2>
-          <button
-            type="submit"
-            className="ask-question-btn"
-            onClick={handleAskQuestion}
-          >
-            Ask Question
-          </button>
-        </div>
+      <header>
+        <h1>{questionData.title}</h1>
+        <p>
+          Posted by: {questionData.author} | Date: {questionData.date}
+        </p>
       </header>
-      <main>
-        <hr></hr>
-        <p className="content">{questionData.content}</p>
-        <div className="topic-row">
-          <div className="styled-box">{questionData.topic}</div>
-          <div className="info-user-container">
-            <p className="info-user-item">Chris Du</p>
-            <p className="info-user-item">10/06/2023</p>
-          </div>
-        </div>
-      </main>
-      <footer></footer>
-      <Modal
-        open={isOpenModal}
-        onClose={handleOnCloseModal}
-        center
-        classNames={{
-          modal: "customModal"
-        }}
-      >
-        <AskQuestion onSubmit={addQuestion} />
-      </Modal>
+
+      <div className="question">
+        <p>{questionData.content}</p>
+        {questionData.comments.map((comment) => (
+          <Comment
+            key={comment.id}
+            username={comment.username}
+            date={comment.date}
+            commentText={comment.commentText}
+          />
+        ))}
+      </div>
+      <CommentForm
+        onSetQuestionData={setQuestionData}
+        question={questionData}
+      />
+
+      <div className="answers">
+        <h2>Answers</h2>
+        {questionData.answers.map((answer) => (
+          <Answer
+            key={answer.id}
+            id={answer.id}
+            username={answer.username}
+            date={answer.date}
+            answerText={answer.answerText}
+            comments={answer.comments}
+            questionData={questionData}
+            handleSetQuestionData={setQuestionData}
+          />
+        ))}
+      </div>
+      <div>
+        <AnswerForm
+          onSetQuestionData={setQuestionData}
+          question={questionData}
+        />
+      </div>
     </div>
   );
 }
 
-export default QuestionDetail;
+function Answer({
+  id,
+  username,
+  date,
+  answerText,
+  comments,
+  questionData,
+  handleSetQuestionData
+}) {
+  return (
+    <div className="answer">
+      <p>
+        Answered by: {username} | Date: {date}
+      </p>
+      <p>{answerText}</p>
+
+      <div className="comments">
+        <h3>Comments</h3>
+        {comments.map((comment) => (
+          <Comment
+            key={comment.id}
+            username={comment.username}
+            date={comment.date}
+            commentText={comment.commentText}
+          />
+        ))}
+      </div>
+      <CommentForm
+        onSetQuestionData={handleSetQuestionData}
+        question={questionData}
+        answerId={id}
+      />
+      <hr className="lighter-hr"></hr>
+    </div>
+  );
+}
+
+function Comment({ username, date, commentText }) {
+  return (
+    <div className="comment">
+      <p>
+        Comment by: {username} | Date: {date}
+      </p>
+      <p>{commentText}</p>
+      <hr className="lighter-hr"></hr>
+    </div>
+  );
+}
+
+export default QuestionDetail_;

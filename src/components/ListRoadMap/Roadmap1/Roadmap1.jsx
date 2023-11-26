@@ -14,24 +14,6 @@ function removeActiveOnContent() {
   }
 }
 
-function setAnimation() {
-  document.body.addEventListener("mousemove", (event) => {
-    const mouseX = event.clientX;
-    const mouseY = event.clientY;
-
-    gsap.set(".cursor", {
-      x: mouseX,
-      y: mouseY
-    });
-
-    gsap.to(".shape", {
-      x: mouseX,
-      y: mouseY,
-      stagger: -0.05
-    });
-  });
-}
-
 export default function Roadmap1({ rMode, content }) {
   const [mode, setMode] = useState(rMode);
   const { roadmapId } = useParams();
@@ -39,12 +21,32 @@ export default function Roadmap1({ rMode, content }) {
   const [milestones, setMilestones] = useState([]);
   const [milestonesContent, setMilestonesContent] = useState([]);
 
+  // set animation and unset animation
   useEffect(() => {
+    function setAnimation(event) {
+      const mouseX = event.clientX;
+      const mouseY = event.clientY;
 
-    setAnimation();
+      gsap.set(".cursor", {
+        x: mouseX,
+        y: mouseY
+      });
+
+      gsap.to(".shape", {
+        x: mouseX,
+        y: mouseY,
+        stagger: -0.05
+      });
+    }
+    document.addEventListener("mousemove", (event) => setAnimation(event));
+    return () => {
+      document.removeEventListener("mousemove", (event) => setAnimation(event));
+    };
+  }, []);
+
+  useEffect(() => {
     switch (mode) {
       case "watch":
-        setRoadmap(content);
         renderMilestone();
         renderMilestoneContent(0);
         break;

@@ -125,14 +125,15 @@ export default function CreateRoadmapModal({}) {
         categoryId: cate.value
       })
         .then((res) => {
-          console.log(res);
-          navigate(`/roadmap/${res.data.id}`, {
-            state: {
-              content: res.data,
-              type: type.value,
-              mode: "create"
-            }
-          });
+          if (res.data.code === 201) {
+            navigate(`/roadmap/${res.data.id}`, {
+              state: {
+                content: res.data.data,
+                type: type.value,
+                mode: "create"
+              }
+            });
+          }
         })
         .catch((err) => {
           console.log(err);

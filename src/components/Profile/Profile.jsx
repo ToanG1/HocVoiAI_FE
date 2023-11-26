@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import styles from "./Profile.scss";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCamera, faEllipsis } from "@fortawesome/free-solid-svg-icons";
 import {
@@ -36,7 +36,9 @@ function showInfoToast(msg) {
 export default function Profile() {
   const [image, setImage] = useState("");
   const [userInfo, setUserInfo] = useState({
-    id: JSON.parse(localStorage.getItem("USER_INFO")).userId,
+    id: JSON.parse(localStorage.getItem("USER_INFO"))
+      ? JSON.parse(localStorage.getItem("USER_INFO")).userId
+      : undefined,
     name: "",
     about: "",
     avartar: "",
@@ -49,10 +51,13 @@ export default function Profile() {
     followers: [],
     following: []
   });
+  const navigate = useNavigate();
+
   useEffect(() => {
-    const userId = JSON.parse(localStorage.getItem("USER_INFO")).userId;
+    if (!userInfo.id) navigate("/login");
+
     async function fecthData() {
-      const res = await getUser(userId);
+      const res = await getUser(userInfo.id);
       if (res.data.code === 200) {
         setData(res.data.data);
         setImage(res.data.data.userInfo.avatar);

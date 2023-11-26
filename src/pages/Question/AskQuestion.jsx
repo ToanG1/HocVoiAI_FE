@@ -1,14 +1,19 @@
 import React, { useState, useEffect } from "react";
+
+import { useNavigate } from "react-router-dom";
+
 import Select from "react-select";
 import styles from "./Question.scss";
 import Editor from "../../components/Editor/Editor";
 
-import { getAllCategory } from "../../api/category";
 import { createQuestion } from "../../api/question";
 import { toast } from "react-toastify";
 
-function AskQuestion({ onSubmit }) {
-  const [topics, setTopics] = useState([]);
+function AskQuestion({ onSubmit, topics }) {
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (!localStorage.getItem("USER_INFO")) navigate("/login");
+  }, []);
 
   const [selectedTopic, setSelectedTopic] = useState({
     value: 1,
@@ -16,23 +21,6 @@ function AskQuestion({ onSubmit }) {
   });
   const [newQuestion, setNewQuestion] = useState("");
   const [newTitle, setNewTitle] = useState("");
-
-  useEffect(() => {
-    async function fetchCategory() {
-      const res = await getAllCategory();
-      setTopics(
-        res.data.map((item) => {
-          return {
-            value: item.id,
-            label: item.name
-          };
-        })
-      );
-    }
-    fetchCategory().catch((err) => {
-      console.log(err);
-    });
-  }, []);
 
   const handleTitleInputChange = (event) => {
     setNewTitle(event.target.value);

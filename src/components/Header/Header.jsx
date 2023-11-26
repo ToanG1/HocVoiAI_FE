@@ -4,7 +4,14 @@ import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEarthAsia } from "@fortawesome/free-solid-svg-icons";
 
+import { logout } from "../../api/auth";
 export default function Header() {
+  function handleLogout() {
+    logout().then((res) => {
+      if (res === true) window.location.href = "/";
+      else console.log(res);
+    });
+  }
   return (
     <header className="header-container">
       <div className="header-logo">logo</div>
@@ -38,7 +45,7 @@ export default function Header() {
               <Link>Help</Link>
             </li>
             <li>
-              <Link>Log Out</Link>
+              <Link onClick={handleLogout}>Log Out</Link>
             </li>
           </ul>
         </button>

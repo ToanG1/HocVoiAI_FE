@@ -29,7 +29,7 @@ function updateRoadmap(roadmap, rmId) {
 }
 
 function deleteRoadmap(roadmapId) {
-  return authedAxiosInstance.delete(`/roadmap?id=${roadmapId}`);
+  return authedAxiosInstance.delete(`/roadmap/${roadmapId}`);
 }
 
 export {

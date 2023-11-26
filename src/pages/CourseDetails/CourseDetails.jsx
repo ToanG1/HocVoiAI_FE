@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styles from "./CourseDetails.scss";
 import { useParams } from "react-router";
+import { useNavigate } from "react-router-dom";
 import moment from "moment";
 
 import Header from "../../components/Header/Header";
@@ -9,9 +10,9 @@ import CourseOverview from "../../components/CourseOverview/CourseOverview";
 import CourseCirculum from "../../components/CourseCirculum/CourseCirculum";
 
 import { createImg } from "../../api/AIGenImg";
-import { getRoadmap } from "../../api/roadmap";
+import { getRoadmap, deleteRoadmap } from "../../api/roadmap";
 
-import { ToastContainer } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 
 function removeActiveClass() {
   document
@@ -25,7 +26,7 @@ export default function CourseDetails() {
   const { courseId } = useParams("courseId");
   const [img, setImg] = useState("");
   const [detail, setDetail] = useState({});
-  
+
   useEffect(() => {
     createImg("tech").then((res) => {
       setImg(res);
@@ -40,6 +41,40 @@ export default function CourseDetails() {
       });
   }, []);
 
+  function handleDelete() {
+    deleteRoadmap(detail.id)
+      .then((res) => {
+        if (res.data.code === 200) {
+          toast.success("Delete roadmap successfuly!", {
+            position: "top-right",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light"
+          });
+          setInterval(() => {
+            window.location.href = "/course";
+          }, 3000);
+        } else if (res.data.code === 403) {
+          toast.error("You don't have permission to delete", {
+            position: "top-right",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light"
+          });
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
 
   const [page, setPage] = useState(0);
   useEffect(() => {
@@ -51,7 +86,6 @@ export default function CourseDetails() {
           .classList.add("course-details-active-btn");
         break;
       case 1:
-        
         removeActiveClass();
         document
           .getElementById("curriculum-btn")
@@ -64,6 +98,18 @@ export default function CourseDetails() {
           .classList.add("course-details-active-btn");
     }
   }, [page]);
+  const navigate = useNavigate();
+
+  function handleOpenRoadmap() {
+    console.log(detail);
+    navigate(`/roadmap/${courseId}`, {
+      state: {
+        content: detail.roadmap,
+        type: detail.type,
+        mode: "watch"
+      }
+    });
+  }
   return (
     <>
       <Header />
@@ -93,6 +139,12 @@ export default function CourseDetails() {
             >
               Curriculum
             </button>
+            <button
+              className="course-details-page-button"
+              onClick={handleOpenRoadmap}
+            >
+              Roadmap
+            </button>
           </div>
           <div className="course-details-body">
             {page === 0 ? (
@@ -105,7 +157,12 @@ export default function CourseDetails() {
         <div className="course-details-sidebar">
           <div className="course-details-sidebar-header">
             <button className="course-details-sidebar-button">Share</button>
-            <button className="course-details-sidebar-button">Delete</button>
+            <button
+              className="course-details-sidebar-button"
+              onClick={handleDelete}
+            >
+              Delete
+            </button>
           </div>
           <div className="course-details-sidebar-content">
             <img

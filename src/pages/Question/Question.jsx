@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useState } from "react";
 import styles from "./Question.scss";
 
+
 import QuestionList from "./QuestionList";
 import AskQuestion from "./AskQuestion";
 import "react-responsive-modal/styles.css";
@@ -15,12 +16,8 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 import { getAllQuestion } from "../../api/question";
+import { getAllCategory } from "../../api/category";
 
-const topics = [
-  { value: "Tuition", label: "Tuition" },
-  { value: "Pronunciation", label: "Pronunciation" },
-  { value: "Grammar", label: "Grammar" }
-];
 const months = [
   { value: "1", label: "1" },
   { value: "2", label: "2" },
@@ -43,9 +40,28 @@ const years = [
 ];
 
 function Question() {
+  const [topics, setTopics] = useState([]);
+  useEffect(() => {
+    async function fetchCategory() {
+      const res = await getAllCategory();
+      setTopics(
+        res.data.map((item) => {
+          return {
+            value: item.id,
+            label: item.name
+          };
+        })
+      );
+    }
+    fetchCategory().catch((err) => {
+      console.log(err);
+    });
+  }, []);
+
   const [questions, setQuestions] = useState([]);
   const [page, setPage] = useState(1);
   const [pageCount, setPageCount] = useState(1);
+  const [totalItems, setTotalItems] = useState(0);
   const [isOpenModal, setIsOpenModal] = useState(false);
   const [selectedOption, setSelectedOption] = useState(null);
 
@@ -55,6 +71,7 @@ function Question() {
       if (res.data.code === 200) {
         setQuestions(res.data.data);
         setPageCount(Math.ceil(res.data.totalItems / res.data.limit));
+        setTotalItems(res.data.totalItems);
       } else console.log(res.data);
     }
     fetchData().catch((err) => {
@@ -68,11 +85,11 @@ function Question() {
 
   const handleSubmitQuestion = (data) => {
     setIsOpenModal(false);
-    if (data.code === 200) {
-      setQuestions([...questions, data.data]);
+    console.log(data);
+    if (data.code === 201) {
       toast.success("Your question is submitted successfully", {
         position: "top-right",
-        autoClose: 5000,
+        autoClose: 3000,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
@@ -80,6 +97,9 @@ function Question() {
         progress: undefined,
         theme: "light"
       });
+      setInterval(() => {
+        window.location.reload();
+      }, 3000);
     } else {
       toast.error("Something wrong !", {
         position: "top-right",
@@ -122,7 +142,7 @@ function Question() {
           </div>
           <div className="title-row">
             <div>
-              <p>24 questions</p>
+              <p>{totalItems} questions</p>
             </div>
             <div className="select-container">
               <Select
@@ -182,7 +202,7 @@ function Question() {
             modal: "customModal"
           }}
         >
-          <AskQuestion onSubmit={handleSubmitQuestion} />
+          <AskQuestion onSubmit={handleSubmitQuestion} topics={topics} />
         </Modal>
       </div>
       <Footer />

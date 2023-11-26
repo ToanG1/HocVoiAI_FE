@@ -15,12 +15,12 @@ export default function App() {
   return (
     <BrowserRouter>
       <Routes>
+        <Route path="login" element={<Login />} />
+        <Route path="signup" element={<Signup />} />
         <Route path="/" element={<Home />} />
         <Route path="features" element={<Features />} />
         <Route path="course" element={<Course />} />
         <Route path="course/:courseId" element={<CourseDetails />} />
-        <Route path="login" element={<Login />} />
-        <Route path="signup" element={<Signup />} />
         <Route path="roadmap/:roadmapId" element={<Roadmap />} />
         <Route path="questions" element={<Question />} />
         <Route path="questions/:questionId" element={<QuestionDetail />} />

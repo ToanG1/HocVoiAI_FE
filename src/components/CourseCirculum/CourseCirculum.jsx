@@ -41,6 +41,7 @@ export default function CourseCirculum({ id }) {
   return (
     <>
       <div className="course-details-curriculum">
+        {content.length === 0 ? <h1>No content</h1> : null}
         {content.map((topic, index) => {
           return (
             <>

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styles from "./Course.scss";
-
+import { useNavigate } from "react-router-dom";
 import CourseBox from "../../components/CourseBox/CourseBox";
 import Header from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
@@ -23,8 +23,11 @@ function clearActiveSideNavItem() {
   }
 }
 export default function Course() {
+  const userInfo = JSON.parse(localStorage.getItem("USER_INFO"));
   const [data, setData] = useState([]);
+  const navigate = useNavigate();
   useEffect(() => {
+    if (!userInfo) navigate("/login");
     getAllPrivilege()
       .then((res) => {
         if (res.data.code === 200) {
@@ -53,9 +56,14 @@ export default function Course() {
         <ToastContainer />
         <div className="course-header">
           <div className="course-user-info">
-            <img src="https://picsum.photos/200/300" alt="user-img" />
+            <img
+              src={userInfo ? userInfo.avatar : "https://picsum.photos/200/300"}
+              alt="user-img"
+            />
             <div>
-              <p className="course-user-name">Welcome back, Toan!</p>
+              <p className="course-user-name">
+                Welcome back, {userInfo ? userInfo.name : "user"}!
+              </p>
               <p className="course-add-course">Add more courses</p>
             </div>
           </div>

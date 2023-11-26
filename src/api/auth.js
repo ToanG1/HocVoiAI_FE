@@ -1,4 +1,4 @@
-import { axiosInstance } from "./API";
+import { authedAxiosInstance, axiosInstance } from "./API";
 async function login(email, password) {
   try {
     const res = await axiosInstance.post("/auth/login", {
@@ -44,4 +44,18 @@ async function signup(email, password, name) {
   }
 }
 
-export { login, signup };
+async function logout() {
+  try {
+    const token = localStorage.getItem("tokenId");
+    localStorage.removeItem("HOCVOIAI_TOKEN");
+    localStorage.removeItem("HOCVOIAI_REFRESHTOKEN");
+    localStorage.removeItem("tokenId");
+    localStorage.removeItem("USER_INFO");
+    const res = await authedAxiosInstance.post(`/auth/logout/${token}`);
+    return res.data;
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+export { login, signup, logout };

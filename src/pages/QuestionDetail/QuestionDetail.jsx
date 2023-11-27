@@ -2,6 +2,9 @@ import React, { useCallback, useEffect, useState } from "react";
 import styles from "./QuestionDetail.scss";
 import CommentForm from "./CommentForm";
 import AnswerForm from "./AnswerForm";
+import Header from "../../components/Header/Header";
+import Footer from "../../components/Footer/Footer";
+import BgComp from "../../components/BgComp/BgComp";
 
 const MOCK_QUESTIONS = {
   title: "Question Title",
@@ -103,53 +106,59 @@ const MOCK_QUESTIONS = {
 
 function QuestionDetail_({}) {
   const [questionData, setQuestionData] = useState(MOCK_QUESTIONS);
+
   return (
-    <div className="app">
-      <header>
-        <h1>{questionData.title}</h1>
-        <p>
-          Posted by: {questionData.author} | Date: {questionData.date}
-        </p>
-      </header>
+    <>
+      <Header />
+      <BgComp />
+      <div className="questions-container">
+        <header>
+          <h1>{questionData.title}</h1>
+          <p>
+            Posted by: {questionData.author} | Date: {questionData.date}
+          </p>
+        </header>
 
-      <div className="question">
-        <p>{questionData.content}</p>
-        {questionData.comments.map((comment) => (
-          <Comment
-            key={comment.id}
-            username={comment.username}
-            date={comment.date}
-            commentText={comment.commentText}
-          />
-        ))}
-      </div>
-      <CommentForm
-        onSetQuestionData={setQuestionData}
-        question={questionData}
-      />
-
-      <div className="answers">
-        <h2>Answers</h2>
-        {questionData.answers.map((answer) => (
-          <Answer
-            key={answer.id}
-            id={answer.id}
-            username={answer.username}
-            date={answer.date}
-            answerText={answer.answerText}
-            comments={answer.comments}
-            questionData={questionData}
-            handleSetQuestionData={setQuestionData}
-          />
-        ))}
-      </div>
-      <div>
-        <AnswerForm
+        <div className="question">
+          <p>{questionData.content}</p>
+          {questionData.comments.map((comment) => (
+            <Comment
+              key={comment.id}
+              username={comment.username}
+              date={comment.date}
+              commentText={comment.commentText}
+            />
+          ))}
+        </div>
+        <CommentForm
           onSetQuestionData={setQuestionData}
           question={questionData}
         />
+
+        <div className="answers">
+          <h2>Answers</h2>
+          {questionData.answers.map((answer) => (
+            <Answer
+              key={answer.id}
+              id={answer.id}
+              username={answer.username}
+              date={answer.date}
+              answerText={answer.answerText}
+              comments={answer.comments}
+              questionData={questionData}
+              handleSetQuestionData={setQuestionData}
+            />
+          ))}
+        </div>
+        <div>
+          <AnswerForm
+            onSetQuestionData={setQuestionData}
+            question={questionData}
+          />
+        </div>
       </div>
-    </div>
+      <Footer />
+    </>
   );
 }
 
@@ -167,7 +176,7 @@ function Answer({
       <p>
         Answered by: {username} | Date: {date}
       </p>
-      <p>{answerText}</p>
+      <div dangerouslySetInnerHTML={{ __html: answerText }}></div>
 
       <div className="comments">
         <h3>Comments</h3>

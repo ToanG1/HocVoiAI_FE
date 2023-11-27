@@ -74,8 +74,9 @@ function CommentForm({ onSetQuestionData, question, answerId }) {
           </label>
           <br />
           <button
+            className="button-submit"
+            disabled={!comment}
             onClick={handleSubmit}
-            style={{ padding: "5px 10px", marginTop: "20px", fontSize: "15px" }}
           >
             Submit Comment
           </button>

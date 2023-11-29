@@ -1,10 +1,10 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styles from "./Editor.scss";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import { BASE_URL, IMG_URL } from "../../api/API";
 
-export default function Editor({ setData }) {
+export default function Editor({ setData, data }) {
   const UPLOAD_ENDPOINT = "minio/image";
 
   function uploadAdapter(loader) {
@@ -46,6 +46,7 @@ export default function Editor({ setData }) {
           extraPlugins: [uploadPlugin]
         }}
         editor={ClassicEditor}
+        data={data}
         onChange={(event, editor) => {
           const data = editor.getData();
           setData(data);

@@ -1,6 +1,7 @@
 import React from "react";
 import { useState, useEffect, useCallback } from "react";
 import styles from "./Features.scss";
+import { useNavigate } from "react-router-dom";
 
 import Header from "../../components/Header/Header";
 import CoursesListing from "../../components/CoursesListing/CoursesListing";
@@ -16,6 +17,14 @@ import "react-responsive-modal/styles.css";
 import { useWebSocket } from "../../websocket/context";
 
 export default function Features() {
+  const userInfo = JSON.parse(localStorage.getItem("USER_INFO"));
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (!userInfo) {
+      navigate("/login");
+    }
+  }, []);
+
   const [isOpenModal, setIsOpenModal] = useState(false);
 
   const handleAskQuestion = useCallback(() => {

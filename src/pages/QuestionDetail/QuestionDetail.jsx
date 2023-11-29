@@ -104,7 +104,7 @@ const MOCK_QUESTIONS = {
 function QuestionDetail_({}) {
   const [questionData, setQuestionData] = useState(MOCK_QUESTIONS);
   return (
-    <div className="app">
+    <div className="question-detail-container">
       <header>
         <h1>{questionData.title}</h1>
         <p>

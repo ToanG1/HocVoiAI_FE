@@ -111,7 +111,7 @@ function QuestionDetail_({}) {
     <>
       <Header />
       <BgComp />
-      <div className="questions-container">
+      <div className="questions-detail-container">
         <header>
           <h1>{questionData.title}</h1>
           <p>

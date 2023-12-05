@@ -1,0 +1,26 @@
+.list-goal-container {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  z-index: 10;
+  background-color: transparent;
+  position: absolute;
+  bottom: -120px;
+  left: 40px;
+  width: 710px;
+  overflow-x: scroll;
+  .list-goal-item {
+    margin: 50px 50px;
+    margin-bottom: 20px;
+    padding: 4px;
+    background-color: white;
+    border-radius: 5px;
+    color: black;
+    border: 1px solid #e0b5ff;
+    p {
+      padding: 5px 20px;
+      border-radius: 5px;
+      border: 1px solid #ffb6bd;
+    }
+  }
+}

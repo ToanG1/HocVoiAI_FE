@@ -12,6 +12,7 @@ import {
 
 import Header from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
+import ListGoal from "../ListGoal/ListGoal";
 import { ToastContainer, toast } from "react-toastify";
 
 import { getUser, updateUser } from "../../api/user";
@@ -158,13 +159,16 @@ export default function Profile() {
   return (
     <>
       <Header />
+      <ToastContainer />
+
       <div className="profile-container">
-        <ToastContainer />
         <div className="profile">
           <div className="profile-bg">
             <i onClick={handleEditProfile}>
               <FontAwesomeIcon icon={faEllipsis} size="2xl" />
             </i>
+        <ListGoal />
+
           </div>
           <section className="container">
             <Color src={image} crossOrigin="anonymous" format="hex">
@@ -346,6 +350,7 @@ export default function Profile() {
           </section>
         </div>
       </div>
+
       <Footer />
     </>
   );

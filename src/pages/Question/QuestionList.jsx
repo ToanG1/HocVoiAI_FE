@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import moment from "moment/moment";
 
@@ -12,6 +12,12 @@ function QuestionList({ questions }) {
   };
 
   const [isHovered, setIsHovered] = useState(false);
+  const userInfo = JSON.parse(localStorage.getItem("USER_INFO"));
+  useEffect(() => {
+    if (!userInfo) {
+      navigate("/login");
+    }
+  }, []);
 
   const handleMouseEnter = () => {
     setIsHovered(true);

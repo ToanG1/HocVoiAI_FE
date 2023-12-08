@@ -9,7 +9,6 @@ import Footer from "../../components/Footer/Footer";
 import CourseOverview from "../../components/CourseOverview/CourseOverview";
 import CourseCirculum from "../../components/CourseCirculum/CourseCirculum";
 
-import { createImg } from "../../api/AIGenImg";
 import { getRoadmap, deleteRoadmap } from "../../api/roadmap";
 
 import { ToastContainer, toast } from "react-toastify";
@@ -24,13 +23,9 @@ function removeActiveClass() {
 }
 export default function CourseDetails() {
   const { courseId } = useParams("courseId");
-  const [img, setImg] = useState("");
   const [detail, setDetail] = useState({});
 
   useEffect(() => {
-    createImg("tech").then((res) => {
-      setImg(res);
-    });
     getRoadmap(courseId)
       .then((res) => {
         console.log(res);
@@ -166,7 +161,7 @@ export default function CourseDetails() {
           </div>
           <div className="course-details-sidebar-content">
             <img
-              src={img}
+              src={detail.avatar}
               className="course-details-sidebar-image"
               alt="course-img"
             />

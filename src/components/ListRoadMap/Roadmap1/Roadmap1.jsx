@@ -4,9 +4,13 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import gsap from "gsap";
 
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEllipsisVertical } from "@fortawesome/free-solid-svg-icons";
+
 import { updateRoadmap } from "../../../api/roadmap";
 
 import { ToastContainer, toast } from "react-toastify";
+
 function removeActiveOnContent() {
   const content = document.getElementsByClassName("roadmap1-milestone-content");
   for (let i = 0; i < content.length; i++) {
@@ -50,10 +54,8 @@ export default function Roadmap1({ rMode, content }) {
         renderMilestone();
         renderMilestoneContent(0);
         break;
-      case "create":
-        handleCreateMilestone();
-        break;
       case "edit":
+        handleCreateMilestone();
         break;
       default:
         renderMilestone();
@@ -64,31 +66,11 @@ export default function Roadmap1({ rMode, content }) {
   // Render milestones in watch mode
   function renderMilestone() {
     if (roadmap.milestones !== undefined)
-      setMilestones(
-        roadmap.milestones.map((item, index) => {
-          return (
-            <li
-              className={
-                index === 0 ? "active roadmap1-milestone" : "roadmap1-milestone"
-              }
-              id={index}
-              onClick={(e) => {
-                handleActiveMilestone(e);
-              }}
-              key={index}
-            >
-              {item.name}
-            </li>
-          );
-        })
-      );
-  }
-  // Render milestones in create mode and add input to create new milestone
-  function handleCreateMilestone() {
-    if (roadmap.milestones !== undefined)
-      setMilestones(
-        roadmap.milestones
-          .map((item, index) => {
+      if (roadmap.milestones.length === 0)
+        setMilestones(<p>There are no milestones yet</p>);
+      else
+        setMilestones(
+          roadmap.milestones.map((item, index) => {
             return (
               <li
                 className={
@@ -104,6 +86,74 @@ export default function Roadmap1({ rMode, content }) {
               >
                 {item.name}
               </li>
+            );
+          })
+        );
+  }
+  // Render milestones in create mode and add input to create new milestone
+  function handleCreateMilestone() {
+    if (roadmap.milestones !== undefined)
+      setMilestones(
+        roadmap.milestones
+          .map((item, index) => {
+            return (
+              <div
+                className={
+                  index === 0
+                    ? "active roadmap1-milestone"
+                    : "roadmap1-milestone"
+                }
+                id={index}
+                onClick={(e) => {
+                  handleActiveMilestone(e);
+                  if (e.detail === 2) {
+                    document
+                      .getElementById("milestone-input" + index)
+                      .classList.add("active");
+                  }
+                }}
+                key={index}
+                ref={(element) => {
+                  if (element)
+                    element.style.setProperty("display", "flex", "important");
+                }}
+                style={{ alignItems: "center" }}
+              >
+                {item.name}
+                <textarea
+                  type="text"
+                  cols={15}
+                  rows={2}
+                  value={item.name}
+                  className="milestone-input"
+                  id={`milestone-input` + index}
+                  placeholder="New Milestone"
+                  onChange={(e) => {
+                    if (e.target.value.length > 36) {
+                      e.target.value = e.target.value.slice(0, 36);
+                      window.alert("Please enter less than 36 characters");
+                    }
+                  }}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") {
+                      setRoadmap({
+                        ...roadmap,
+                        milestones: roadmap.milestones.map((item, i) => {
+                          if (i === index) {
+                            return { name: e.target.value, content: [] };
+                          } else {
+                            return item;
+                          }
+                        })
+                      });
+                      document
+                        .getElementById("milestone-input" + index)
+                        .classList.remove("active");
+                    }
+                  }}
+                  style={{ display: "none", marginLeft: "20px" }}
+                />
+              </div>
             );
           })
           .concat(
@@ -145,7 +195,7 @@ export default function Roadmap1({ rMode, content }) {
       case "watch":
         renderMilestoneContent(e.target.id);
         break;
-      case "create":
+      case "edit":
         handleCreateMilestoneContent(e.target.id);
         break;
       default:
@@ -156,38 +206,41 @@ export default function Roadmap1({ rMode, content }) {
   // Render milestones content in watch mode
   function renderMilestoneContent(index) {
     if (roadmap.milestones[index] !== undefined) {
-      setMilestonesContent(
-        roadmap.milestones[index].content.map((item, index) => {
-          return (
-            <div
-              className="w-25 quarter roadmap1-milestone-content"
-              id={index}
-              onMouseEnter={(e) => {
-                e.currentTarget.classList.add("active");
-              }}
-              onMouseLeave={(e) => {
-                removeActiveOnContent();
-              }}
-            >
-              <div className="quarter-title">
-                <h2>{item.name}</h2>
+      if (roadmap.milestones[index].content.length === 0)
+        setMilestonesContent(<h3>There are no content yet</h3>);
+      else
+        setMilestonesContent(
+          roadmap.milestones[index].content.map((item, index) => {
+            return (
+              <div
+                className="w-25 quarter roadmap1-milestone-content"
+                id={index}
+                onMouseEnter={(e) => {
+                  e.currentTarget.classList.add("active");
+                }}
+                onMouseLeave={(e) => {
+                  removeActiveOnContent();
+                }}
+              >
+                <div className="quarter-title">
+                  <h2>{item.name}</h2>
+                </div>
+                <div className="quarter-content">
+                  <h4>{item.name}</h4>
+                  <ul>
+                    {item.description.map((item) => {
+                      return (
+                        <li>
+                          <p>{item}</p>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                </div>
               </div>
-              <div className="quarter-content">
-                <h4>{item.name}</h4>
-                <ul>
-                  {item.description.map((item) => {
-                    return (
-                      <li>
-                        <p>{item}</p>
-                      </li>
-                    );
-                  })}
-                </ul>
-              </div>
-            </div>
-          );
-        })
-      );
+            );
+          })
+        );
     }
   }
 
@@ -331,6 +384,7 @@ export default function Roadmap1({ rMode, content }) {
         });
       })
       .catch((err) => {
+        console.log(err);
         toast.error("Something wrong happen, please try again", {
           position: "top-right",
           autoClose: 5000,
@@ -345,7 +399,7 @@ export default function Roadmap1({ rMode, content }) {
   }
 
   useEffect(() => {
-    if (mode === "create") {
+    if (mode === "edit") {
       handleCreateMilestone();
     }
   }, [roadmap]);
@@ -354,7 +408,7 @@ export default function Roadmap1({ rMode, content }) {
     const element = document.getElementsByClassName(
       "roadmap1-milestone active"
     )[0];
-    if (mode === "create" && element !== undefined) {
+    if (mode === "edit" && element !== undefined) {
       handleCreateMilestoneContent(element.id);
     }
   }, [roadmap.milestones]);
@@ -374,7 +428,7 @@ export default function Roadmap1({ rMode, content }) {
           </div>
           <div className="roadmap-section">
             <div className="roadmap-title-container">
-              {mode === "create" || mode === "edit" ? (
+              {mode === "edit" ? (
                 <div className="create-btn" onClick={handleUpdateContent}>
                   Complete Edit
                 </div>
@@ -386,6 +440,15 @@ export default function Roadmap1({ rMode, content }) {
               <div className="years w-50">
                 <ul>{milestones}</ul>
               </div>
+              <FontAwesomeIcon
+                icon={faEllipsisVertical}
+                onClick={() => {
+                  setMode(mode === "edit" ? "watch" : "edit");
+                }}
+                size="2xl"
+                color="#fff"
+                style={{ paddingLeft: "20px" }}
+              />
             </div>
             <div className="roadmap-content">{milestonesContent}</div>
           </div>

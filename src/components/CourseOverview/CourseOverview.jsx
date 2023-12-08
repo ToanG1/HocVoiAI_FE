@@ -22,7 +22,8 @@ export default function CourseOverview({ detail }) {
   useEffect(() => {
     async function fetchRelativeCourse() {
       const res = await getReletiveRoadmap(detail.id);
-      if (res.data.code === 200) {
+      if (res.code === 200) {
+        console.log(res);
         setRCrouse(res.data.data);
       }
     }

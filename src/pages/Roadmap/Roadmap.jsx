@@ -2,7 +2,6 @@ import React, { lazy, Suspense } from "react";
 import { useLocation } from "react-router-dom";
 import styles from "./Roadmap.scss";
 import Loading from "../../components/Loading/Loading";
-import { data } from "../../api/data";
 
 import { ToastContainer } from "react-toastify";
 
@@ -52,7 +51,7 @@ export default function Roadmap() {
   const renderRoamap = loadRoadmap(
     state.type || 1,
     state.mode || "watch",
-    roadmap || data
+    roadmap
   );
   return (
     <>

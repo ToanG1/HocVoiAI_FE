@@ -4,7 +4,7 @@ function getUser(userId) {
   return authedAxiosInstance.get(`/user/${userId}`);
 }
 
-function updateUser(user) {
+async function updateUser(user) {
   return authedAxiosInstance.patch(`/user/${user.id}`, user);
 }
 

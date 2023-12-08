@@ -34,7 +34,7 @@ export default function CourseDetails() {
     getRoadmap(courseId)
       .then((res) => {
         console.log(res);
-        if (res.data.code === 200) setDetail(res.data.data);
+        if (res.code === 200) setDetail(res.data);
       })
       .catch((err) => {
         console.log(err);
@@ -44,7 +44,7 @@ export default function CourseDetails() {
   function handleDelete() {
     deleteRoadmap(detail.id)
       .then((res) => {
-        if (res.data.code === 200) {
+        if (res.code === 200) {
           toast.success("Delete roadmap successfuly!", {
             position: "top-right",
             autoClose: 3000,
@@ -58,7 +58,7 @@ export default function CourseDetails() {
           setInterval(() => {
             window.location.href = "/course";
           }, 3000);
-        } else if (res.data.code === 403) {
+        } else if (res.code === 403) {
           toast.error("You don't have permission to delete", {
             position: "top-right",
             autoClose: 3000,

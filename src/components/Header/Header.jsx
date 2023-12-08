@@ -12,6 +12,9 @@ export default function Header() {
       else console.log(res);
     });
   }
+  const userId = JSON.parse(localStorage.getItem("USER_INFO"))
+    ? JSON.parse(localStorage.getItem("USER_INFO")).userId
+    : undefined;
   return (
     <header className="header-container">
       <div className="header-logo">logo</div>
@@ -32,7 +35,7 @@ export default function Header() {
           </i>
           <ul className="dropdown">
             <li>
-              <Link to="/profile">Profile Information</Link>
+              <Link to={`/profile/${userId}`}>Profile Information</Link>
             </li>
             <li>
               <Link to="/course">Library</Link>

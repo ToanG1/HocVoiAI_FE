@@ -1,7 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react";
 import styles from "./Question.scss";
 
-
 import QuestionList from "./QuestionList";
 import AskQuestion from "./AskQuestion";
 import "react-responsive-modal/styles.css";
@@ -68,7 +67,7 @@ function Question() {
   useEffect(() => {
     async function fetchData() {
       const res = await getAllQuestion(page);
-      if (res.data.code === 200) {
+      if (res.code === 200) {
         setQuestions(res.data.data);
         setPageCount(Math.ceil(res.data.totalItems / res.data.limit));
         setTotalItems(res.data.totalItems);
@@ -85,8 +84,7 @@ function Question() {
 
   const handleSubmitQuestion = (data) => {
     setIsOpenModal(false);
-    console.log(data);
-    if (data.code === 201) {
+    if (data) {
       toast.success("Your question is submitted successfully", {
         position: "top-right",
         autoClose: 3000,

@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState, useMemo } from "react";
 import styles from "./Question.scss";
 
 import QuestionList from "./QuestionList";
@@ -40,6 +40,10 @@ const years = [
 
 function Question() {
   const [topics, setTopics] = useState([]);
+  const [selectedTopic, setSelectedTopic] = useState(null);
+  const [selectedMonth, setSelectedMonth] = useState(null);
+  const [selectedYear, setSelectedYear] = useState(null);
+
   useEffect(() => {
     async function fetchCategory() {
       const res = await getAllCategory();
@@ -77,6 +81,22 @@ function Question() {
       console.log(err);
     });
   }, [page]);
+
+  const filteredQuestions = useMemo(() => {
+    const filteredData = questions.filter((question) => {
+      const topicMatch =
+        !selectedTopic || question.category.name === selectedTopic.label;
+      const dateObject = new Date(question.createdAt);
+      const month = dateObject.getMonth() + 1;
+      const year = dateObject.getFullYear();
+      const monthMatch =
+        !selectedMonth || month === Number(selectedMonth.label);
+      const yearMatch = !selectedYear || year === Number(selectedYear.label);
+      return topicMatch && monthMatch && yearMatch;
+    });
+
+    return filteredData;
+  }, [selectedTopic, selectedMonth, selectedYear, questions]);
 
   const handlePageClick = (event) => {
     setPage(event.selected + 1);
@@ -145,22 +165,22 @@ function Question() {
             <div className="select-container">
               <Select
                 placeholder="Topic"
-                defaultValue={selectedOption}
-                onChange={setSelectedOption}
+                defaultValue={selectedTopic}
+                onChange={(value) => setSelectedTopic(value)}
                 options={topics}
                 className="select"
               />
               <Select
                 placeholder="Month"
-                defaultValue={selectedOption}
-                onChange={setSelectedOption}
+                defaultValue={selectedMonth}
+                onChange={(value) => setSelectedMonth(value)}
                 options={months}
                 className="select"
               />
               <Select
                 placeholder="Year"
-                defaultValue={selectedOption}
-                onChange={setSelectedOption}
+                defaultValue={selectedYear}
+                onChange={(value) => setSelectedYear(value)}
                 options={years}
                 className="select"
               />
@@ -168,7 +188,7 @@ function Question() {
           </div>
         </div>
         <div className="main">
-          <QuestionList questions={questions} />
+          <QuestionList questions={filteredQuestions} />
         </div>
         <div className="footer">
           <ReactPaginate

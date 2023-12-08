@@ -8,4 +8,7 @@ async function getAllQuestion(page) {
   return axiosInstance.get(`/question?page=${page}&limit=${ITEM_LIMIT}`);
 }
 
-export { createQuestion, getAllQuestion };
+function getQuestion(id) {
+  return axiosInstance.get(`/question/${id}`);
+}
+export { createQuestion, getAllQuestion, getQuestion };

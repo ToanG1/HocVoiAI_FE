@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const BASE_URL = "http://localhost:5001/api";
-const IMG_URL = "http://localhost:9090";
+const IMG_URL = "http://localhost:9000";
 const WS_SERVER = "ws://localhost:5001/";
 
 const axiosInstance = axios.create({
@@ -25,6 +25,7 @@ authedAxiosInstance.interceptors.response.use(
   },
   async (error) => {
     const originalRequest = error.config;
+    console.log(error);
     if (error.response.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true;
 

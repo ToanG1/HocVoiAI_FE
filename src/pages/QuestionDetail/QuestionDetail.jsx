@@ -11,6 +11,7 @@ import BgComp from "../../components/BgComp/BgComp";
 
 import { getQuestion } from "../../api/question";
 import { getQuestionRepliesByQId } from "../../api/question-reply";
+import { getQuestionCommentsById } from "../../api/question-comment";
 
 import moment from "moment";
 
@@ -77,12 +78,7 @@ function QuestionDetail_({}) {
             className="content"
             dangerouslySetInnerHTML={{ __html: data.content }}
           ></p>
-          {answers.map((item) => (
-            <Comment />
-          ))}
         </section>
-        <CommentForm />
-
         <section className="answers">
           <h2 className="title">{answers.length} Answers</h2>
           {answers.map((answer) => (
@@ -102,6 +98,23 @@ function QuestionDetail_({}) {
 }
 
 function Answer({ answer }) {
+  const [comments, setComments] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const res = await getQuestionCommentsById(answer.id);
+      if (res.code === 200) {
+        setComments(res.data);
+        console.log(res.data);
+      }
+    };
+    fetchData();
+  }, []);
+
+  function handleAddCommentToList(comment) {
+    setComments([...comments, comment]);
+  }
+
   return (
     <section className="answer">
       <section
@@ -113,20 +126,29 @@ function Answer({ answer }) {
         {moment(answer.createdAt).format("DD/MM/YYYY")}
       </p>
       <hr className="lighter-hr"></hr>
-      <section className="comments"></section>
-      <CommentForm />
+      <section className="comments">
+        {comments.map((item) => (
+          <Comment comment={item} />
+        ))}
+      </section>
+      <CommentForm
+        addComment={handleAddCommentToList}
+        questionId={answer.questionId}
+        answerId={answer.id}
+      />
       <hr className="lighter-hr"></hr>
     </section>
   );
 }
 
-function Comment({}) {
+function Comment({ comment }) {
+  console.log(comment);
   return (
     <section className="comment">
-      <p className="content content-comment">nice</p>
+      <p className="content content-comment">{comment.content}</p>
       <p className="info-comment">
-        <span className="username"> Ninh </span>
-        '12/02/2023'
+        <span className="username"> {comment.user.name} </span>'
+        {moment(comment.createdAt).format("DD/MM/YYYY")}'
       </p>
       <hr className="lighter-hr"></hr>
     </section>

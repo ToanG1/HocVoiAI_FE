@@ -5,6 +5,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEarthAsia } from "@fortawesome/free-solid-svg-icons";
 
 import { logout } from "../../api/auth";
+import logo from "../../assets/images/logo.png";
+
 export default function Header() {
   function handleLogout() {
     logout().then((res) => {
@@ -17,7 +19,9 @@ export default function Header() {
     : undefined;
   return (
     <header className="header-container">
-      <div className="header-logo">logo</div>
+      <div className="header-logo">
+        <img src={logo} alt="logo" />
+      </div>
       <div className="nav-container">
         <Link to="/features" className="nav-item">
           Features

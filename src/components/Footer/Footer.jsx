@@ -1,6 +1,9 @@
 import React from "react";
 import styles from "./Footer.scss";
 import { Link } from "react-router-dom";
+
+import logo from "../../assets/images/logo.png";
+
 export default function Footer() {
   return (
     <section className="footer">
@@ -13,7 +16,9 @@ export default function Footer() {
           <button>Get Started</button>
         </div>
         <div className="footer-content">
-          <div className="footer-logo">logo</div>
+          <div className="footer-logo">
+            <img src={logo} alt="logo" />
+          </div>
           <div className="footer-item">
             <h1 className="footer-item-title">About us</h1>
             <ul>

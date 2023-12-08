@@ -1,87 +1,40 @@
 import React, { useCallback, useEffect, useState } from "react";
 import styles from "./QuestionDetail.scss";
 
-function formatDate(date) {
-  const options = { month: "long", day: "numeric", year: "numeric" };
-  return new Date(date).toLocaleDateString("en-US", options);
-}
+import { createQuestionComment } from "../../api/question-comment";
 
-function CommentForm({ onSetQuestionData, question, answerId }) {
-  const [comment, setComment] = useState("");
-  const [isFormVisible, setIsFormVisible] = useState(false);
-
-  const handleSubmit = useCallback(() => {
+function CommentForm({ addComment, questionId, answerId }) {
+  const handleSubmit = (value) => {
     const newComment = {
-      id: question.comments?.length + 1,
-      commentText: comment,
-      date: formatDate(new Date()),
-      username: "User 789"
+      content: value,
+      questionId: questionId,
+      questionReplyId: answerId
     };
-    if (!answerId) {
-      // NOTE: if have not answerId, submit comment to question
-      const updatedQuestion = Object.assign(
-        {},
-        {
-          ...question,
-          comments: [...question.comments, newComment]
+    console.log(newComment);
+
+    createQuestionComment(newComment)
+      .then((res) => {
+        if (res.code === 200) {
+          addComment(res.data);
         }
-      );
-      onSetQuestionData(updatedQuestion);
-    } else {
-      // NOTE: if have answerId, submit comment to answer by answerId
-      const answerIndex = question.answers.findIndex(
-        (answer) => answer.id === answerId
-      );
-
-      if (answerIndex !== -1) {
-        const updatedAnswer = Object.assign(
-          {},
-          {
-            ...question.answers[answerIndex],
-            comments: [...question.answers[answerIndex].comments, newComment]
-          }
-        );
-        const updatedQuestion = Object.assign({}, question);
-        updatedQuestion.answers[answerIndex] = updatedAnswer;
-        onSetQuestionData(updatedQuestion);
-      }
-    }
-    setComment("");
-    setIsFormVisible(false);
-  }, [comment]);
-
-  const toggleFormVisibility = () => {
-    setIsFormVisible(!isFormVisible);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   return (
     <div>
-      <p className="lighter-text" onClick={toggleFormVisibility}>
-        Add a comment
-      </p>
-      {isFormVisible && (
-        <div>
-          <label>
-            <textarea
-              name="comment"
-              value={comment}
-              onChange={(e) => setComment(e.target.value)}
-              rows="4"
-              cols="50"
-              placeholder="Type your comment here..."
-              required
-            ></textarea>
-          </label>
-          <br />
-          <button
-            className="button-submit"
-            disabled={!comment}
-            onClick={handleSubmit}
-          >
-            Submit Comment
-          </button>
-        </div>
-      )}
+      <input
+        className="lighter-text"
+        onKeyDown={(e) => {
+          if (e.key === "Enter") {
+            handleSubmit(e.target.value);
+            e.target.value = "";
+          }
+        }}
+        placeholder="Add a comment..."
+      ></input>
     </div>
   );
 }

@@ -51,6 +51,7 @@ export default function Signup() {
   function handleGenerateRoadmap() {
     const topics = JSON.parse(localStorage.getItem("toGenTopics"));
     localStorage.removeItem("toGenTopics");
+    
     // Send a message to the server
     socket.emit("generate", {
       topics: topics,

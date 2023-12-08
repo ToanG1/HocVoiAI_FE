@@ -18,10 +18,10 @@ export default function CourseCirculum({ id }) {
   useEffect(() => {
     async function fecthData() {
       const res = await getRoadmap(id);
-      if (res.data.code === 200) {
-        setContent(JSON.parse(res.data.data.roadmap.topics));
+      if (res.code === 200) {
+        setContent(JSON.parse(res.data.roadmap.topics));
       } else {
-        toast.error(res.data.message, {
+        toast.error(res.message, {
           position: "top-right",
           autoClose: 5000,
           hideProgressBar: false,

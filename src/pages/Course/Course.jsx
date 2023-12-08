@@ -30,8 +30,9 @@ export default function Course() {
     if (!userInfo) navigate("/login");
     getAllPrivilege()
       .then((res) => {
-        if (res.data.code === 200) {
-          setData(res.data.data);
+        console.log(res);
+        if (res.code === 200) {
+          setData(res.data);
         }
       })
       .catch((err) => {

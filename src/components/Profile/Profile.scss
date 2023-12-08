@@ -3,21 +3,23 @@
 @import url("https://fonts.googleapis.com/css?family=Montserrat:600");
 @import url("https://fonts.googleapis.com/css?family=Montserrat:800");
 @import url("https://fonts.googleapis.com/css?family=Montserrat");
-
-.profile-container {
+.profile-section {
+  background: linear-gradient(270deg, #ffead1, #ffb6bd, #e0b5ff);
   margin: 80px 0;
   margin-bottom: 0;
   padding: 100px 0;
   padding-bottom: 400px;
-  font-family: "Montserrat", sans-serif;
-  background: linear-gradient(270deg, #ffead1, #ffb6bd, #e0b5ff);
-  background-size: 150% 150%;
-  animation: backgroundAnimation 10s ease infinite;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  width: 100%;
+  font-family: "Montserrat", sans-serif;
+}
+
+.profile-container {
+  background-size: 150% 150%;
+  animation: backgroundAnimation 10s ease infinite;
+  width: max-content;
 }
 
 .profile {
@@ -214,13 +216,6 @@ textarea {
   }
   h1.second-name {
     left: 60px;
-  }
-}
-
-@media screen and (min-aspect-ratio: 4/7) {
-  .profile {
-    margin-left: 10%;
-    margin-right: 10%;
   }
 }
 

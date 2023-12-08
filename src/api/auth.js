@@ -9,7 +9,7 @@ async function login(email, password) {
     localStorage.removeItem("HOCVOIAI_REFRESHTOKEN");
     localStorage.removeItem("tokenId");
     localStorage.removeItem("USER_INFO");
-
+    console.log(res);
     localStorage.setItem("HOCVOIAI_TOKEN", res.data.access_token);
     localStorage.setItem("HOCVOIAI_REFRESHTOKEN", res.data.refersh_token);
     localStorage.setItem("tokenId", res.data.tokenId);
@@ -32,7 +32,6 @@ async function signup(email, password, name) {
     localStorage.removeItem("HOCVOIAI_REFRESHTOKEN");
     localStorage.removeItem("tokenId");
     localStorage.removeItem("USER_INFO");
-
     localStorage.setItem("HOCVOIAI_TOKEN", res.data.access_token);
     localStorage.setItem("HOCVOIAI_REFRESHTOKEN", res.data.refersh_token);
     localStorage.setItem("tokenId", res.data.tokenId);

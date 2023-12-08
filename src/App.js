@@ -24,7 +24,7 @@ export default function App() {
         <Route path="roadmap/:roadmapId" element={<Roadmap />} />
         <Route path="questions" element={<Question />} />
         <Route path="questions/:questionId" element={<QuestionDetail />} />
-        <Route path="profile" element={<Profile />} />
+        <Route path="profile/:userId" element={<Profile />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>

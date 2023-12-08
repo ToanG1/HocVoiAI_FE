@@ -56,6 +56,11 @@
     height: auto;
     position: relative;
     margin: auto;
+
+    .active {
+      display: block !important;
+    }
+
     .cursor {
       position: absolute;
       width: 500px;
@@ -216,9 +221,9 @@
       align-items: center;
     }
 
+    .years ul div,
     .years ul li {
       padding-right: 50px;
-      margin-bottom: 10px;
       width: auto;
       font-family: "Lexend", sans-serif;
       color: #848b9f;

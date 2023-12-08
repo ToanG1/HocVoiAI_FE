@@ -125,12 +125,12 @@ export default function CreateRoadmapModal({}) {
         categoryId: cate.value
       })
         .then((res) => {
-          if (res.data.code === 201) {
+          if (res.code === 201) {
             navigate(`/roadmap/${res.data.id}`, {
               state: {
-                content: res.data.data,
+                content: res.data,
                 type: type.value,
-                mode: "create"
+                mode: "edit"
               }
             });
           }

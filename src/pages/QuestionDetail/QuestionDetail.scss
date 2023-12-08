@@ -1,45 +1,106 @@
+@import url("https://fonts.googleapis.com/css?family=Montserrat:600");
+@import url("https://fonts.googleapis.com/css?family=Montserrat:800");
+@import url("https://fonts.googleapis.com/css?family=Montserrat");
+
 .questions-detail-container {
+  border: 1px solid #d3d3d3;
+  border-radius: 10px;
   max-width: 800px;
   margin: 150px auto;
   padding: 20px;
   background-color: #fff;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
 
-  .lighter-hr {
-    background-color: #eee;
-    border: 0 none;
-    color: #eee;
-    height: 1px;
-  }
+.lighter-hr {
+  background-color: #eee;
+  border: 0 none;
+  color: #eee;
+  height: 1px;
+}
 
-  body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-  }
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
 
-  header {
-    padding: 20px;
-  }
+header {
+  padding: 20px;
+}
 
-  div {
-    margin: 20px;
-  }
+div {
+  margin: 20px;
+}
 
-  h2 {
-    border-bottom: 1px solid #ccc;
-  }
+h2 {
+  border-bottom: 1px solid #ccc;
+}
 
-  .answer {
-    margin-bottom: 20px;
+.question-title {
+  font-weight: 200;
+  margin-bottom: 10px;
+  animation: titleEffect 1s cubic-bezier(0, 0.2, 0.4, 1);
+  top: -115px;
+  left: -85px;
+}
+
+.title {
+  font-family: "Montserrat", sans-serif;
+  animation: titleEffect 1s cubic-bezier(0, 0.2, 0.4, 1);
+  top: -115px;
+  left: -85px;
+}
+
+.info {
+  font-family: "Montserrat", sans-serif;
+  margin-bottom: 10px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #636b74;
+  animation: titleEffect 1s cubic-bezier(0, 0, 0.3, 1);
+  .author {
+    color: #1b75d0;
   }
-  .comment {
-    margin-bottom: 20px;
-  }
-  .lighter-text {
-    color: #999; /* Replace #999 with the desired lighter color code */
+  .date {
+    color: #a7adb4;
   }
 }
+.info-answer {
+  text-align: right;
+}
+
+.info-comment {
+  font-size: 12px;
+  margin-top: 5px;
+  font-weight: 600;
+  color: #a7adb4;
+  animation: titleEffect 1s cubic-bezier(0, 0, 0.3, 1);
+  text-align: right;
+  .username {
+    color: #1b75d0;
+  }
+}
+
+.content {
+  animation: titleEffect 1s cubic-bezier(0, 0, 0.3, 1);
+  top: -50px;
+  left: -45px;
+}
+.content-comment {
+  font-size: 14px;
+  font-style: italic;
+}
+.answer {
+  margin-bottom: 20px;
+}
+.comment {
+  margin-bottom: 20px;
+}
+.lighter-text {
+  color: #999; /* Replace #999 with the desired lighter color code */
+}
+
 .button-submit {
   padding: 5px 10px;
   margin-top: 20px;
@@ -47,5 +108,9 @@
 }
 .button-submit:disabled {
   background-color: #999;
+  color: white;
+}
+.button-submit:enabled {
+  background-color: #f63d47;
   color: white;
 }

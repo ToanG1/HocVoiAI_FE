@@ -4,6 +4,8 @@ import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import { BASE_URL, IMG_URL } from "../../api/API";
 
+import { uploadImage } from "../../api/UploadFile";
+
 export default function Editor({ setData, data }) {
   const UPLOAD_ENDPOINT = "minio/image";
 
@@ -13,17 +15,18 @@ export default function Editor({ setData, data }) {
         return new Promise((resolve, reject) => {
           const body = new FormData();
           loader.file.then((file) => {
-            body.append("image", file);
-            let headers = new Headers();
-            headers.append("Origin", "http://localhost:3000");
-            fetch(`${BASE_URL}/${UPLOAD_ENDPOINT}`, {
-              headers: headers,
-              method: "post",
-              body: body
-            })
-              .then((res) => res.json())
+            // body.append("image", file);
+            // let headers = new Headers();
+            // headers.append("Origin", "http://localhost:3000");
+            // fetch(`${BASE_URL}/${UPLOAD_ENDPOINT}`, {
+            //   headers: headers,
+            //   method: "post",
+            //   body: body
+            // })
+            uploadImage(file)
               .then((res) => {
-                resolve({ default: `${IMG_URL}/${res.url}` });
+                if (res.code === 200)
+                  resolve({ default: `${IMG_URL}/${res.data.url}` });
               })
               .catch((err) => {
                 reject(err);

@@ -11,7 +11,7 @@ export default function CourseBox({ course }) {
         <div className="course-box-content">
           <div className="course-box-header">
             <img
-              src="https://picsum.photos/200/300"
+              src={course.avatar}
               className="course-box-image"
               alt="course-img"
             />

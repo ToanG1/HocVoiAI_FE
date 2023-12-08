@@ -1,4 +1,5 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import styles from "./QuestionDetail.scss";
 import CommentForm from "./CommentForm";
 import AnswerForm from "./AnswerForm";
@@ -7,96 +8,101 @@ import Footer from "../../components/Footer/Footer";
 import BgComp from "../../components/BgComp/BgComp";
 
 const MOCK_QUESTIONS = {
-  title: "Question Title",
-  author: "User123",
+  title:
+    "Strategies for Enhancing English Language Proficiency in and Outside the Course",
+  author: "Chris Du",
   date: "November 20, 2023",
   content:
-    "So I am working with python boost. The goal for me is to be able to overload c++ functions from python modules. I have managed that, but I have observed a weird behavior when using aliases.",
+    "Can anyone share practical tips or personal experiences on how to improve English language skills outside the classroom? Whether it's recommended books, online resources, or language exchange programs, I'm eager to hear suggestions to enhance my learning journey in the English course. What strategies have proven effective for you in mastering the language beyond traditional coursework?",
   comments: [
     {
       id: 1,
-      username: "User789",
+      username: "Adam",
       date: "November 22, 2023",
-      commentText: "Lorem ipsum dolor sit amet, consectetur adipiscing elit...."
+      commentText:
+        "Engaging in language exchange through platforms like Tandem or HelloTalk has been a game-changer for me"
     },
     {
       id: 2,
-      username: "User789",
+      username: "Mai",
       date: "November 22, 2023",
-      commentText: "Another comment here...."
+      commentText:
+        "Connecting with native English speakers for language exchange allows for practical application and cultural exchange."
     }
     // Add more comments for the question as needed
   ],
   answers: [
     {
       id: 1,
-      username: "User456",
+      username: "Alex",
       date: "November 21, 2023",
-      answerText: "Lorem ipsum dolor sit amet, consectetur adipiscing elit....",
+      answerText:
+        "I found 'Word Power Made Easy' by Norman Lewis to be an excellent resource for expanding my vocabulary. Additionally, 'English Grammar in Use' by Raymond Murphy helped me strengthen my grammar skills.",
       comments: [
         {
           id: 1,
-          username: "User789",
+          username: "Jimmy",
           date: "November 22, 2023",
           commentText:
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit...."
+            "Maintaining a journal in English has been invaluable. It not only helps improve writing skills but also serves as a personal record of language progression"
         },
         {
           id: 2,
-          username: "User789",
+          username: "Ken",
           date: "November 22, 2023",
           commentText:
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit...."
+            "I often use online platforms like Lang-8 for receiving feedback from native speakers"
         },
         {
           id: 3,
-          username: "User789",
+          username: "Hellen",
           date: "November 22, 2023",
           commentText:
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit...."
+            "I completely agree! 'Word Power Made Easy' is a gem for vocabulary building. I've also benefited from 'English Idioms in Use' by Michael McCarthy for understanding idiomatic expressions."
         },
         {
           id: 4,
-          username: "User789",
+          username: "Justin",
           date: "November 22, 2023",
           commentText:
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit...."
+            "Duolingo has been my go-to as well! It's a fun and interactive way to reinforce language skills daily. Another app I recommend is Babbel, which tailors lessons to individual learning styles."
         }
       ]
     },
     {
       id: 2,
-      username: "User456",
+      username: "Hong",
       date: "November 21, 2023",
-      answerText: "Lorem ipsum dolor sit amet, consectetur adipiscing elit....",
+      answerText:
+        "Duolingo and Memrise are fantastic apps for daily language practice. They offer interactive lessons, quizzes, and a variety of exercises that make learning English enjoyable and effective.",
       comments: [
         {
           id: 1,
-          username: "User789",
+          username: "Conan",
           date: "November 22, 2023",
           commentText:
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit...."
+            "Absolutely! Duolingo have been a staple in my routine. For audiobooks, the 'Harry Potter' series narrated by Jim Dale is not only entertaining but also excellent for language immersion."
         },
         {
           id: 2,
-          username: "User789",
+          username: "Ken",
           date: "November 22, 2023",
           commentText:
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit...."
+            "I've started using Duolingo recently, and the feedback is incredibly helpful."
         },
         {
           id: 3,
-          username: "User789",
+          username: "Hum",
           date: "November 22, 2023",
           commentText:
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit...."
+            "Engaging in discussions on Duolingo has been a game-changer."
         },
         {
           id: 4,
-          username: "User789",
+          username: "Tommy",
           date: "November 22, 2023",
           commentText:
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit...."
+            "It's a supportive community where you can ask questions, share experiences, and receive valuable insights. Does anyone have other forums they recommend?"
         }
       ]
     }
@@ -105,6 +111,13 @@ const MOCK_QUESTIONS = {
 };
 
 function QuestionDetail_({}) {
+  const userInfo = JSON.parse(localStorage.getItem("USER_INFO"));
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (!userInfo) {
+      navigate("/login");
+    }
+  }, []);
   const [questionData, setQuestionData] = useState(MOCK_QUESTIONS);
 
   return (
@@ -113,14 +126,15 @@ function QuestionDetail_({}) {
       <BgComp />
       <div className="questions-detail-container">
         <header>
-          <h1>{questionData.title}</h1>
-          <p>
-            Posted by: {questionData.author} | Date: {questionData.date}
+          <h1 className="question-title">{questionData.title}</h1>
+          <p className="info">
+            Posted by: <span className="author">{questionData.author}</span> |
+            Date: <span className="date">{questionData.date}</span>
           </p>
         </header>
 
         <div className="question">
-          <p>{questionData.content}</p>
+          <p className="content">{questionData.content}</p>
           {questionData.comments.map((comment) => (
             <Comment
               key={comment.id}
@@ -136,7 +150,7 @@ function QuestionDetail_({}) {
         />
 
         <div className="answers">
-          <h2>Answers</h2>
+          <h2 className="title">{questionData.answers.length} Answers</h2>
           {questionData.answers.map((answer) => (
             <Answer
               key={answer.id}
@@ -173,13 +187,15 @@ function Answer({
 }) {
   return (
     <div className="answer">
-      <p>
+      <div
+        className="content"
+        dangerouslySetInnerHTML={{ __html: answerText }}
+      ></div>
+      <p className="info info-answer">
         Answered by: {username} | Date: {date}
       </p>
-      <div dangerouslySetInnerHTML={{ __html: answerText }}></div>
-
+      <hr className="lighter-hr"></hr>
       <div className="comments">
-        <h3>Comments</h3>
         {comments.map((comment) => (
           <Comment
             key={comment.id}
@@ -202,10 +218,11 @@ function Answer({
 function Comment({ username, date, commentText }) {
   return (
     <div className="comment">
-      <p>
-        Comment by: {username} | Date: {date}
+      <p className="content content-comment">{commentText}</p>
+      <p className="info-comment">
+        <span className="username"> {username} </span>
+        {date}
       </p>
-      <p>{commentText}</p>
       <hr className="lighter-hr"></hr>
     </div>
   );

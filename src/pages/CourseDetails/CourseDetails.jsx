@@ -8,6 +8,7 @@ import Header from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
 import CourseOverview from "../../components/CourseOverview/CourseOverview";
 import CourseCirculum from "../../components/CourseCirculum/CourseCirculum";
+import defaultImg from "../../assets/images/roadmap.png";
 
 import { getRoadmap, deleteRoadmap } from "../../api/roadmap";
 
@@ -143,7 +144,7 @@ export default function CourseDetails() {
           </div>
           <div className="course-details-body">
             {page === 0 ? (
-              <CourseOverview detail={detail} />
+              <CourseOverview detail={detail} courseId={courseId} />
             ) : (
               <CourseCirculum id={courseId} />
             )}
@@ -161,7 +162,7 @@ export default function CourseDetails() {
           </div>
           <div className="course-details-sidebar-content">
             <img
-              src={detail.avatar}
+              src={detail.avatar ? detail.avatar : defaultImg}
               className="course-details-sidebar-image"
               alt="course-img"
             />

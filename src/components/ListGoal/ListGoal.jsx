@@ -4,6 +4,7 @@ import styles from "./ListGoal.scss";
 import RoadmapBranch from "../RoadmapBranch/RoadmapBranch";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight, faCircleXmark } from "@fortawesome/free-solid-svg-icons";
+import defaultImg from "../../assets/images/roadmap.png";
 
 import { getListGoalByUserId, createGoal, updateGoal } from "../../api/goal";
 import { getGoalBranchsById, createGoalBranch } from "../../api/goalBranch";
@@ -193,7 +194,11 @@ export default function ListGoal({ userId, mode }) {
                     <div className="search-item selected">
                       <p>{selectedSearch.roadmapDetail.title}</p>
                       <img
-                        src={selectedSearch.roadmapDetail.avatar}
+                        src={
+                          selectedSearch.roadmapDetail.avatar
+                            ? selectedSearch.roadmapDetail.avatar
+                            : defaultImg
+                        }
                         alt="roadmap img"
                       />
                       <i onClick={() => setSelectedSearch()}>
@@ -223,7 +228,11 @@ export default function ListGoal({ userId, mode }) {
                       >
                         <p>{item.roadmapDetail.title}</p>
                         <img
-                          src={item.roadmapDetail.avatar}
+                          src={
+                            item.roadmapDetail.avatar
+                              ? item.roadmapDetail.avatar
+                              : defaultImg
+                          }
                           alt="roadmap img"
                         />
                       </div>

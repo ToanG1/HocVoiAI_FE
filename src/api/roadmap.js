@@ -8,7 +8,7 @@ function getAllPrivilege() {
 }
 
 function getReletiveRoadmap(roadmapId) {
-  return axiosInstance.get(`/roadmap?roadmapId=${roadmapId}`);
+  return axiosInstance.get(`/roadmap/ralative/${roadmapId}`);
 }
 
 async function getAllRoadmap() {

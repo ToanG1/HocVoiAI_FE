@@ -30,11 +30,6 @@ export default function CourseBox({ course }) {
             <p className="course-box-time">{detail.topics} topics</p>
             <p className="course-box-description">
               <span>{detail.description.replace(/<[^>]+>/g, "")}</span>
-              <div className="course-box-progessbar">
-                <div class="progress-bar" role="progressbar">
-                  {course.progress}
-                </div>
-              </div>
             </p>
           </div>
         </div>

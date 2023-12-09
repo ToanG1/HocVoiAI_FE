@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import styles from "./Home.scss";
 import { Link } from "react-router-dom";
 
+import logo from "../../assets/images/logo.png";
 import * as PIXI from "https://cdn.skypack.dev/pixi.js@5.x";
 import { KawaseBlurFilter } from "https://cdn.skypack.dev/@pixi/filter-kawase-blur@3.2.0";
 import SimplexNoise from "https://cdn.skypack.dev/simplex-noise@3.0.0";
@@ -261,7 +262,9 @@ export default function Home() {
       <section className="home-container">
         <ToastContainer />
         <div className="home-header">
-          <p>Logo</p>
+          <p>
+            <img src={logo} />
+          </p>
           <div className="log-btn">
             <Link to="/login">Login</Link>
           </div>

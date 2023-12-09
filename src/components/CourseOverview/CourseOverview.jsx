@@ -7,7 +7,8 @@ import SCourseBox from "../../components/SCourseBox/SCourseBox";
 
 import { getReletiveRoadmap } from "../../api/roadmap";
 
-export default function CourseOverview({ detail }) {
+
+export default function CourseOverview({ detail, courseId }) {
   const settings = {
     dots: false,
     autoplay: true,
@@ -21,15 +22,16 @@ export default function CourseOverview({ detail }) {
   const [rCourse, setRCrouse] = useState([]);
   useEffect(() => {
     async function fetchRelativeCourse() {
-      const res = await getReletiveRoadmap(detail.id);
+      const res = await getReletiveRoadmap(courseId);
       if (res.code === 200) {
         console.log(res);
         setRCrouse(res.data.data);
       }
     }
-    fetchRelativeCourse().catch((err) => {
-      console.log(err);
-    });
+    if (courseId)
+      fetchRelativeCourse().catch((err) => {
+        console.log(err);
+      });
   }, []);
   return (
     <>

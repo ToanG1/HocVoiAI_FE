@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
 import styles from "./RoadmapBranch.scss";
+import { Link } from "react-router-dom";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight, faCircleXmark } from "@fortawesome/free-solid-svg-icons";
+import defaultImg from "../../assets/images/roadmap.png";
 
 import { updateGoalBranch, deleteGoalBranch } from "../../api/goalBranch";
 import { searchPrivilege } from "../../api/privilege";
@@ -82,7 +84,10 @@ export default function RoadmapBranch({
 
   return (
     <section>
-      <div className="roadmap-branch">
+      <Link
+        className="roadmap-branch"
+        to={mode !== "edit" ? `/course/${data.id}` : null}
+      >
         <div className="left-side">
           <p className="upper-ruler ruler"></p>
           <p className="dot"></p>
@@ -134,10 +139,10 @@ export default function RoadmapBranch({
             ) : (
               <h3>{data.title}</h3>
             )}
-            <img src={data.avatar} alt="avatar" />
+            <img src={data.avatar ? data.avatar : defaultImg} alt="avatar" />
           </div>
         </div>
-      </div>
+      </Link>
       <div className="search-results">
         {searchResults.map((item, index) => {
           console.log(item.roadmapDetail.title);
@@ -150,7 +155,14 @@ export default function RoadmapBranch({
               }}
             >
               <p>{item.roadmapDetail.title}</p>
-              <img src={item.roadmapDetail.avatar} alt="roadmap img" />
+              <img
+                src={
+                  item.roadmapDetail.avatar
+                    ? item.roadmapDetail.avatar
+                    : defaultImg
+                }
+                alt="roadmap img"
+              />
             </div>
           );
         })}

@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
 import styles from "./Course.scss";
 import { useNavigate } from "react-router-dom";
+
 import CourseBox from "../../components/CourseBox/CourseBox";
 import Header from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
 import BgComp from "../../components/BgComp/BgComp";
-
+import defaultImg from "../../assets//images/default-img.png";
 import { ToastContainer } from "react-toastify";
 
 import { getAllPrivilege } from "../../api/roadmap";
@@ -58,7 +59,7 @@ export default function Course() {
         <div className="course-header">
           <div className="course-user-info">
             <img
-              src={userInfo ? userInfo.avatar : "https://picsum.photos/200/300"}
+              src={userInfo.avatar ? userInfo.avatar : defaultImg}
               alt="user-img"
             />
             <div>

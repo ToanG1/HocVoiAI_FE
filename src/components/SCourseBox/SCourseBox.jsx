@@ -4,9 +4,8 @@ import { Link } from "react-router-dom";
 export default function CourseBox({ course }) {
   const root = document.documentElement;
   root.style.setProperty("--percent", "75%");
-
   return (
-    <Link to={`/Course/${course}`} style={{ textDecorationLine: "none" }}>
+    <Link to={`/Course/${course.id}`} style={{ textDecorationLine: "none" }}>
       <div className="small-course-box-container">
         <div className="course-box-content">
           <div className="course-box-header">

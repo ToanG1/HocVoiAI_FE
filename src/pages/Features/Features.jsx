@@ -14,8 +14,6 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "react-responsive-modal/styles.css";
 
-import { useWebSocket } from "../../websocket/context";
-
 export default function Features() {
   const userInfo = JSON.parse(localStorage.getItem("USER_INFO"));
   const navigate = useNavigate();
@@ -34,8 +32,6 @@ export default function Features() {
   const handleOnCloseModal = useCallback(() => {
     setIsOpenModal(false);
   }, []);
-
-  const socket = useWebSocket();
 
   return (
     <>

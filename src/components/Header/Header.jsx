@@ -6,7 +6,6 @@ import { faEarthAsia } from "@fortawesome/free-solid-svg-icons";
 
 import { logout } from "../../api/auth";
 import logo from "../../assets/images/logo.png";
-
 export default function Header() {
   function handleLogout() {
     logout().then((res) => {
@@ -20,7 +19,9 @@ export default function Header() {
   return (
     <header className="header-container">
       <div className="header-logo">
-        <img src={logo} alt="logo" />
+        <Link to="/">
+          <img src={logo} alt="logo" />
+        </Link>
       </div>
       <div className="nav-container">
         <Link to="/features" className="nav-item">

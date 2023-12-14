@@ -1,9 +1,13 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styles from "./Login.scss";
 
+import { Modal } from "react-responsive-modal";
+import ForgotPwdModal from "./ForgotPwdModal";
+
 import { login } from "../../api/auth";
+import { authenticateToken } from "../../api/auth";
 import { ToastContainer, toast } from "react-toastify";
 
 export default function Login() {
@@ -11,6 +15,16 @@ export default function Login() {
   const [pass, setPass] = useState("");
 
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (localStorage.getItem("HOCVOIAI_TOKEN"))
+      authenticateToken().then((res) => {
+        if (res.code === 200 || res.data) {
+          navigate("/features");
+        }
+      });
+  }, []);
+
   async function handleLogin() {
     login(email, pass).then((res) => {
       res
@@ -27,9 +41,19 @@ export default function Login() {
           });
     });
   }
+
+  const [isOpenModal, setIsOpenModal] = useState(false);
+
+  const handleOpenModal = () => {
+    setIsOpenModal(true);
+  };
+
+  const handleOnCloseModal = () => {
+    setIsOpenModal(false);
+  };
   return (
     <>
-      <div className="login-section">
+      <section className="login-section">
         <ToastContainer />
         <div class="form-box">
           <div class="form-value">
@@ -69,7 +93,7 @@ export default function Login() {
                   Remember Me
                 </label>
 
-                <Link to="#">Forgot Password</Link>
+                <p onClick={() => handleOpenModal()}>Forgot Password</p>
               </div>
 
               <button type="submit">Log In</button>
@@ -82,7 +106,17 @@ export default function Login() {
             </form>
           </div>
         </div>
-      </div>
+        <Modal
+          open={isOpenModal}
+          onClose={handleOnCloseModal}
+          center
+          classNames={{
+            modal: "customModal"
+          }}
+        >
+          <ForgotPwdModal />
+        </Modal>
+      </section>
     </>
   );
 }

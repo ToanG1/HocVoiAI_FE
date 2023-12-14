@@ -11,16 +11,21 @@ import BgComp from "../../components/BgComp/BgComp";
 import { Modal } from "react-responsive-modal";
 import { ToastContainer } from "react-toastify";
 
+import { authenticateToken } from "../../api/auth";
+
 import "react-toastify/dist/ReactToastify.css";
 import "react-responsive-modal/styles.css";
 
 export default function Features() {
-  const userInfo = JSON.parse(localStorage.getItem("USER_INFO"));
   const navigate = useNavigate();
   useEffect(() => {
-    if (!userInfo) {
-      navigate("/login");
-    }
+    if (localStorage.getItem("HOCVOIAI_TOKEN"))
+      authenticateToken().then((res) => {
+        if (res.code !== 200 || !res.data) {
+          navigate("/login");
+        }
+      });
+    else navigate("/login");
   }, []);
 
   const [isOpenModal, setIsOpenModal] = useState(false);

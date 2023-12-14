@@ -15,6 +15,9 @@ const authedAxiosInstance = axios.create({
   }
 });
 
+let retryCounter = 0;
+const MAX_RETRY = 3;
+
 axiosInstance.interceptors.response.use((response) => {
   return response.data;
 });
@@ -26,7 +29,13 @@ authedAxiosInstance.interceptors.response.use(
   async (error) => {
     const originalRequest = error.config;
     console.log(error);
-    if (error.response.status === 401 && !originalRequest._retry) {
+    if (
+      error.response.status === 401 &&
+      !originalRequest._retry &&
+      retryCounter < MAX_RETRY
+    ) {
+      retryCounter++;
+
       originalRequest._retry = true;
 
       const { data } = await refreshToken();
@@ -46,8 +55,7 @@ authedAxiosInstance.interceptors.response.use(
 
 // Function to refresh the token (replace this with your actual token refresh logic)
 const refreshToken = async () => {
-  const refreshTokenId = localStorage.getItem("tokenId");
-  return axiosInstance.post(`/auth/refresh/${refreshTokenId}`, {
+  return axiosInstance.post(`/auth/refresh`, {
     refreshToken: localStorage.getItem("HOCVOIAI_REFRESHTOKEN")
   });
 };

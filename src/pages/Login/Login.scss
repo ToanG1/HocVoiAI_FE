@@ -70,6 +70,9 @@
         color: #fff;
         display: flex;
         justify-content: space-between;
+        p {
+          cursor: pointer;
+        }
       }
 
       .forget label input {
@@ -113,6 +116,32 @@
       .register p a:hover {
         text-decoration: underline;
       }
+    }
+  }
+}
+
+.forgot-pwd-container {
+  padding: 50px;
+  .forgot-pwd-header {
+    h1 {
+      margin-bottom: 10px;
+    }
+    p {
+    }
+  }
+  input {
+    margin: 10px 0;
+    font-size: 16px;
+    border-bottom: 1px dashed lightgray;
+  }
+  button {
+    margin: 0px 10px;
+    padding: 5px 10px;
+    color: white;
+    font-size: 14px;
+  }
+  .secret-code {
+    p {
     }
   }
 }

@@ -11,12 +11,16 @@ import QuestionDetail from "./pages/QuestionDetail/QuestionDetail";
 import Features from "./pages/Features/Features";
 import NotFound from "./pages/NotFound/NotFound";
 import Profile from "./components/Profile/Profile";
+import ResetPassword from "./pages/ResetPassword/ResetPassword";
+import Activate from "./pages/Activate/Activate";
+
 export default function App() {
   return (
     <BrowserRouter>
       <Routes>
         <Route path="login" element={<Login />} />
         <Route path="signup" element={<Signup />} />
+        <Route path="reset-pwd/:token" element={<ResetPassword />} />
         <Route path="/" element={<Home />} />
         <Route path="features" element={<Features />} />
         <Route path="course" element={<Course />} />
@@ -25,6 +29,7 @@ export default function App() {
         <Route path="questions" element={<Question />} />
         <Route path="questions/:questionId" element={<QuestionDetail />} />
         <Route path="profile/:userId" element={<Profile />} />
+        <Route path="activate" element={<Activate />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>

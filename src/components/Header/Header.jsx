@@ -1,21 +1,28 @@
 import React from "react";
 import styles from "./Header.scss";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEarthAsia } from "@fortawesome/free-solid-svg-icons";
 
 import { logout } from "../../api/auth";
 import logo from "../../assets/images/logo.png";
 export default function Header() {
+  const navigate = useNavigate();
   function handleLogout() {
-    logout().then((res) => {
-      if (res === true) window.location.href = "/";
-      else console.log(res);
-    });
+    logout()
+      .then((res) => {
+        if (res.code === 200) if (res.data === true) navigate("/");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
   const userId = JSON.parse(localStorage.getItem("USER_INFO"))
     ? JSON.parse(localStorage.getItem("USER_INFO")).userId
     : undefined;
+
+  const handlePwdReset = () => {};
   return (
     <header className="header-container">
       <div className="header-logo">
@@ -46,7 +53,7 @@ export default function Header() {
               <Link to="/course">Library</Link>
             </li>
             <li>
-              <Link>Change Password</Link>
+              <a onClick={handlePwdReset}>Change Password</a>
             </li>
 
             <li>

@@ -3,7 +3,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styles from "./Signup.scss";
 
-import { signup } from "../../api/auth";
+import { signup, authenticateToken } from "../../api/auth";
 import { useWebSocket } from "../../websocket/context";
 import { ToastContainer, toast } from "react-toastify";
 
@@ -15,6 +15,17 @@ export default function Signup() {
   const [password1, setPassword1] = useState("");
   const [password2, setPassword2] = useState("");
   const [isValid, setIsValid] = useState(false);
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (localStorage.getItem("HOCVOIAI_TOKEN"))
+      authenticateToken().then((res) => {
+        if (res.code === 200 || res.data) {
+          navigate("/features");
+        }
+      });
+  }, []);
   useEffect(() => {
     if (password1 !== "" && password2 !== "") {
       if (password1 !== password2) {
@@ -26,10 +37,8 @@ export default function Signup() {
     }
   }, [password1, password2]);
 
-  const navigate = useNavigate();
   function handleSignup() {
     signup(email, pass, name).then((res) => {
-    console.log({email, pass, name})
       if (res) {
         handleGenerateRoadmap();
         navigate("/features");
@@ -51,7 +60,7 @@ export default function Signup() {
   function handleGenerateRoadmap() {
     const topics = JSON.parse(localStorage.getItem("toGenTopics"));
     localStorage.removeItem("toGenTopics");
-    
+
     // Send a message to the server
     socket.emit("generate", {
       topics: topics,

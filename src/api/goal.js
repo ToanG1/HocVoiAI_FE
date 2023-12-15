@@ -16,8 +16,12 @@ function updateGoal(id, name) {
   return authedAxiosInstance.patch(`/goal/${id}`, object);
 }
 
+function deleteGoal(id) {
+  return authedAxiosInstance.delete(`/goal/${id}`);
+}
+
 function getListGoalByUserId(userId) {
   return axiosInstance.get(`/goal?userId=${userId}`);
 }
 
-export { createGoal, updateGoal, getListGoalByUserId };
+export { createGoal, updateGoal, deleteGoal, getListGoalByUserId };

@@ -19,13 +19,14 @@ export default function Signup() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (localStorage.getItem("HOCVOIAI_TOKEN"))
+    if (localStorage.getItem("HOCVOIAI_TOKEN") !== null)
       authenticateToken().then((res) => {
         if (res.code === 200 || res.data) {
           navigate("/features");
         }
       });
   }, []);
+
   useEffect(() => {
     if (password1 !== "" && password2 !== "") {
       if (password1 !== password2) {

@@ -48,6 +48,7 @@
         width: 530px !important;
         line-height: 80px !important;
         margin: 10px;
+        font-size: 16px;
       }
 
       h3,
@@ -62,6 +63,7 @@
         overflow: hidden;
         text-overflow: ellipsis;
         border-radius: 10px;
+        color: rgb(31, 31, 31);
       }
       img {
         position: absolute;
@@ -91,6 +93,7 @@
       font-size: 14px;
       padding: 0 10px;
       position: unset !important;
+      font-size: 16px;
       color: black !important;
       overflow: hidden;
       text-overflow: ellipsis;

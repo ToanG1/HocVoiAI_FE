@@ -1,13 +1,29 @@
 import { authedAxiosInstance, axiosInstance } from "./API";
 
 async function handleLocalStorage(res) {
-  localStorage.removeItem("HOCVOIAI_TOKEN");
-  localStorage.removeItem("HOCVOIAI_REFRESHTOKEN");
-  localStorage.removeItem("USER_INFO");
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      localStorage.removeItem("HOCVOIAI_TOKEN");
+      localStorage.removeItem("HOCVOIAI_REFRESHTOKEN");
+      localStorage.removeItem("USER_INFO");
 
-  localStorage.setItem("HOCVOIAI_TOKEN", res.data.access_token);
-  localStorage.setItem("HOCVOIAI_REFRESHTOKEN", res.data.refersh_token);
-  localStorage.setItem("USER_INFO", JSON.stringify(res.data.user_info));
+      localStorage.setItem("HOCVOIAI_TOKEN", res.data.access_token);
+      localStorage.setItem("HOCVOIAI_REFRESHTOKEN", res.data.refersh_token);
+      localStorage.setItem("USER_INFO", JSON.stringify(res.data.user_info));
+      resolve();
+    }, 1000);
+  });
+}
+
+async function handleRemoveLocalStorage(res) {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      localStorage.removeItem("HOCVOIAI_TOKEN");
+      localStorage.removeItem("HOCVOIAI_REFRESHTOKEN");
+      localStorage.removeItem("USER_INFO");
+      resolve();
+    }, 1000);
+  });
 }
 
 async function login(email, password) {
@@ -51,11 +67,9 @@ async function activate(token) {
 async function logout() {
   try {
     const token = localStorage.getItem("HOCVOIAI_REFRESHTOKEN");
-    localStorage.removeItem("HOCVOIAI_TOKEN");
-    localStorage.removeItem("HOCVOIAI_REFRESHTOKEN");
-    localStorage.removeItem("tokenId");
-    localStorage.removeItem("USER_INFO");
-    return authedAxiosInstance.get(`/auth/logout/${token}`);
+    return handleRemoveLocalStorage().then(() => {
+      return authedAxiosInstance.get(`/auth/logout/${token}`);
+    });
   } catch (err) {
     console.log(err);
   }

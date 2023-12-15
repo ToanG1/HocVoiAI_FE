@@ -1,6 +1,8 @@
 import React, { useCallback, useEffect, useState, useMemo } from "react";
 import styles from "./Question.scss";
 
+import { useNavigate } from "react-router-dom";
+
 import QuestionList from "./QuestionList";
 import AskQuestion from "./AskQuestion";
 import "react-responsive-modal/styles.css";
@@ -16,6 +18,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 import { getAllQuestion } from "../../api/question";
 import { getAllCategory } from "../../api/category";
+import { authenticateToken } from "../../api/auth";
 
 const months = [
   { value: "1", label: "1" },
@@ -44,7 +47,17 @@ function Question() {
   const [selectedMonth, setSelectedMonth] = useState(null);
   const [selectedYear, setSelectedYear] = useState(null);
 
+  const navigate = useNavigate();
+
   useEffect(() => {
+    if (localStorage.getItem("HOCVOIAI_TOKEN"))
+      authenticateToken().then((res) => {
+        if (res.code !== 200 || !res.data) {
+          navigate("/login");
+        }
+      });
+    else navigate("/login");
+
     async function fetchCategory() {
       const res = await getAllCategory();
       console.log(res);

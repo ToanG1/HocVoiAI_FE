@@ -8,10 +8,20 @@ const axiosInstance = axios.create({
   baseURL: BASE_URL
 });
 
+function getToken() {
+  const token = localStorage.getItem("HOCVOIAI_TOKEN");
+  while (token === null) {
+    setInterval(() => {
+      getToken();
+    }, 500);
+  }
+  return token;
+}
+
 const authedAxiosInstance = axios.create({
   baseURL: BASE_URL,
   headers: {
-    Authorization: `Bearer ${localStorage.getItem("HOCVOIAI_TOKEN")}`
+    Authorization: `Bearer ${getToken()}`
   }
 });
 

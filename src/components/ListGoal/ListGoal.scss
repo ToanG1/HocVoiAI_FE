@@ -16,6 +16,8 @@
       border-radius: 5px;
       color: black;
       border: 1px solid #e0b5ff;
+      position: relative;
+
       .inside-border {
         padding: 5px 20px;
         border-radius: 5px;
@@ -24,6 +26,13 @@
       }
       input {
         font-size: 18px;
+      }
+      i {
+        position: absolute;
+        top: 2px;
+        right: 2px;
+        color: #ffb6bd;
+        background-color: white;
       }
     }
   }

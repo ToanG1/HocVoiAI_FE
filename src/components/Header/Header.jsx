@@ -12,6 +12,7 @@ export default function Header() {
   function handleLogout() {
     logout()
       .then((res) => {
+        console.log(res);
         if (res.code === 200) if (res.data === true) navigate("/");
       })
       .catch((err) => {

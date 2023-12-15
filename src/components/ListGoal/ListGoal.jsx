@@ -4,9 +4,15 @@ import styles from "./ListGoal.scss";
 import RoadmapBranch from "../RoadmapBranch/RoadmapBranch";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight, faCircleXmark } from "@fortawesome/free-solid-svg-icons";
+import { faCircleXmark as faCircleXmarkRegular } from "@fortawesome/free-regular-svg-icons";
 import defaultImg from "../../assets/images/roadmap.png";
 
-import { getListGoalByUserId, createGoal, updateGoal } from "../../api/goal";
+import {
+  getListGoalByUserId,
+  createGoal,
+  updateGoal,
+  deleteGoal
+} from "../../api/goal";
 import { getGoalBranchsById, createGoalBranch } from "../../api/goalBranch";
 import { searchPrivilege } from "../../api/privilege";
 
@@ -17,7 +23,6 @@ export default function ListGoal({ userId, mode }) {
   useEffect(() => {
     const fetchData = async () => {
       const res = await getListGoalByUserId(userId);
-      console.log(res);
       if (res.code === 200) setListGoal(res.data);
     };
     fetchData();
@@ -26,14 +31,7 @@ export default function ListGoal({ userId, mode }) {
   async function handleAddNewGoal(value) {
     createGoal(value)
       .then((res) => {
-        console.log(res);
-        if (res.code === 200)
-          setListGoal(
-            listGoal.concat({
-              name: value,
-              id: 0
-            })
-          );
+        if (res.code === 200) setListGoal(listGoal.concat(res.data));
       })
       .catch((err) => {
         console.log(err);
@@ -65,6 +63,25 @@ export default function ListGoal({ userId, mode }) {
       })
       .catch((err) => {
         console.log(err);
+      });
+  }
+
+  function handleDeleteGoal(id) {
+    deleteGoal(id)
+      .then(() => {
+        setListGoal(listGoal.filter((item) => item.id !== id));
+      })
+      .catch((err) => {
+        toast.error(err.response.data.message, {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light"
+        });
       });
   }
 
@@ -135,6 +152,13 @@ export default function ListGoal({ userId, mode }) {
                       handleGetGoalBranchs(item.id);
                     }}
                   />
+                  <i
+                    onClick={() => {
+                      handleDeleteGoal(item.id);
+                    }}
+                  >
+                    <FontAwesomeIcon icon={faCircleXmarkRegular} />
+                  </i>
                 </div>
               );
             else

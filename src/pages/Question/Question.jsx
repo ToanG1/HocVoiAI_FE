@@ -47,14 +47,16 @@ function Question() {
   useEffect(() => {
     async function fetchCategory() {
       const res = await getAllCategory();
-      setTopics(
-        res.data.map((item) => {
-          return {
-            value: item.id,
-            label: item.name
-          };
-        })
-      );
+      console.log(res);
+      if (res.code === 200)
+        setTopics(
+          res.data.map((item) => {
+            return {
+              value: item.id,
+              label: item.name
+            };
+          })
+        );
     }
     fetchCategory().catch((err) => {
       console.log(err);

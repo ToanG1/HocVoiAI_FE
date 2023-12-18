@@ -12,20 +12,34 @@ import { Modal } from "react-responsive-modal";
 import { ToastContainer } from "react-toastify";
 
 import { authenticateToken } from "../../api/auth";
+import { getAllRoadmap } from "../../api/roadmap";
 
 import "react-toastify/dist/ReactToastify.css";
 import "react-responsive-modal/styles.css";
 
 export default function Features() {
+  const [roadmaps, setRoadmaps] = useState([]);
+
   const navigate = useNavigate();
   useEffect(() => {
     if (localStorage.getItem("HOCVOIAI_TOKEN"))
-      authenticateToken().then((res) => {
-        if (res.code !== 200 || !res.data) {
-          navigate("/login");
-        }
-      });
+      authenticateToken()
+        .then((res) => {
+          if (res.code !== 200 || !res.data) {
+            navigate("/login");
+          }
+        })
+        .catch((err) => {
+          if (err.response.status !== 401) navigate("/login");
+          else console.log(err);
+        });
     else navigate("/login");
+
+    const fetchRoadmap = async () => {
+      const res = await getAllRoadmap(0, 7);
+      if (res.code === 200) setRoadmaps(res.data);
+    };
+    fetchRoadmap();
   }, []);
 
   const [isOpenModal, setIsOpenModal] = useState(false);
@@ -50,7 +64,7 @@ export default function Features() {
             Create New
           </button>
         </div>
-        <CoursesListing />
+        <CoursesListing data={roadmaps.data} />
         <CoursesListing />
         <CoursesListing />
       </div>

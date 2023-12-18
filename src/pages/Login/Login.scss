@@ -126,8 +126,6 @@
     h1 {
       margin-bottom: 10px;
     }
-    p {
-    }
   }
   input {
     margin: 10px 0;
@@ -140,9 +138,9 @@
     color: white;
     font-size: 14px;
   }
-  .secret-code {
-    p {
-    }
+
+  .customModal {
+    max-width: 500px;
   }
 }
 

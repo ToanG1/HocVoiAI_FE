@@ -11,12 +11,12 @@ function getReletiveRoadmap(roadmapId) {
   return axiosInstance.get(`/roadmap/ralative/${roadmapId}`);
 }
 
-async function getAllRoadmap() {
-  return await axiosInstance.get(`/roadmap`);
+function getAllRoadmap(page, limit) {
+  return axiosInstance.get(`/roadmap?page=${page}&limit=${limit}`);
 }
 
-async function createRoadmap(roadmap) {
-  return await authedAxiosInstance.post(`/roadmap`, roadmap);
+function createRoadmap(roadmap) {
+  return authedAxiosInstance.post(`/roadmap`, roadmap);
 }
 
 function updateRoadmap(roadmap, rmId) {

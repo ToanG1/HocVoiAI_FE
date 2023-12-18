@@ -20,11 +20,15 @@ export default function Signup() {
 
   useEffect(() => {
     if (localStorage.getItem("HOCVOIAI_TOKEN") !== null)
-      authenticateToken().then((res) => {
-        if (res.code === 200 || res.data) {
-          navigate("/features");
-        }
-      });
+      authenticateToken()
+        .then((res) => {
+          if (res.code === 200 || res.data) {
+            navigate("/features");
+          }
+        })
+        .catch((err) => {
+          if (err.response.status !== 401) console.log(err);
+        });
   }, []);
 
   useEffect(() => {

@@ -17,6 +17,7 @@ import Footer from "../../components/Footer/Footer";
 import ListGoal from "../ListGoal/ListGoal";
 import { ToastContainer, toast } from "react-toastify";
 
+import { authenticateToken } from "../../api/auth";
 import { getUser, updateUser } from "../../api/user";
 import { uploadImage } from "../../api/UploadFile";
 import { IMG_URL } from "../../api/API";
@@ -102,7 +103,13 @@ export default function Profile() {
 
   const [mode, setMode] = useState("view");
   function handleEditProfile() {
-    setMode(mode === "view" ? "edit" : "view");
+    authenticateToken()
+      .then((res) => {
+        if (res.code === 200) setMode(mode === "view" ? "edit" : "view");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 
   const [selectedSocial, setselectedSocial] = useState("");

@@ -18,11 +18,15 @@ export default function Login() {
 
   useEffect(() => {
     if (localStorage.getItem("HOCVOIAI_TOKEN"))
-      authenticateToken().then((res) => {
-        if (res.code === 200 || res.data) {
-          navigate("/features");
-        }
-      });
+      authenticateToken()
+        .then((res) => {
+          if (res.code === 200 || res.data) {
+            navigate("/features");
+          }
+        })
+        .catch((err) => {
+          if (err.response.status !== 401) console.log(err);
+        });
   }, []);
 
   async function handleLogin() {
@@ -111,6 +115,7 @@ export default function Login() {
           onClose={handleOnCloseModal}
           center
           classNames={{
+            overlay: "customOverlay",
             modal: "customModal"
           }}
         >

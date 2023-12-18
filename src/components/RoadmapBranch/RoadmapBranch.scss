@@ -25,6 +25,7 @@
 
   .right-side {
     width: 785px;
+    position: relative;
     input {
       background-color: transparent;
     }
@@ -32,6 +33,15 @@
       background-color: white;
       border-radius: 10px;
       position: relative;
+
+      #sticky-note-img {
+        z-index: 2;
+        position: absolute;
+        bottom: 5px;
+        right: 5px;
+        width: 40px;
+        height: 40px;
+      }
 
       i {
         position: absolute;

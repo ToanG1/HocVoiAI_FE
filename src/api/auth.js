@@ -11,7 +11,7 @@ async function handleLocalStorage(res) {
       localStorage.setItem("HOCVOIAI_REFRESHTOKEN", res.data.refersh_token);
       localStorage.setItem("USER_INFO", JSON.stringify(res.data.user_info));
       resolve();
-    }, 1000);
+    }, 500);
   });
 }
 
@@ -22,7 +22,7 @@ async function handleRemoveLocalStorage(res) {
       localStorage.removeItem("HOCVOIAI_REFRESHTOKEN");
       localStorage.removeItem("USER_INFO");
       resolve();
-    }, 1000);
+    }, 500);
   });
 }
 

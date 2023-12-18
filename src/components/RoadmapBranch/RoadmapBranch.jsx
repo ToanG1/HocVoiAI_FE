@@ -5,6 +5,10 @@ import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight, faCircleXmark } from "@fortawesome/free-solid-svg-icons";
 import defaultImg from "../../assets/images/roadmap.png";
+import stickyNote from "../../assets/images/sticky-note.png";
+
+import { Modal } from "react-responsive-modal";
+import StickyNote from "../StickyNotes/StickyNotes";
 
 import { updateGoalBranch, deleteGoalBranch } from "../../api/goalBranch";
 import { searchPrivilege } from "../../api/privilege";
@@ -82,12 +86,19 @@ export default function RoadmapBranch({
       });
   }
 
+  const [isOpenModal, setIsOpenModal] = useState(false);
+
+  function handleOpenStickyNote() {
+    setIsOpenModal(true);
+  }
+
+  function handleCloseStickyNote() {
+    setIsOpenModal(false);
+  }
+
   return (
     <section>
-      <Link
-        className="roadmap-branch"
-        to={mode !== "edit" ? `/course/${data.id}` : null}
-      >
+      <div className="roadmap-branch">
         <div className="left-side">
           <p className="upper-ruler ruler"></p>
           <p className="dot"></p>
@@ -137,12 +148,24 @@ export default function RoadmapBranch({
                 </i>
               </>
             ) : (
-              <h3>{data.title}</h3>
+              <>
+                <Link to={mode !== "edit" ? `/course/${data.id}` : null}>
+                  <h3>{data.title}</h3>
+                </Link>
+                <img
+                  id="sticky-note-img"
+                  src={stickyNote}
+                  alt="sticky note"
+                  onClick={() => {
+                    handleOpenStickyNote();
+                  }}
+                />
+              </>
             )}
             <img src={data.avatar ? data.avatar : defaultImg} alt="avatar" />
           </div>
         </div>
-      </Link>
+      </div>
       <div className="search-results">
         {searchResults.map((item, index) => {
           console.log(item.roadmapDetail.title);
@@ -167,6 +190,16 @@ export default function RoadmapBranch({
           );
         })}
       </div>
+      <Modal
+        open={isOpenModal}
+        onClose={handleCloseStickyNote}
+        center
+        classNames={{
+          modal: "customModal"
+        }}
+      >
+        <StickyNote id={roadmap.id} />
+      </Modal>
     </section>
   );
 }

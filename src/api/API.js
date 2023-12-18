@@ -10,7 +10,7 @@ const axiosInstance = axios.create({
 
 function getToken() {
   const token = localStorage.getItem("HOCVOIAI_TOKEN");
-  while (token === null) {
+  if (token === null) {
     setInterval(() => {
       getToken();
     }, 500);
@@ -37,8 +37,8 @@ authedAxiosInstance.interceptors.response.use(
     return response.data;
   },
   async (error) => {
+    console.log("bug: " + error);
     const originalRequest = error.config;
-    console.log(error);
     if (
       error.response.status === 401 &&
       !originalRequest._retry &&

@@ -81,7 +81,6 @@ function Question() {
   const [pageCount, setPageCount] = useState(1);
   const [totalItems, setTotalItems] = useState(0);
   const [isOpenModal, setIsOpenModal] = useState(false);
-  const [selectedOption, setSelectedOption] = useState(null);
 
   useEffect(() => {
     async function fetchData() {

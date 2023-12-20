@@ -1,7 +1,6 @@
 import React from "react";
 import { useState, useEffect, useCallback } from "react";
 import styles from "./Features.scss";
-import { useNavigate } from "react-router-dom";
 
 import Header from "../../components/Header/Header";
 import CoursesListing from "../../components/CoursesListing/CoursesListing";
@@ -11,8 +10,9 @@ import BgComp from "../../components/BgComp/BgComp";
 import { Modal } from "react-responsive-modal";
 import { ToastContainer } from "react-toastify";
 
-import { authenticateToken } from "../../api/auth";
 import { getAllRoadmap } from "../../api/roadmap";
+
+import { checkAuthenticationInApp } from "../../services/common";
 
 import "react-toastify/dist/ReactToastify.css";
 import "react-responsive-modal/styles.css";
@@ -20,20 +20,8 @@ import "react-responsive-modal/styles.css";
 export default function Features() {
   const [roadmaps, setRoadmaps] = useState([]);
 
-  const navigate = useNavigate();
   useEffect(() => {
-    if (localStorage.getItem("HOCVOIAI_TOKEN"))
-      authenticateToken()
-        .then((res) => {
-          if (res.code !== 200 || !res.data) {
-            navigate("/login");
-          }
-        })
-        .catch((err) => {
-          if (err.response.status !== 401) navigate("/login");
-          else console.log(err);
-        });
-    else navigate("/login");
+    checkAuthenticationInApp();
 
     const fetchRoadmap = async () => {
       const res = await getAllRoadmap(0, 7);

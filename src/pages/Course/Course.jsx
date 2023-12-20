@@ -10,7 +10,8 @@ import defaultImg from "../../assets//images/default-img.png";
 import { ToastContainer } from "react-toastify";
 
 import { getAllPrivilege } from "../../api/roadmap";
-import { authenticateToken } from "../../api/auth";
+
+import { checkAuthenticationInApp } from "../../services/common";
 
 function clearActiveNavItem() {
   const elements = document.getElementsByClassName("course-nav-item");
@@ -27,15 +28,8 @@ function clearActiveSideNavItem() {
 export default function Course() {
   const userInfo = JSON.parse(localStorage.getItem("USER_INFO"));
   const [data, setData] = useState([]);
-  const navigate = useNavigate();
   useEffect(() => {
-    if (localStorage.getItem("HOCVOIAI_TOKEN"))
-      authenticateToken().then((res) => {
-        if (res.code !== 200 || !res.data) {
-          navigate("/login");
-        }
-      });
-    else navigate("/login");
+    checkAuthenticationInApp();
 
     getAllPrivilege()
       .then((res) => {

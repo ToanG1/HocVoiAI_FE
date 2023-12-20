@@ -4,7 +4,7 @@ import styles from "./CoursesListing.scss";
 
 export default function CoursesListing({ data }) {
   console.log(data);
-  if (data)
+  if (data && data.length > 0)
     return (
       <section className="coursesListing-container">
         <h2 className="feature-title">New Recommended To You</h2>
@@ -38,7 +38,7 @@ export default function CoursesListing({ data }) {
                       className="thumb"
                       style={{
                         backgroundImage: item.avatar
-                          ? item.avatar
+                          ? `url(${item.avatar})`
                           : `url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/210284/users-2.png)`
                       }}
                     ></div>

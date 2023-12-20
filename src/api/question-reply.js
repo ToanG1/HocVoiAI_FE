@@ -8,4 +8,8 @@ function getQuestionRepliesByQId(qId) {
   return authedAxiosInstance.get(`/question-reply/${qId}`);
 }
 
-export { createQuestionReply, getQuestionRepliesByQId };
+function deleteQuestionReply(id) {
+  return authedAxiosInstance.delete(`/question-reply/${id}`);
+}
+
+export { createQuestionReply, getQuestionRepliesByQId, deleteQuestionReply };

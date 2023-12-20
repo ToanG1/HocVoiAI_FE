@@ -3,7 +3,10 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styles from "./Signup.scss";
 
-import { signup, authenticateToken } from "../../api/auth";
+import { signup } from "../../api/auth";
+
+import { checkAuthenticationOutOfApp } from "../../services/common";
+
 import { useWebSocket } from "../../websocket/context";
 import { ToastContainer, toast } from "react-toastify";
 
@@ -19,16 +22,7 @@ export default function Signup() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (localStorage.getItem("HOCVOIAI_TOKEN") !== null)
-      authenticateToken()
-        .then((res) => {
-          if (res.code === 200 || res.data) {
-            navigate("/features");
-          }
-        })
-        .catch((err) => {
-          if (err.response.status !== 401) console.log(err);
-        });
+    checkAuthenticationOutOfApp();
   }, []);
 
   useEffect(() => {

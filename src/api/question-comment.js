@@ -8,4 +8,12 @@ function getQuestionCommentsById(id) {
   return authedAxiosInstance.get(`/question-comment/${id}`);
 }
 
-export { createQuestionComment, getQuestionCommentsById };
+function deleteQuestionComment(id) {
+  return authedAxiosInstance.delete(`/question-comment/${id}`);
+}
+
+export {
+  createQuestionComment,
+  getQuestionCommentsById,
+  deleteQuestionComment
+};

@@ -25,7 +25,11 @@ function updateRoadmap(roadmap, rmId) {
     milestones: JSON.stringify(roadmap.milestones)
   };
 
-  return authedAxiosInstance.patch(`roadmap/${rmId}`, roadmapDto);
+  return authedAxiosInstance.patch(`/roadmap/${rmId}`, roadmapDto);
+}
+
+function updateRoadmapDetail(rmId, data) {
+  return authedAxiosInstance.patch(`/roadmap/${rmId}`, data);
 }
 
 function deleteRoadmap(roadmapId) {
@@ -39,5 +43,6 @@ export {
   getAllPrivilege,
   createRoadmap,
   updateRoadmap,
+  updateRoadmapDetail,
   deleteRoadmap
 };

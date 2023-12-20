@@ -371,17 +371,20 @@ export default function Roadmap1({ rMode, content }) {
   async function handleUpdateContent() {
     updateRoadmap(roadmap, roadmapId)
       .then((res) => {
-        setMode("watch");
-        toast.success("Update roadmap successfuly!", {
-          position: "top-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light"
-        });
+        console.log(res);
+        if (res.code === 200) {
+          setMode("watch");
+          toast.success("Update roadmap successfuly!", {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light"
+          });
+        }
       })
       .catch((err) => {
         console.log(err);

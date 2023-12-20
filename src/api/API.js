@@ -37,7 +37,6 @@ authedAxiosInstance.interceptors.response.use(
     return response.data;
   },
   async (error) => {
-    console.log("bug: " + error);
     const originalRequest = error.config;
     if (
       error.response.status === 401 &&

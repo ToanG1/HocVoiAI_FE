@@ -7,6 +7,7 @@
   padding: 50px;
   margin: 80px 0;
   margin-bottom: 150px;
+  min-height: 70vh;
   .course-details-content {
     width: 63%;
     .course-details-tag {
@@ -101,6 +102,11 @@
   .course-details-sidebar {
     width: 33%;
     height: 100vh;
+    .edit-button {
+      width: fit-content !important;
+      padding: 0 20px !important;
+      margin-left: 10px !important;
+    }
     .course-details-sidebar-header {
       height: 80px;
       display: flex;
@@ -165,6 +171,39 @@
           border-bottom: none;
         }
       }
+    }
+  }
+  .sidebar-img-container {
+    position: relative;
+    i {
+      position: absolute;
+      bottom: 10px;
+      right: 10px;
+    }
+  }
+  .home-input__select {
+    width: fit-content;
+    border: none;
+    outline: none;
+    border-radius: 10px;
+    padding: 10px 20px;
+    background-color: rgba(255, 255, 255, 0.38);
+    -webkit-appearance: none;
+    color: var(--dark-color);
+    font-size: 1rem;
+    text-align-last: center;
+  }
+  input {
+    width: 80px;
+    font-size: 16px;
+  }
+
+  .rating-form {
+    & > * {
+      margin-top: 20px;
+    }
+    textarea {
+      width: 96% !important;
     }
   }
 }

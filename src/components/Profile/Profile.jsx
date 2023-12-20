@@ -48,6 +48,8 @@ export default function Profile() {
     async function fecthData() {
       const res = await getUser(userInfo.id);
       if (res.code === 200) {
+        console.log(res.data);
+
         setData(res.data);
         setImage(res.data.userInfo.avatar);
         const socialLink = JSON.parse(res.data.userInfo.socialLink);
@@ -61,7 +63,6 @@ export default function Profile() {
           instagram: socialLink.instagram,
           linkedin: socialLink.linkedin
         });
-        console.log(res.data);
       }
     }
     fecthData().catch((err) => {

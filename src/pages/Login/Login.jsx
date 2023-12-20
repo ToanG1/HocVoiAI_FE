@@ -7,7 +7,9 @@ import { Modal } from "react-responsive-modal";
 import ForgotPwdModal from "./ForgotPwdModal";
 
 import { login } from "../../api/auth";
-import { authenticateToken } from "../../api/auth";
+
+import { checkAuthenticationOutOfApp } from "../../services/common";
+
 import { ToastContainer, toast } from "react-toastify";
 
 export default function Login() {
@@ -17,16 +19,7 @@ export default function Login() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (localStorage.getItem("HOCVOIAI_TOKEN"))
-      authenticateToken()
-        .then((res) => {
-          if (res.code === 200 || res.data) {
-            navigate("/features");
-          }
-        })
-        .catch((err) => {
-          if (err.response.status !== 401) console.log(err);
-        });
+    checkAuthenticationOutOfApp();
   }, []);
 
   async function handleLogin() {

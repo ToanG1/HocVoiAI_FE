@@ -11,4 +11,9 @@ async function getAllQuestion(page) {
 function getQuestion(id) {
   return axiosInstance.get(`/question/${id}`);
 }
-export { createQuestion, getAllQuestion, getQuestion };
+
+function deleteQuestion(id) {
+  return authedAxiosInstance.delete(`/question/${id}`);
+}
+
+export { createQuestion, getAllQuestion, getQuestion, deleteQuestion };

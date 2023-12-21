@@ -21,10 +21,19 @@
     top: 0;
     right: 0;
   }
+  input {
+    margin-top: 20px !important;
+  }
+  h2 {
+    border-bottom: 1px solid #ccc;
+  }
+  .select {
+    margin-left: 5px;
+    width: 150px;
+    color: black;
+  }
 }
-input {
-  margin-top: 20px !important;
-}
+
 .lighter-hr {
   background-color: #eee;
   border: 0 none;
@@ -43,10 +52,6 @@ input {
 
 .questions-detail-container section {
   margin: 20px;
-}
-
-h2 {
-  border-bottom: 1px solid #ccc;
 }
 
 .question-title {

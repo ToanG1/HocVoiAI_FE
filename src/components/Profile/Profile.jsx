@@ -144,11 +144,11 @@ export default function Profile() {
             pauseOnHover: true,
             draggable: true,
             progress: undefined,
-            theme: "light"
+            theme: "light",
+            onClose: () => {
+              window.location.reload();
+            }
           });
-          setInterval(() => {
-            window.location.reload();
-          }, 3000);
         }
       })
       .catch((err) => {

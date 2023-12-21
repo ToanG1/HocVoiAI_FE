@@ -79,11 +79,7 @@
     display: flex;
     justify-content: space-between;
   }
-  .select {
-    margin-left: 5px;
-    width: 150px;
-    color: black;
-  }
+
   .modal-row {
     display: flex;
     justify-content: space-between;
@@ -189,4 +185,11 @@
     font-size: 12px;
     line-height: 24px;
   }
+  .select {
+    margin-left: 5px;
+    width: 150px;
+    color: black;
+  }
 }
+
+

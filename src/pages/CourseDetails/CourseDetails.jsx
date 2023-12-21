@@ -75,11 +75,11 @@ export default function CourseDetails() {
             pauseOnHover: true,
             draggable: true,
             progress: undefined,
-            theme: "light"
+            theme: "light",
+            onClose: () => {
+              window.location.href = "/course";
+            }
           });
-          setInterval(() => {
-            window.location.href = "/course";
-          }, 3000);
         } else if (res.code === 403) {
           toast.error("You don't have permission to delete", {
             position: "top-right",

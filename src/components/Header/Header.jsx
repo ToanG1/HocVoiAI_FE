@@ -7,6 +7,7 @@ import { faUser } from "@fortawesome/free-solid-svg-icons";
 
 import { logout } from "../../api/auth";
 import logo from "../../assets/images/logo.png";
+
 export default function Header() {
   const navigate = useNavigate();
   function handleLogout() {
@@ -23,7 +24,10 @@ export default function Header() {
     : undefined;
 
   const handleSearch = () => {
-    console.log("search");
+    const keyword = document.getElementById("search");
+    if (keyword.value) {
+      navigate(`/search?keyword=${keyword.value}`);
+    }
   };
 
   return (
@@ -43,7 +47,16 @@ export default function Header() {
         <div className="nav-item">Social</div>
       </div>
       <div className="dropdown-container">
-        <input id="search" type="text" placeholder="Search" />
+        <input
+          id="search"
+          type="text"
+          placeholder="Search"
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              handleSearch();
+            }
+          }}
+        />
         <button className="btn">
           {/* <span>Account</span> */}
           <i className="earth-icons">
@@ -64,7 +77,7 @@ export default function Header() {
               <Link>Help</Link>
             </li>
             <li>
-              <Link onClick={handleLogout}>Log Out</Link>
+              <Link onClick={() => handleLogout()}>Log Out</Link>
             </li>
           </ul>
         </button>

@@ -12,8 +12,20 @@ function getQuestion(id) {
   return axiosInstance.get(`/question/${id}`);
 }
 
+function searchQuestions(keyword, page = 0, limit = 10) {
+  return axiosInstance.get(
+    `/question/search?keyword=${keyword}&page=${page}&limit=${limit}`
+  );
+}
+
 function deleteQuestion(id) {
   return authedAxiosInstance.delete(`/question/${id}`);
 }
 
-export { createQuestion, getAllQuestion, getQuestion, deleteQuestion };
+export {
+  createQuestion,
+  getAllQuestion,
+  getQuestion,
+  searchQuestions,
+  deleteQuestion
+};

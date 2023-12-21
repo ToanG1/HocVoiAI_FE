@@ -14,6 +14,7 @@ import Profile from "./components/Profile/Profile";
 import ResetPassword from "./pages/ResetPassword/ResetPassword";
 import Activate from "./pages/Activate/Activate";
 import ForgotPassword from "./pages/ForgotPassword/ForgotPassword";
+import Search from "./pages/Search/Search";
 
 export default function App() {
   return (
@@ -32,6 +33,7 @@ export default function App() {
         <Route path="questions/:questionId" element={<QuestionDetail />} />
         <Route path="profile/:userId" element={<Profile />} />
         <Route path="activate" element={<Activate />} />
+        <Route path="search" element={<Search />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>

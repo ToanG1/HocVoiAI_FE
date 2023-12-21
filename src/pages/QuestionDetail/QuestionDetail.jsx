@@ -83,11 +83,11 @@ function QuestionDetail_({}) {
           pauseOnHover: true,
           draggable: true,
           progress: undefined,
-          theme: "light"
+          theme: "light",
+          onClose: () => {
+            navigate("/questions");
+          }
         });
-        setInterval(() => {
-          navigate("/questions");
-        }, 4000);
       }
     });
   }

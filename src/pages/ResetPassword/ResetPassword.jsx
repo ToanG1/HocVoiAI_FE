@@ -55,21 +55,22 @@ export default function ResetPassword() {
               pauseOnHover: true,
               draggable: true,
               progress: undefined,
-              theme: "light"
+              theme: "light",
+              onClose: () => {
+                logout()
+                  .then((res) => {
+                    if (res.code === 200)
+                      if (res.data === true) navigate("/login");
+                  })
+                  .catch((err) => {
+                    console.log(err);
+                  });
+              }
             });
-            setInterval(() => {
-              logout()
-                .then((res) => {
-                  if (res.code === 200)
-                    if (res.data === true) navigate("/login");
-                })
-                .catch((err) => {
-                  console.log(err);
-                });
-            }, 3000);
           }
         })
         .catch((err) => {
+          console.log(err);
           toast.error(err.response.data.message, {
             position: "top-right",
             autoClose: 5000,
@@ -107,7 +108,7 @@ export default function ResetPassword() {
           This is an unique link to reset your password for your account. Note
           that this link will expire in 5 minutes and can be used only once.
         </p>
-        <button onClick={handleChangePassword}>Reset Password</button>
+        <button onClick={() => handleChangePassword()}>Reset Password</button>
       </div>
     </section>
   );

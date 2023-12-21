@@ -118,11 +118,11 @@ function Question() {
         pauseOnHover: true,
         draggable: true,
         progress: undefined,
-        theme: "light"
+        theme: "light",
+        onClose: () => {
+          window.location.reload();
+        }
       });
-      setInterval(() => {
-        window.location.reload();
-      }, 3000);
     } else {
       toast.error("Something wrong !", {
         position: "top-right",

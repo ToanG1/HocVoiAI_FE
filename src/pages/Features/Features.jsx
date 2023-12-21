@@ -22,7 +22,6 @@ export default function Features() {
 
   useEffect(() => {
     checkAuthenticationInApp();
-
     const fetchRoadmap = async () => {
       const res = await getAllRoadmap(0, 7);
       if (res.code === 200) setRoadmaps(res.data);

@@ -3,16 +3,17 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 import Select from "react-select";
-import styles from "./Question.scss";
+import styles from "./AskQuestion.scss";
 import Editor from "../../components/Editor/Editor";
 
 import { createQuestion } from "../../api/question";
 import { toast } from "react-toastify";
 
+import { checkAuthenticationInApp } from "../../services/common";
+
 function AskQuestion({ onSubmit, topics }) {
-  const navigate = useNavigate();
   useEffect(() => {
-    if (!localStorage.getItem("USER_INFO")) navigate("/login");
+    checkAuthenticationInApp();
   }, []);
 
   const [selectedTopic, setSelectedTopic] = useState({
@@ -58,7 +59,7 @@ function AskQuestion({ onSubmit, topics }) {
   }
 
   return (
-    <div className="ask-question">
+    <div className="ask-question-container">
       <h2>Ask a public question</h2>
       <div class="modal-row">
         <Select
@@ -70,11 +71,11 @@ function AskQuestion({ onSubmit, topics }) {
         />
       </div>
       <div class="title-container">
-        <h5 class="title-item">Title </h5>
+        <h3 class="title-item">Title </h3>
         <div class="title-item">
           Be specific and imagine you’re asking a question to another person.
         </div>
-        <div class="question-form">
+        <div>
           <input
             class="title-input"
             type="text"
@@ -85,7 +86,7 @@ function AskQuestion({ onSubmit, topics }) {
         </div>
       </div>
       <div class="context-container">
-        <h5 class="title-item">What are the details of your problem? </h5>
+        <h3 class="title-item">What are the details of your problem? </h3>
         <div class="title-item">
           Introduce the problem and expand on what you put in the title.
         </div>

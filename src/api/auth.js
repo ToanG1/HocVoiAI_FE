@@ -66,9 +66,8 @@ async function activate(token) {
 
 async function logout() {
   try {
-    const token = localStorage.getItem("HOCVOIAI_REFRESHTOKEN");
     return handleRemoveLocalStorage().then(() => {
-      return authedAxiosInstance.get(`/auth/logout/${token}`);
+      return authedAxiosInstance.get(`/auth/logout`);
     });
   } catch (err) {
     console.log(err);
@@ -89,11 +88,18 @@ async function checkUrlToken(token) {
   return axiosInstance.get(`/auth/check-url-token?token=${token}`);
 }
 
-async function changePwd(token, pwd) {
+async function resetPwd(token, pwd) {
   const data = {
     pwd: pwd
   };
   return axiosInstance.post(`/auth/reset-pwd/${token}`, data);
+}
+
+function changePwd(pwd) {
+  const data = {
+    pwd: pwd
+  };
+  return authedAxiosInstance.post(`/auth/change-pwd`, data);
 }
 
 async function authenticateToken() {
@@ -107,6 +113,7 @@ export {
   logout,
   forgotPwd,
   checkCode,
+  resetPwd,
   changePwd,
   checkUrlToken,
   authenticateToken

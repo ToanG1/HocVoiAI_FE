@@ -8,7 +8,7 @@ import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 
 import logo from "../../assets/images/logo.png";
 
-import { changePwd, checkUrlToken } from "../../api/auth";
+import { resetPwd, checkUrlToken, logout } from "../../api/auth";
 import { ToastContainer, toast } from "react-toastify";
 
 export default function ResetPassword() {
@@ -44,7 +44,7 @@ export default function ResetPassword() {
         theme: "light"
       });
     } else
-      changePwd(token, pwd)
+      resetPwd(token, pwd)
         .then((res) => {
           if (res.code === 200) {
             toast.success("Your password has been changed", {
@@ -55,14 +55,22 @@ export default function ResetPassword() {
               pauseOnHover: true,
               draggable: true,
               progress: undefined,
-              theme: "light"
+              theme: "light",
+              onClose: () => {
+                logout()
+                  .then((res) => {
+                    if (res.code === 200)
+                      if (res.data === true) navigate("/login");
+                  })
+                  .catch((err) => {
+                    console.log(err);
+                  });
+              }
             });
-            setInterval(() => {
-              navigate("/login");
-            }, 4000);
           }
         })
         .catch((err) => {
+          console.log(err);
           toast.error(err.response.data.message, {
             position: "top-right",
             autoClose: 5000,
@@ -98,9 +106,9 @@ export default function ResetPassword() {
         </div>
         <p>
           This is an unique link to reset your password for your account. Note
-          that this link will expire in 5 minutes and can only be used once.
+          that this link will expire in 5 minutes and can be used only once.
         </p>
-        <button onClick={handleChangePassword}>Reset Password</button>
+        <button onClick={() => handleChangePassword()}>Reset Password</button>
       </div>
     </section>
   );

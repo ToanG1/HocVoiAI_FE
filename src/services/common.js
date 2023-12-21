@@ -21,11 +21,13 @@ function checkAuthenticationInApp() {
   if (localStorage.getItem("HOCVOIAI_TOKEN"))
     authenticateToken()
       .then((res) => {
+        console.log(res);
         if (res.code !== 200 || !res.data) {
           window.location.href = "/login";
         }
       })
       .catch((err) => {
+        console.log("bug", err);
         if (err instanceof TypeError) window.location.href = "/login";
         if (err.response.status !== 401) window.location.href = "/login";
       });

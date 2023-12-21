@@ -10,10 +10,30 @@
   padding: 20px;
   background-color: #fff;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+  }
+  i {
+    position: absolute;
+    top: 0;
+    right: 0;
+  }
+  input {
+    margin-top: 20px !important;
+  }
+  h2 {
+    border-bottom: 1px solid #ccc;
+  }
+  .select {
+    margin-left: 5px;
+    width: 150px;
+    color: black;
+  }
 }
-input {
-  margin-top: 20px !important;
-}
+
 .lighter-hr {
   background-color: #eee;
   border: 0 none;
@@ -21,13 +41,7 @@ input {
   height: 1px;
 }
 
-body {
-  font-family: Arial, sans-serif;
-  margin: 0;
-  padding: 0;
-}
-
-header {
+.question-detail-header {
   position: relative;
   padding: 20px;
   i {
@@ -38,10 +52,6 @@ header {
 
 .questions-detail-container section {
   margin: 20px;
-}
-
-h2 {
-  border-bottom: 1px solid #ccc;
 }
 
 .question-title {
@@ -102,11 +112,7 @@ h2 {
   margin-bottom: 20px;
   position: relative;
 }
-i {
-  position: absolute;
-  top: 0;
-  right: 0;
-}
+
 .comment {
   position: relative;
   margin: 20px 0 0 20px;

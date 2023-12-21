@@ -11,6 +11,12 @@ function getReletiveRoadmap(roadmapId) {
   return axiosInstance.get(`/roadmap/ralative/${roadmapId}`);
 }
 
+function searchRoadmap(keyword, page = 0, limit = 10) {
+  return axiosInstance.get(
+    `/roadmap/search?keyword=${keyword}&page=${page}&limit=${limit}`
+  );
+}
+
 function getAllRoadmap(page, limit) {
   return axiosInstance.get(`/roadmap?page=${page}&limit=${limit}`);
 }
@@ -39,6 +45,7 @@ function deleteRoadmap(roadmapId) {
 export {
   getRoadmap,
   getAllRoadmap,
+  searchRoadmap,
   getReletiveRoadmap,
   getAllPrivilege,
   createRoadmap,

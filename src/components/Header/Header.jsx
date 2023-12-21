@@ -1,9 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from "./Header.scss";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEarthAsia } from "@fortawesome/free-solid-svg-icons";
+import { faUser } from "@fortawesome/free-solid-svg-icons";
 
 import { logout } from "../../api/auth";
 import logo from "../../assets/images/logo.png";
@@ -12,8 +12,7 @@ export default function Header() {
   function handleLogout() {
     logout()
       .then((res) => {
-        console.log(res);
-        if (res.code === 200) if (res.data === true) navigate("/");
+        if (res.code === 200) if (res.data === true) navigate("/login");
       })
       .catch((err) => {
         console.log(err);
@@ -23,7 +22,10 @@ export default function Header() {
     ? JSON.parse(localStorage.getItem("USER_INFO")).userId
     : undefined;
 
-  const handlePwdReset = () => {};
+  const handleSearch = () => {
+    console.log("search");
+  };
+
   return (
     <header className="header-container">
       <div className="header-logo">
@@ -41,10 +43,11 @@ export default function Header() {
         <div className="nav-item">Social</div>
       </div>
       <div className="dropdown-container">
+        <input id="search" type="text" placeholder="Search" />
         <button className="btn">
-          <span>Account Settings</span>
+          {/* <span>Account</span> */}
           <i className="earth-icons">
-            <FontAwesomeIcon icon={faEarthAsia} size="2xl" />
+            <FontAwesomeIcon icon={faUser} size="2xl" />
           </i>
           <ul className="dropdown">
             <li>
@@ -54,7 +57,7 @@ export default function Header() {
               <Link to="/course">Library</Link>
             </li>
             <li>
-              <a onClick={handlePwdReset}>Change Password</a>
+              <Link to="/forgot-pwd">Change Password</Link>
             </li>
 
             <li>

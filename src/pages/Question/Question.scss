@@ -4,189 +4,189 @@
   padding: 20px;
   background-color: #fff;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
 
-.header {
-  color: black;
-  text-align: center;
-  padding: 20px 0;
-}
+  .header {
+    color: black;
+    text-align: center;
+    padding: 20px 0;
+  }
 
-.main {
-  margin-top: 20px !important;
-}
+  .main {
+    margin-top: 20px !important;
+  }
 
-.question-list {
-  border-top: 1px solid #ddd;
-  margin-top: 20px;
-  padding-top: 20px;
-}
+  .question-list {
+    border-top: 1px solid #ddd;
+    margin-top: 20px;
+    padding-top: 20px;
+  }
 
-.ask-question {
-  margin-top: 20px;
-}
+  .ask-question {
+    margin-top: 20px;
+  }
 
-textarea {
-  width: 100%;
-  height: 100px;
-  padding: 10px;
-  margin-bottom: 10px;
-  border-style: solid;
-  border-width: 1px;
-  border-color: hsl(210, 8%, 75%);
-}
+  textarea {
+    width: 100%;
+    height: 100px;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-style: solid;
+    border-width: 1px;
+    border-color: hsl(210, 8%, 75%);
+  }
 
-button {
-  color: #fff;
-  background-color: hsl(206, 100%, 52%);
-  border: none;
-  padding: 10px 20px;
-  border-radius: 5px;
-  cursor: pointer;
-}
-button:active {
-  background-color: hsl(209, 100%, 32%);
-}
+  button {
+    color: #fff;
+    background-color: hsl(206, 100%, 52%);
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  button:active {
+    background-color: hsl(209, 100%, 32%);
+  }
 
-.column {
-  float: left;
-  width: 33.33%;
-  padding: 20px;
-}
+  .column {
+    float: left;
+    width: 33.33%;
+    padding: 20px;
+  }
 
-/* Clear floats after the columns */
-.title-row {
-  display: flex;
-  justify-content: space-between;
-  padding: 5px 12px;
-}
+  /* Clear floats after the columns */
+  .title-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 5px 12px;
+  }
 
-.ask-question-btn {
-  background-color: hsl(206, 100%, 52%);
-}
+  .ask-question-btn {
+    background-color: hsl(206, 100%, 52%);
+  }
 
-.ask-question-btn:hover {
-  background-color: hsl(209, 100%, 32%);
-}
+  .ask-question-btn:hover {
+    background-color: hsl(209, 100%, 32%);
+  }
 
-.customOverlay {
-  background: rgba(36, 123, 160, 0.7);
-}
-.customModal {
-  max-width: 500px;
-  width: 70%;
-}
-.select-container {
-  display: flex;
-  justify-content: space-between;
-}
-.select {
-  margin-left: 5px;
-  width: 150px;
-  color: black;
-}
-.modal-row {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 10px;
-  margin-bottom: 10px;
-}
+  .customOverlay {
+    background: rgba(36, 123, 160, 0.7);
+  }
+  .customModal {
+    max-width: 500px;
+    width: 70%;
+  }
+  .select-container {
+    display: flex;
+    justify-content: space-between;
+  }
+  .select {
+    margin-left: 5px;
+    width: 150px;
+    color: black;
+  }
+  .modal-row {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
 
-.context-container {
-  padding: 10px;
-  border-style: solid;
-  border-width: 1px;
-  border-color: hsl(210, 8%, 85%);
-}
-.title-container {
-  padding: 10px;
-  border-style: solid;
-  border-width: 1px;
-  border-color: hsl(210, 8%, 85%);
-}
-.title-item {
-  margin-bottom: 5px;
-}
-.title-form {
-  padding-right: 10px;
-}
-.title-input {
-  width: calc(100% - 22px);
-  height: 30px;
-  padding: 10px;
-  margin-bottom: 10px;
-  font-size: 18px;
-  border-style: solid;
-  border-width: 1px;
-  border-color: hsl(210, 8%, 75%);
-}
-/* pagination.css */
-.pagination {
-  display: flex;
-  list-style: none;
-  padding: 0;
-  justify-content: center;
-  margin-top: 20px;
-}
+  .context-container {
+    padding: 10px;
+    border-style: solid;
+    border-width: 1px;
+    border-color: hsl(210, 8%, 85%);
+  }
+  .title-container {
+    padding: 10px;
+    border-style: solid;
+    border-width: 1px;
+    border-color: hsl(210, 8%, 85%);
+  }
+  .title-item {
+    margin-bottom: 5px;
+  }
+  .title-form {
+    padding-right: 10px;
+  }
+  .title-input {
+    width: calc(100% - 22px);
+    height: 30px;
+    padding: 10px;
+    margin-bottom: 10px;
+    font-size: 18px;
+    border-style: solid;
+    border-width: 1px;
+    border-color: hsl(210, 8%, 75%);
+  }
+  /* pagination.css */
+  .pagination {
+    display: flex;
+    list-style: none;
+    padding: 0;
+    justify-content: center;
+    margin-top: 20px;
+  }
 
-.page-item {
-  margin: 0 5px;
-  display: flex;
-  align-items: center;
-}
+  .page-item {
+    margin: 0 5px;
+    display: flex;
+    align-items: center;
+  }
 
-.page-link {
-  text-decoration: none;
-  background-color: #f0f0f0;
-  color: #333;
-  border: 1px solid #ccc;
-  padding: 8px 12px;
-  border-radius: 4px;
-}
+  .page-link {
+    text-decoration: none;
+    background-color: #f0f0f0;
+    color: #333;
+    border: 1px solid #ccc;
+    padding: 8px 12px;
+    border-radius: 4px;
+  }
 
-.page-link:hover {
-  background-color: #ddd;
-}
+  .page-link:hover {
+    background-color: #ddd;
+  }
 
-.active .page-link {
-  background-color: #007bff;
-  color: #fff;
-  border: 1px solid #007bff;
-}
+  .active .page-link {
+    background-color: #007bff;
+    color: #fff;
+    border: 1px solid #007bff;
+  }
 
-.question-container {
-  padding: 10px;
-}
+  .question-container {
+    padding: 10px;
+  }
 
-.title-question-row {
-  padding-bottom: 10px;
-  padding-top: 10px;
-  color: #0074cc;
-}
+  .title-question-row {
+    padding-bottom: 10px;
+    padding-top: 10px;
+    color: #0074cc;
+  }
 
-.styled-box {
-  background-color: #3498db;
-  color: #fff;
-  padding: 5px;
-  border-radius: 5px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  text-align: center;
-}
+  .styled-box {
+    background-color: #3498db;
+    color: #fff;
+    padding: 5px;
+    border-radius: 5px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+  }
 
-.topic-row {
-  display: flex;
-  justify-content: space-between;
-  padding-top: 10px;
-  padding-bottom: 10px;
-}
+  .topic-row {
+    display: flex;
+    justify-content: space-between;
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
 
-.info-user-container {
-  display: flex;
-  justify-content: space-between;
-}
+  .info-user-container {
+    display: flex;
+    justify-content: space-between;
+  }
 
-.info-user-item {
-  padding-right: 5px;
-  font-size: 12px;
-  line-height: 24px;
+  .info-user-item {
+    padding-right: 5px;
+    font-size: 12px;
+    line-height: 24px;
+  }
 }

@@ -97,7 +97,7 @@ function QuestionDetail_({}) {
       <BgComp />
       <ToastContainer />
       <section className="questions-detail-container">
-        <header>
+        <div className="question-detail-header">
           <h1 className="question-title">{data ? data.title : null}</h1>
           <p className="info">
             Posted by:{" "}
@@ -118,7 +118,7 @@ function QuestionDetail_({}) {
               />
             </i>
           )}
-        </header>
+        </div>
 
         <section className="question">
           <p

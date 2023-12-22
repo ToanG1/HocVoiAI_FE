@@ -48,8 +48,6 @@ export default function Profile() {
     async function fecthData() {
       const res = await getUser(userInfo.id);
       if (res.code === 200) {
-        console.log(res.data);
-
         setData(res.data);
         setImage(res.data.userInfo.avatar);
         const socialLink = JSON.parse(res.data.userInfo.socialLink);
@@ -115,10 +113,6 @@ export default function Profile() {
 
   const [selectedSocial, setselectedSocial] = useState("");
 
-  useEffect(() => {
-    console.log(userInfo);
-  }, [userInfo]);
-
   function handleUpdateInfo() {
     const user = {
       id: JSON.parse(localStorage.getItem("USER_INFO")).userId,
@@ -132,7 +126,6 @@ export default function Profile() {
         linkedin: userInfo.linkedin
       })
     };
-    console.log(user);
     updateUser(user)
       .then((res) => {
         if (res.code === 200) {

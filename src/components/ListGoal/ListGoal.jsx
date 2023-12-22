@@ -99,7 +99,6 @@ export default function ListGoal({ userId, mode }) {
     if (value)
       searchPrivilege(value)
         .then((res) => {
-          console.log(res.data);
           if (res.code === 200) setSearchResults(res.data);
         })
         .catch((err) => {
@@ -121,7 +120,6 @@ export default function ListGoal({ userId, mode }) {
       startDate: document.getElementById("start-date").value,
       endDate: document.getElementById("start-date").value
     };
-    console.log(data);
     createGoalBranch(data)
       .then((res) => {
         if (res.code === 200) setGoalBranchs(goalBranchs.concat(res.data));
@@ -192,7 +190,6 @@ export default function ListGoal({ userId, mode }) {
         </div>
         <div className="goal-roadmaps">
           {goalBranchs.map((item) => {
-            console.log(item);
             return (
               <RoadmapBranch
                 key={item.id}
@@ -241,7 +238,6 @@ export default function ListGoal({ userId, mode }) {
 
                 <div className="search-results">
                   {searchResults.map((item, index) => {
-                    console.log(item.roadmapDetail.title);
                     return (
                       <div
                         className="search-item"

@@ -10,7 +10,6 @@ function CommentForm({ addComment, questionId, answerId }) {
       questionId: questionId,
       questionReplyId: answerId
     };
-    console.log(newComment);
 
     createQuestionComment(newComment)
       .then((res) => {

@@ -152,7 +152,6 @@ function Answer({ answer, removeAnswer }) {
       const res = await getQuestionCommentsById(answer.id);
       if (res.code === 200) {
         setComments(res.data);
-        console.log(res.data);
       }
     };
     fetchData();

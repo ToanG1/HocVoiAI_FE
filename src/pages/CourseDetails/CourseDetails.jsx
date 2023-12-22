@@ -224,7 +224,6 @@ export default function CourseDetails() {
         language: language,
         duration: durationValue
       };
-      console.log(data);
       updateRoadmapDetail(detail.id, data)
         .then((res) => {
           if (res.code === 200) {

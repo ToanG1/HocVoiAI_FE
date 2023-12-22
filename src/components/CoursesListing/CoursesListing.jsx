@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import styles from "./CoursesListing.scss";
 
 export default function CoursesListing({ data }) {
-  console.log(data);
   if (data && data.length > 0)
     return (
       <section className="coursesListing-container">

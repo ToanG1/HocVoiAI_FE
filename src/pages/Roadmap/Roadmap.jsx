@@ -42,7 +42,6 @@ export default function Roadmap() {
   const { state } = useLocation();
 
   const content = state.content;
-  console.log(content);
   const roadmap = {
     title: content ? content.title : "Roadmap Title",
     milestones: content && content.topics ? JSON.parse(content.topics) : []

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styles from "./Search.scss";
-import { useSearchParams } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import Select from "react-select";
 import ReactPaginate from "react-paginate";
 import Header from "../../components/Header/Header";
@@ -9,6 +9,9 @@ import BgComp from "../../components/BgComp/BgComp";
 
 import { searchRoadmap } from "../../api/roadmap";
 import { searchQuestions } from "../../api/question";
+
+import moment from "moment";
+
 import defaultImg from "../../assets/images/roadmap.png";
 
 const filterOptions = [
@@ -40,9 +43,9 @@ export default function Search() {
 
   const [type, setType] = useState("roadmap");
 
-  function handleActiveNav(e) {
+  function handleActiveNav(e, value) {
     handleRemoveActiveNav();
-    setType(type === "roadmap" ? "question" : "roadmap");
+    setType(value);
     e.currentTarget.classList.add("active-nav");
   }
 
@@ -86,10 +89,13 @@ export default function Search() {
       <section className="search-result-container">
         <div className="search-result-nav">
           <div className="search-type">
-            <h2 className="active-nav" onClick={(e) => handleActiveNav(e)}>
+            <h2
+              className="active-nav"
+              onClick={(e) => handleActiveNav(e, "roadmap")}
+            >
               Roadmap
             </h2>
-            <h2 onClick={(e) => handleActiveNav(e)}>Question</h2>
+            <h2 onClick={(e) => handleActiveNav(e, "question")}>Question</h2>
           </div>
           <div className="search-filter">
             <Select
@@ -105,25 +111,46 @@ export default function Search() {
             {searchResult.map((item) => {
               if (type === "roadmap") {
                 return (
-                  <li
+                  <Link
                     className="search-result-item roadmap-item"
-                    key={item._id}
+                    key={item.id}
+                    to={`/course/${item.id}`}
                   >
                     <h3>{item.title}</h3>
                     <img
                       src={item.avatar ? item.avatar : defaultImg}
                       alt={item.title}
                     />
-                  </li>
+                  </Link>
                 );
-              } else {
+              } else if (type === "question") {
                 return (
-                  <li
+                  <Link
                     className="search-result-item question-item"
-                    key={item._id}
+                    key={item.id}
+                    to={`/questions/${item.id}`}
                   >
-                    {item.title}
-                  </li>
+                    <div className="content-row">
+                      <h3>{item.title}</h3>
+                      <p>
+                        {item.content
+                          ? item.content.replace(/<[^>]+>/g, "").slice(0, 100)
+                          : ""}
+                      </p>
+                    </div>
+
+                    <div className="topic-row">
+                      <div className="styled-box ">{item.category.name}</div>
+                      <div className="info-user-container">
+                        <p className="info-user-item">
+                          by {item.user ? item.user.name : ""}
+                        </p>
+                        <p className="info-user-item">
+                          {moment(item.createdAt).fromNow()}
+                        </p>
+                      </div>
+                    </div>
+                  </Link>
                 );
               }
             })}

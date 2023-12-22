@@ -91,4 +91,50 @@
       border: 1px solid #007bff;
     }
   }
+  .question-item {
+    padding: 10px !important;
+    h3 {
+      color: #0074cc;
+    }
+    .styled-box {
+      width: fit-content;
+      background-color: #3498db;
+      color: #fff;
+      padding: 5px;
+      margin: 10px;
+      border-radius: 5px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      text-align: center;
+    }
+    .content-row {
+      width: 70%;
+      height: 100%;
+      p {
+        display: -webkit-box;
+        max-width: 100%;
+        -webkit-line-clamp: 4;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+      }
+    }
+    .topic-row {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: end;
+      width: 30%;
+      height: 100%;
+    }
+
+    .info-user-container {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .info-user-item {
+      padding-right: 5px;
+      font-size: 12px;
+      line-height: 24px;
+    }
+  }
 }

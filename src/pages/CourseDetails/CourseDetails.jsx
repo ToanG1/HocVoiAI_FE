@@ -12,12 +12,17 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { faStar as faStarRegular } from "@fortawesome/free-regular-svg-icons";
 
+import "react-responsive-modal/styles.css";
+import { Modal } from "react-responsive-modal";
+
 import Header from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
 import CourseOverview from "../../components/CourseOverview/CourseOverview";
 import CourseCirculum from "../../components/CourseCirculum/CourseCirculum";
 import CourseRating from "../../components/CourseRating/CourseRating";
 import defaultImg from "../../assets/images/roadmap.png";
+import ButtonsModal from "../../components/ButtonsModal/ButtonsModal";
+import ReportForm from "../../components/ReportForm/ReportForm";
 
 import {
   getRoadmap,
@@ -28,7 +33,7 @@ import { createPrivilege } from "../../api/privilege";
 import { createRating } from "../../api/rating";
 import { uploadImage } from "../../api/UploadFile";
 import { IMG_URL } from "../../api/API";
-
+import { ReportType } from "../../utils/ReportType";
 import { ToastContainer, toast } from "react-toastify";
 
 function removeActiveClass() {
@@ -45,6 +50,8 @@ function removeActiveClass() {
 export default function CourseDetails() {
   const { courseId } = useParams("courseId");
   const [detail, setDetail] = useState({});
+  const [isButtonModalOpen, setIsButtonModalOpen] = useState(false);
+  const [isReportModalOpen, setIsReportModalOpen] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -64,6 +71,8 @@ export default function CourseDetails() {
   }, []);
 
   function handleDelete() {
+    setIsButtonModalOpen(false);
+
     deleteRoadmap(detail.id)
       .then((res) => {
         if (res.code === 200) {
@@ -206,7 +215,13 @@ export default function CourseDetails() {
   const [mode, setMode] = useState("watch");
 
   function handleChangeToEditMode() {
+    setIsButtonModalOpen(false);
+
     setMode("edit");
+  }
+
+  function handleChangeToWatchMode() {
+    setMode("watch");
   }
 
   function SideBar() {
@@ -284,25 +299,33 @@ export default function CourseDetails() {
       // 👇️ open file input box on click of another element
       inputRef.current.click();
     };
+
+    function handleReportRoadmap() {
+      setIsButtonModalOpen(false);
+      setIsReportModalOpen(true);
+    }
+
     if (mode === "watch")
       return (
         <div className="course-details-sidebar">
           <div className="course-details-sidebar-header">
             <button className="course-details-sidebar-button">Share</button>
-            <div>
-              <button
-                className="course-details-sidebar-button"
-                onClick={handleDelete}
-              >
-                Delete
-              </button>
-              <button
-                className="course-details-sidebar-button edit-button"
-                onClick={handleChangeToEditMode}
-              >
-                <FontAwesomeIcon icon={faEllipsisVertical} />
-              </button>
-            </div>
+
+            <button
+              className="course-details-sidebar-button edit-button"
+              onClick={() => {
+                setIsButtonModalOpen(!isButtonModalOpen);
+              }}
+            >
+              <FontAwesomeIcon icon={faEllipsisVertical} />
+            </button>
+            {isButtonModalOpen ? (
+              <ButtonsModal
+                onReport={handleReportRoadmap}
+                onUpdate={handleChangeToEditMode}
+                onDelete={handleDelete}
+              />
+            ) : null}
           </div>
           <div className="course-details-sidebar-content">
             <img
@@ -375,14 +398,18 @@ export default function CourseDetails() {
       return (
         <div className="course-details-sidebar">
           <div className="course-details-sidebar-header">
-            <div>
-              <button
-                className="course-details-sidebar-button"
-                onClick={handleUpdateDetail}
-              >
-                Save changes
-              </button>
-            </div>
+            <button
+              className="course-details-sidebar-button"
+              onClick={handleUpdateDetail}
+            >
+              Save changes
+            </button>
+            <button
+              className="course-details-sidebar-button"
+              onClick={handleChangeToWatchMode}
+            >
+              Cancel
+            </button>
           </div>
           <div className="course-details-sidebar-content">
             <div className="sidebar-img-container">
@@ -475,6 +502,10 @@ export default function CourseDetails() {
         </div>
       );
   }
+
+  function handleCloseReportModal() {
+    setIsReportModalOpen(false);
+  }
   return (
     <>
       <Header />
@@ -528,6 +559,20 @@ export default function CourseDetails() {
         </div>
         <SideBar />
       </div>
+      <Modal
+        open={isReportModalOpen}
+        onClose={handleCloseReportModal}
+        center
+        classNames={{
+          modal: "customModal"
+        }}
+      >
+        <ReportForm
+          id={courseId}
+          type={ReportType.ROADMAP_REPORT}
+          closeForm={handleCloseReportModal}
+        />
+      </Modal>
       <Footer />
     </>
   );

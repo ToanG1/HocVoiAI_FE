@@ -23,7 +23,6 @@ export default function CourseBox({ course }) {
           </div>
           <div className="course-box-body">
             <p className="course-box-title">{detail.title}</p>
-            <p className="course-box-time">{detail.topics} topics</p>
             <p className="course-box-description">
               <span>{detail.description.replace(/<[^>]+>/g, "")}</span>
             </p>

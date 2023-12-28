@@ -1,0 +1,16 @@
+.pagination-container {
+  button {
+    padding: 5px 10px !important;
+    margin: 0 10px !important;
+    background-color: rgb(195, 195, 195) !important;
+    border: none !important;
+    border-radius: 4px !important;
+    color: white !important;
+  }
+  span {
+    letter-spacing: 3px !important;
+  }
+  .active {
+    background-color: rgb(108, 1, 124) !important;
+  }
+}

@@ -45,7 +45,7 @@
 
   p {
     font-family: "Lexend", sans-serif;
-    color: #848b9f;
+    color: #bac4de;
     font-size: 20px;
     font-weight: 400;
     line-height: 30px;
@@ -275,17 +275,45 @@
     .quarter-content {
       opacity: 0;
       transition: all 0.8s ease;
+
+      position: relative;
       ul li {
-        margin-bottom: 10px;
+        margin-top: 10px;
+      }
+      span {
+        z-index: 10;
+        width: 400px;
+        display: none;
+        background-color: rgba(255, 255, 255, 0.75);
+        padding: 20px;
+        border-radius: 10px;
+        position: absolute;
+        top: 0;
+        right: -460px;
+        text-align: left;
+        font-size: 14px;
+        white-space: pre-line;
       }
     }
 
+    .roadmap1-milestone-content:nth-child(4) span,
+    .roadmap1-milestone-content:nth-child(5) span {
+      left: -460px !important;
+      right: 0 !important;
+    }
+
+    .roadmap1-milestone-content:hover .quarter-title,
     .active .quarter-title {
       opacity: 0;
     }
 
+    .roadmap1-milestone-content:hover .quarter-content,
     .active .quarter-content {
       opacity: 1;
+    }
+    .roadmap1-milestone-content:hover .quarter-content span,
+    .active .quarter-content span {
+      display: block;
     }
     .milestone-input {
       font-size: 20px;

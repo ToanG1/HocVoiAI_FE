@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styles from "./ReportForm.scss";
 
-import { ReportType } from "../../utils/ReportType";
-
 import { createReport } from "../../api/report";
 
 import { toast } from "react-toastify";

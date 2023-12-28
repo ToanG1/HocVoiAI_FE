@@ -1,38 +1,34 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./CourseBox.scss";
-export default function CourseBox() {
+import { Link } from "react-router-dom";
+
+import defaultImg from "../../assets/images/roadmap.png";
+
+export default function CourseBox({ course }) {
+  const detail = course.roadmapDetail;
   const root = document.documentElement;
-  root.style.setProperty("--percent", "75%");
+  root.style.setProperty("--percent", course.progress);
 
   return (
-    <div className="course-box-container">
-      <div className="course-box-content">
-        <div className="course-box-header">
-          <img
-            src="https://picsum.photos/200/300"
-            className="course-box-image"
-            alt="course-img"
-          />
-          <p className="course-box-tag">tag</p>
-        </div>
-        <div className="course-box-body">
-          <p className="course-box-title">Title Of The Course Is Meaningful</p>
-          <p className="course-box-time">15 weeks and 30 hours</p>
-          <p className="course-box-description">
-            <span>
-              This is place where we put the description. User need this to know
-              what the course is about bla bla bla bla bla bla bla bla bla bla
-              bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla
-              bla
-            </span>
-            <div className="course-box-progessbar">
-              <div class="progress-bar" role="progressbar">
-                75%
-              </div>
-            </div>
-          </p>
+    <Link to={`${detail.id}`} style={{ textDecorationLine: "none" }}>
+      <div className="course-box-container">
+        <div className="course-box-content">
+          <div className="course-box-header">
+            <img
+              src={defaultImg}
+              className="course-box-image"
+              alt="course-img"
+            />
+            <p className="course-box-tag">{detail.category.name}</p>
+          </div>
+          <div className="course-box-body">
+            <p className="course-box-title">{detail.title}</p>
+            <p className="course-box-description">
+              <span>{detail.description.replace(/<[^>]+>/g, "")}</span>
+            </p>
+          </div>
         </div>
       </div>
-    </div>
+    </Link>
   );
 }

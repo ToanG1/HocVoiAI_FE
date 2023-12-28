@@ -8,13 +8,18 @@
   height: 425px;
   width: 321px;
   color: blue;
-  @include mixin.gray-thin-border;
+  background-color: style.$white-color;
+  border-radius: 10px;
   .course-box-content {
-    margin: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     .course-box-header {
       width: 271px;
       height: 196px;
       position: relative;
+      margin-top: 20px;
       .course-box-image {
         width: 271px;
         height: 196px;
@@ -26,7 +31,7 @@
         width: fit-content;
         padding: 5px 10px;
         position: absolute;
-        top: -4px;
+        top: 10px;
         left: 10px;
         color: style.$dark-gray-color;
         background-color: style.$light-bg;
@@ -39,7 +44,11 @@
       }
     }
     .course-box-body {
-      margin-top: 40px;
+      width: 280px;
+      height: 150px;
+      margin-top: 30px;
+      margin-right: 20px;
+      margin-left: 20px;
       p {
         margin: 10px 0;
         font-size: 14px;
@@ -54,38 +63,14 @@
         margin-bottom: 20px;
       }
       .course-box-description {
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
         span {
-          width: calc(70%);
+          width: calc(90%);
           color: style.$gray-color;
           display: -webkit-box;
           overflow-y: hidden;
-          -webkit-line-clamp: 3;
+          -webkit-line-clamp: 5;
           -webkit-box-orient: vertical;
           position: relative;
-        }
-        .course-box-progessbar {
-          display: inline-block;
-          width: 20%;
-          height: 50px;
-          color: style.$p-text-color;
-          font-size: 14px;
-          .progress-bar {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background: radial-gradient(
-                closest-side,
-                white 79%,
-                transparent 80% 100%
-              ),
-              conic-gradient(hotpink var(--percent), pink 0);
-          }
         }
       }
     }

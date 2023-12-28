@@ -4,3 +4,25 @@
   border: 1px solid style.$light-gray-color;
   border-radius: 10px;
 }
+
+@mixin blue-rounded-btn {
+  border: none;
+  border-radius: 10px;
+  background-color: style.$blue-color;
+  font-size: 20px;
+  color: style.$white-color;
+}
+
+@mixin gray-rounded-btn {
+  border: none;
+  border-radius: 10px;
+  background-color: style.$gray-color;
+  font-size: 20px;
+  color: style.$white-color;
+}
+
+@mixin p-btn {
+  background-color: style.$purple-color;
+  color: style.$white-color;
+  padding: 10px 20px;
+}

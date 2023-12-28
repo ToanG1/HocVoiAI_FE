@@ -1,127 +1,87 @@
-import React from "react";
-import 'font-awesome/css/font-awesome.min.css';
-//import './YourComponent.css'; 
+import React, { useState } from "react";
+import styles from "./Header.scss";
+import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUser } from "@fortawesome/free-solid-svg-icons";
 
-import style from '../Header/Header.scss';
-function HEADER() {
-    const handleKeyPress = (event) => {
-        // Add your handling logic for keypress here
-        // For example, you can access the input value using event.target.value
-        const searchKeyword = event.target.value;
-        console.log('Search Keyword:', searchKeyword);
-      };
-      const top = (event) => {
-        
-        const searchKeyword = event.target.value;
-        console.log('Search Keyword:', searchKeyword);
-      };
-      const services = (event) => {
-        
-        const searchKeyword = event.target.value;
-        console.log('Search Keyword:', searchKeyword);
-      };
-    return (
-    <body>   
-       
-      
-  
-  <header class="header-area header-sticky">
-    <div class="container">
-        <div class="row">
-            <div class="col-12">
-                <nav class="main-nav">
-                    
-                    <a href="index.html" class="logo">
-                        <h1>Scholar</h1>
-                    </a>
-                   
-                    <div class="search-input">
-                      <form id="search" action="#">
-                        <input type="text" placeholder="Type Something" id='searchText' name="searchKeyword" onkeypress="handle" />
-                        <i class="fa fa-search"></i>
-                      </form>
-                    </div>
-                  
-                    <ul class="nav">
-                      <li class="scroll-to-section"><a href="#top" class="active">Home</a></li>
-                      <li class="scroll-to-section"><a href="#services">Services</a></li>
-                      <li class="scroll-to-section"><a href="#courses">Courses</a></li>
-                      <li class="scroll-to-section"><a href="#team">Team</a></li>
-                      <li class="scroll-to-section"><a href="#events">Events</a></li>
-                      <li class="scroll-to-section"><a href="#contact">Register Now!</a></li>
-                  </ul>   
-                    <a class='menu-trigger'>
-                        <span>Menu</span>
-                    </a>
-                  
-                </nav>
-            </div>
-        </div>
-    </div>
-  </header>
+import { logout } from "../../api/auth";
+import logo from "../../assets/images/logo.png";
 
-
-  <div class="main-banner" id="top">
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-12">
-          <div class="owl-carousel owl-banner">
-            <div class="item item-1">
-              <div class="header-text">
-                <span class="category">Our Courses</span>
-                <h2>With Scholar Teachers, Everything Is Easier</h2>
-                <p>Scholar is free CSS template designed by TemplateMo for online educational related websites. This layout is based on the famous Bootstrap v5.3.0 framework.</p>
-                <div class="buttons">
-                  <div class="main-button">
-                    <a href="#">Request Demo</a>
-                  </div>
-                  <div class="icon-button">
-                    <a href="#"><i class="fa fa-play"></i> What's Scholar?</a>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="item item-2">
-              <div class="header-text">
-                <span class="category">Best Result</span>
-                <h2>Get the best result out of your effort</h2>
-                <p>You are allowed to use this template for any educational or commercial purpose. You are not allowed to re-distribute the template ZIP file on any other website.</p>
-                <div class="buttons">
-                  <div class="main-button">
-                    <a href="#">Request Demo</a>
-                  </div>
-                  <div class="icon-button">
-                    <a href="#"><i class="fa fa-play"></i> What's the best result?</a>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="item item-3">
-              <div class="header-text">
-                <span class="category">Online Learning</span>
-                <h2>Online Learning helps you save the time</h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod temporious incididunt ut labore et dolore magna aliqua suspendisse.</p>
-                <div class="buttons">
-                  <div class="main-button">
-                    <a href="#">Request Demo</a>
-                  </div>
-                  <div class="icon-button">
-                    <a href="#"><i class="fa fa-play"></i> What's Online Course?</a>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-
-    </body> 
-    
-  
-    );
+export default function Header() {
+  const navigate = useNavigate();
+  function handleLogout() {
+    logout()
+      .then((res) => {
+        if (res.code === 200) if (res.data === true) navigate("/login");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
-  
-  export default HEADER;
+  const userId = JSON.parse(localStorage.getItem("USER_INFO"))
+    ? JSON.parse(localStorage.getItem("USER_INFO")).userId
+    : undefined;
+
+  const handleSearch = () => {
+    const keyword = document.getElementById("search");
+    if (keyword.value) {
+      navigate(`/search?keyword=${keyword.value}`);
+    }
+  };
+
+  return (
+    <header className="header-container">
+      <div className="header-logo">
+        <Link to="/">
+          <img src={logo} alt="logo" />
+        </Link>
+      </div>
+      <div className="nav-container">
+        <Link to="/features" className="nav-item">
+          Features
+        </Link>
+        <Link to="/questions" className="nav-item">
+          Asking
+        </Link>
+        <div className="nav-item">Social</div>
+      </div>
+      <div className="dropdown-container">
+        <input
+          id="search"
+          type="text"
+          placeholder="Search"
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              handleSearch();
+            }
+          }}
+        />
+        <button className="btn">
+          {/* <span>Account</span> */}
+          <i className="earth-icons">
+            <FontAwesomeIcon icon={faUser} size="2xl" />
+          </i>
+          <ul className="dropdown">
+            <li>
+              <Link to={`/profile/${userId}`}>Profile Information</Link>
+            </li>
+            <li>
+              <Link to="/course">Library</Link>
+            </li>
+            <li>
+              <Link to="/forgot-pwd">Change Password</Link>
+            </li>
+
+            <li>
+              <Link>Help</Link>
+            </li>
+            <li>
+              <Link onClick={() => handleLogout()}>Log Out</Link>
+            </li>
+          </ul>
+        </button>
+      </div>
+    </header>
+  );
+}

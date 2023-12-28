@@ -1,0 +1,45 @@
+@use "../../common/sass/style";
+.features-container {
+  margin: 80px 5% 100px 5%;
+  position: relative;
+  min-height: 100vh;
+  .create-new {
+    position: absolute;
+    top: -5px;
+    right: 50px;
+    #create-btn {
+      margin: 50px 0;
+      padding: 10px 40px;
+      font-size: 20px;
+      background-color: style.$primary-color;
+      color: style.$t-text-color;
+    }
+  }
+}
+.create-roadmap-container {
+  padding: 80px 30px;
+  .roadmap-info {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px 0;
+    div {
+      margin: 0;
+    }
+    h1 {
+      margin-bottom: 20px;
+    }
+    .select {
+      margin-bottom: 10px;
+    }
+    input {
+      background-color: style.$light2-bg;
+      border-radius: 5px;
+      padding: 10px;
+      font-size: 16px;
+    }
+    label {
+      font-size: 14px;
+      padding-right: 10px;
+    }
+  }
+}

@@ -1,0 +1,140 @@
+@use "../../common/sass/style";
+@use "../../common/sass/mixin";
+.search-result-container {
+  margin: 150px auto;
+  padding: 20px;
+  max-width: 1600px;
+  .search-result-nav {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    .search-type {
+      display: flex;
+      h2 {
+        width: fit-content;
+        padding: 15px 40px;
+        margin-right: 30px;
+        @include mixin.gray-rounded-btn;
+      }
+      .active-nav {
+        background-color: style.$blue-color !important;
+      }
+    }
+    .search-filter {
+      .select-filter {
+        width: 180px;
+      }
+    }
+  }
+  .search-result-list {
+    padding: 20px;
+    background-color: white;
+    min-height: 600px;
+    border-radius: 10px;
+    ul {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      grid-template-rows: repeat(5, 1fr);
+      grid-column-gap: 20px;
+      grid-row-gap: 20px;
+    }
+    .search-result-item {
+      width: calc(100% - 20px);
+      height: 100px;
+      background-color: style.$light2-bg;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-radius: 5px;
+      padding: 0 10px;
+      h3 {
+        max-width: 250px;
+        overflow: hidden;
+      }
+      img {
+        border-radius: 5px;
+        height: 80px;
+        width: 200px;
+        object-fit: cover;
+      }
+    }
+    .pagination {
+      display: flex;
+      list-style: none;
+      padding: 0;
+      justify-content: center;
+      margin-top: 20px;
+    }
+
+    .page-item {
+      margin: 0 5px;
+      display: flex;
+      align-items: center;
+    }
+
+    .page-link {
+      text-decoration: none;
+      background-color: #f0f0f0;
+      color: #333;
+      border: 1px solid #ccc;
+      padding: 8px 12px;
+      border-radius: 4px;
+    }
+
+    .page-link:hover {
+      background-color: #ddd;
+    }
+
+    .active .page-link {
+      background-color: #007bff;
+      color: #fff;
+      border: 1px solid #007bff;
+    }
+  }
+  .question-item {
+    padding: 10px !important;
+    h3 {
+      color: #0074cc;
+    }
+    .styled-box {
+      width: fit-content;
+      background-color: #3498db;
+      color: #fff;
+      padding: 5px;
+      margin: 10px;
+      border-radius: 5px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      text-align: center;
+    }
+    .content-row {
+      width: 70%;
+      height: 100%;
+      p {
+        display: -webkit-box;
+        max-width: 100%;
+        -webkit-line-clamp: 4;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+      }
+    }
+    .topic-row {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: end;
+      width: 30%;
+      height: 100%;
+    }
+
+    .info-user-container {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .info-user-item {
+      padding-right: 5px;
+      font-size: 12px;
+      line-height: 24px;
+    }
+  }
+}

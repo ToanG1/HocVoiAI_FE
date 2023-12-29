@@ -7,6 +7,8 @@ import gsap from "gsap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEllipsisVertical } from "@fortawesome/free-solid-svg-icons";
 
+import ChatBotHelper from "../../ChatBotHelper/ChatBotHelper";
+
 import { updateRoadmap } from "../../../api/roadmap";
 
 import { ToastContainer, toast } from "react-toastify";
@@ -416,8 +418,10 @@ export default function Roadmap1({ rMode, content }) {
 
   return (
     <>
+      <ChatBotHelper />
+      <ToastContainer />
+
       <div className="roadmap1">
-        <ToastContainer />
         <div className="roadmap1-container">
           <div className="background">
             <div className="cursor"></div>

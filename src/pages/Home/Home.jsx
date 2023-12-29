@@ -11,8 +11,6 @@ import debounce from "https://cdn.skypack.dev/debounce";
 
 import { ToastContainer } from "react-toastify";
 
-import ChatBotHelper from "../../components/ChatBotHelper/ChatBotHelper";
-
 // return a random number within a range
 function random(min, max) {
   return Math.random() * (max - min) + min;
@@ -364,7 +362,6 @@ export default function Home() {
           <p>@HCMUTE 2023 - All Rights Reserved</p>
         </div>
       </section>
-      <ChatBotHelper />
     </>
   );
 }

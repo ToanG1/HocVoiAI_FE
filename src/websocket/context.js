@@ -14,7 +14,33 @@ export function WebSocketProvider({ children }) {
 
     const newSocket = io(WS_SERVER);
     setSocket(newSocket);
+    //Init chat
+    const objectChatBotMessages = localStorage.getItem(
+      "HOCVOIAI_CHATBOT_OBJECT"
+    );
+    if (objectChatBotMessages === null) {
+      newSocket.emit("chatbot-init");
+    }
 
+    newSocket.on("chatbot-init", (data) => {
+      localStorage.setItem("HOCVOIAI_CHATBOT_OBJECT", JSON.stringify(data));
+    });
+
+    // Listen for incoming chatbot messages
+    newSocket.on("chatbot-message", (data) => {
+      const messages = JSON.parse(
+        localStorage.getItem("HOCVOIAI_CHATBOT_MESSAGES")
+      );
+      localStorage.setItem(
+        "HOCVOIAI_CHATBOT_MESSAGES",
+        JSON.stringify(
+          messages.concat({ role: "assistant", content: data.response })
+        )
+      );
+      window.dispatchEvent(new Event("receiveChatBotMessage"));
+    });
+
+    //Listen when generate roadmap finished
     newSocket.on("generated", (data) => {
       console.log("Received data from WebSocket:", data);
       toast.success(

@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 import styles from "./Course.scss";
-import { useNavigate } from "react-router-dom";
 
 import CourseBox from "../../components/CourseBox/CourseBox";
 import Header from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
 import BgComp from "../../components/BgComp/BgComp";
 import defaultImg from "../../assets//images/default-img.png";
+import Pagination from "../Pagination/Pagination";
+
 import { ToastContainer } from "react-toastify";
 
 import { getAllPrivilege } from "../../api/roadmap";
@@ -28,20 +29,30 @@ function clearActiveSideNavItem() {
 export default function Course() {
   const userInfo = JSON.parse(localStorage.getItem("USER_INFO"));
   const [data, setData] = useState([]);
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pageCount, setPageCount] = useState(1);
+
   useEffect(() => {
     checkAuthenticationInApp();
+  }, []);
 
-    getAllPrivilege()
+  useEffect(() => {
+    getAllPrivilege(currentPage, 6)
       .then((res) => {
-        console.log(res);
         if (res.code === 200) {
-          setData(res.data);
+          setData(res.data.data);
+          setPageCount(Math.ceil(res.data.totalItems / res.data.limit));
         }
       })
       .catch((err) => {
         console.log(err);
       });
-  }, []);
+  }, [currentPage]);
+
+  function handlePageClick(page) {
+    setCurrentPage(page + 1);
+  }
 
   function ActiveNavItem(e) {
     clearActiveNavItem();
@@ -129,18 +140,23 @@ export default function Course() {
               Learning History
             </div>
           </div>
-          <div className="course-list">
-            {data.map((item, i) => {
-              return (
-                <>
-                  <CourseBox
-                    course={item}
-                    key={i}
-                    className="course-grid-item"
-                  />
-                </>
-              );
-            })}
+          <div className="course-content">
+            <div className="course-list">
+              {data.map((item, i) => {
+                return (
+                  <>
+                    <CourseBox
+                      course={item}
+                      key={i}
+                      className="course-grid-item"
+                    />
+                  </>
+                );
+              })}
+            </div>
+            <div className="course-pagination">
+              <Pagination pages={pageCount} onPageChange={handlePageClick} />
+            </div>
           </div>
         </div>
       </div>

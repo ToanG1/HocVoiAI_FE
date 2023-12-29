@@ -3,8 +3,8 @@ function getRoadmap(roadmapId) {
   return authedAxiosInstance.get(`/roadmap/${roadmapId}`);
 }
 
-function getAllPrivilege() {
-  return authedAxiosInstance.get(`/roadmap/user`);
+function getAllPrivilege(page = 1, limit = 6) {
+  return authedAxiosInstance.get(`/roadmap/user?page=${page}&limit=${limit}`);
 }
 
 function getReletiveRoadmap(roadmapId) {

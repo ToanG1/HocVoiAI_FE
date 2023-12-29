@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import styles from "./Search.scss";
 import { Link, useSearchParams } from "react-router-dom";
+
 import Select from "react-select";
-import ReactPaginate from "react-paginate";
+import Pagination from "../Pagination/Pagination";
 import Header from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
 import BgComp from "../../components/BgComp/BgComp";
@@ -155,26 +156,9 @@ export default function Search() {
               }
             })}
           </ul>
-          <ReactPaginate
-            nextLabel="next >"
-            onPageChange={handlePageClick}
-            pageRangeDisplayed={3}
-            marginPagesDisplayed={2}
-            pageCount={pageCount}
-            previousLabel="< previous"
-            pageClassName="page-item"
-            pageLinkClassName="page-link"
-            previousClassName="page-item"
-            previousLinkClassName="page-link"
-            nextClassName="page-item"
-            nextLinkClassName="page-link"
-            breakLabel="..."
-            breakClassName="page-item"
-            breakLinkClassName="page-link"
-            containerClassName="pagination"
-            activeClassName="active"
-            renderOnZeroPageCount={null}
-          />
+          <div className="pagination-container">
+            <Pagination pages={pageCount} onPageChange={handlePageClick} />
+          </div>
         </div>
       </section>
       <Footer />

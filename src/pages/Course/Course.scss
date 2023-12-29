@@ -68,8 +68,16 @@
         padding-left: 21px;
       }
     }
-    .course-list {
+    .course-content {
       width: 80%;
+      .course-pagination {
+        width: 100%;
+        text-align: center;
+        margin-top: 40px;
+      }
+    }
+    .course-list {
+      width: 100%;
       display: grid;
       display: grid;
       grid-template-columns: repeat(3, 1fr);

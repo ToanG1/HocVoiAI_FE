@@ -68,7 +68,7 @@ export default function CourseDetails() {
         });
     };
     fetchData();
-  }, []);
+  }, [courseId]);
 
   function handleDelete() {
     setIsButtonModalOpen(false);

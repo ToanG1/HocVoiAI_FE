@@ -6,7 +6,6 @@ import Header from "../../components/Header/Header";
 import CoursesListing from "../../components/CoursesListing/CoursesListing";
 import CreateRoadmapModal from "./CreateRoadmapModal";
 import Footer from "../../components/Footer/Footer";
-import BgComp from "../../components/BgComp/BgComp";
 import { Modal } from "react-responsive-modal";
 import { ToastContainer } from "react-toastify";
 
@@ -42,8 +41,6 @@ export default function Features() {
   return (
     <>
       <Header />
-      <BgComp />
-
       <div className="features-container">
         <ToastContainer />
         <div className="create-new">

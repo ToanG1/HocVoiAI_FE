@@ -182,7 +182,7 @@
 
     .roadmap-title-container {
       display: flex;
-      padding: 100px 0px;
+      padding: 50px 0px;
       justify-content: center;
       align-items: center;
       .create-btn {
@@ -268,6 +268,7 @@
     }
 
     .quarter-title h2 {
+      font-size: 37px;
       color: #ffffff36;
       /*   text-shadow:-5px -5px 5px #152758, 5px 5px 5px #000000; */
     }
@@ -280,24 +281,37 @@
       ul li {
         margin-top: 10px;
       }
-      span {
-        z-index: 10;
-        width: 400px;
-        display: none;
-        background-color: rgba(255, 255, 255, 0.75);
-        padding: 20px;
-        border-radius: 10px;
+      .suggestion {
         position: absolute;
         top: 0;
         right: -460px;
-        text-align: left;
-        font-size: 14px;
-        white-space: pre-line;
+        z-index: 10;
+        width: 440px;
+        span {
+          width: 400px;
+          display: none;
+          background-color: rgba(255, 255, 255, 0.75);
+          padding: 20px;
+          border-radius: 10px;
+          text-align: left;
+          font-size: 14px;
+          white-space: pre-line;
+          margin-bottom: 20px;
+        }
+        button {
+          position: absolute;
+          left: 50%;
+          transform: translateX(-50%);
+          color: rgb(0, 57, 243);
+          padding: 10px 20px;
+          border-radius: 5px;
+          background-color: rgba(237, 237, 237, 0.8);
+        }
       }
     }
 
-    .roadmap1-milestone-content:nth-child(4) span,
-    .roadmap1-milestone-content:nth-child(5) span {
+    .roadmap1-milestone-content:nth-child(4) .suggestion,
+    .roadmap1-milestone-content:nth-child(5) .suggestion {
       left: -460px !important;
       right: 0 !important;
     }
@@ -384,7 +398,7 @@
   }
   @media only screen and (max-width: 1440px) {
     .roadmap1-container {
-      max-width: 1200px;
+      max-width: 1300px;
     }
     .roadmap-content {
       padding: 40px 0px;
@@ -393,7 +407,7 @@
 
   @media only screen and (max-width: 1080px) {
     .roadmap1-container {
-      max-width: 1200px;
+      max-width: 1300px;
     }
     .roadmap-content {
       padding: 0px 0px;

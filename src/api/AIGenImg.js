@@ -1,12 +1,10 @@
-import { IMG_KEY } from "./constant";
-
 async function query(data) {
-  const response = await fetch(IMG_KEY, {
+  const response = await fetch(process.env.IMG_KEY, {
     headers: {
-      Authorization: "Bearer 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",
+      Authorization: "Bearer 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"
     },
     method: "POST",
-    body: JSON.stringify(data),
+    body: JSON.stringify(data)
   });
   const result = await response.blob();
   return result;

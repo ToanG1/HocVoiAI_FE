@@ -2,6 +2,7 @@ import React, { ReactDOM } from "react";
 import styles from "./Roadmap1.scss";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
+import { Link } from "react-router-dom";
 import gsap from "gsap";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -15,9 +16,16 @@ import { ToastContainer, toast } from "react-toastify";
 
 function removeActiveOnContent() {
   const content = document.getElementsByClassName("roadmap1-milestone-content");
+  console.log(content);
   for (let i = 0; i < content.length; i++) {
     content[i].classList.remove("active");
+    console.log("remove");
   }
+}
+
+function handleNavigateToSuggestedDocument(rmId, index, item) {
+  localStorage.setItem("HOCVOIAI_SUGGESTED_DOCUMENT", JSON.stringify(item));
+  window.location.href = `/roadmap/${rmId}/suggested-document/${index}`;
 }
 
 export default function Roadmap1({ rMode, content }) {
@@ -212,11 +220,11 @@ export default function Roadmap1({ rMode, content }) {
         setMilestonesContent(<h3>There are no content yet</h3>);
       else
         setMilestonesContent(
-          roadmap.milestones[index].content.map((item, index) => {
+          roadmap.milestones[index].content.map((item, i) => {
             return (
               <div
                 className="w-25 quarter roadmap1-milestone-content"
-                id={"milestone-content" + index}
+                id={"milestone-content" + i}
                 onClick={(e) => {
                   e.currentTarget.classList.toggle("active");
                 }}
@@ -235,7 +243,22 @@ export default function Roadmap1({ rMode, content }) {
                       );
                     })}
                   </ul>
-                  {item.suggestion ? <span>{item.suggestion}</span> : null}
+                  {item.suggestion ? (
+                    <div className="suggestion">
+                      <span>{item.suggestion}</span>
+                      <button
+                        onClick={() =>
+                          handleNavigateToSuggestedDocument(
+                            roadmapId,
+                            index,
+                            item
+                          )
+                        }
+                      >
+                        View document
+                      </button>
+                    </div>
+                  ) : null}
                 </div>
               </div>
             );
@@ -255,6 +278,7 @@ export default function Roadmap1({ rMode, content }) {
                 className="w-25 quarter roadmap1-milestone-content"
                 id={i}
                 onMouseEnter={(e) => {
+                  removeActiveOnContent();
                   e.currentTarget.classList.add("active");
                 }}
                 onMouseLeave={(e) => {

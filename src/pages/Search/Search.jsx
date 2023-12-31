@@ -6,7 +6,6 @@ import Select from "react-select";
 import Pagination from "../Pagination/Pagination";
 import Header from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
-import BgComp from "../../components/BgComp/BgComp";
 
 import { searchRoadmap } from "../../api/roadmap";
 import { searchQuestions } from "../../api/question";
@@ -86,7 +85,6 @@ export default function Search() {
   return (
     <>
       <Header />
-      <BgComp />
       <section className="search-result-container">
         <div className="search-result-nav">
           <div className="search-type">

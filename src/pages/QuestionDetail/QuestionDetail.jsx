@@ -10,7 +10,6 @@ import CommentForm from "./CommentForm";
 import AnswerForm from "./AnswerForm";
 import Header from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
-import BgComp from "../../components/BgComp/BgComp";
 
 import { getQuestion, deleteQuestion } from "../../api/question";
 import {
@@ -94,7 +93,6 @@ function QuestionDetail_({}) {
   return (
     <>
       <Header />
-      <BgComp />
       <ToastContainer />
       <section className="questions-detail-container">
         <div className="question-detail-header">

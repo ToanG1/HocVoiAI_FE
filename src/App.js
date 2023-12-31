@@ -15,6 +15,7 @@ import ResetPassword from "./pages/ResetPassword/ResetPassword";
 import Activate from "./pages/Activate/Activate";
 import ForgotPassword from "./pages/ForgotPassword/ForgotPassword";
 import Search from "./pages/Search/Search";
+import SuggestedDocument from "./pages/SuggestedDocument/SuggestedDocument";
 
 export default function App() {
   return (
@@ -29,6 +30,10 @@ export default function App() {
         <Route path="course" element={<Course />} />
         <Route path="course/:courseId" element={<CourseDetails />} />
         <Route path="roadmap/:roadmapId" element={<Roadmap />} />
+        <Route
+          path="roadmap/:roadmapId/suggested-document/:milestoneId"
+          element={<SuggestedDocument />}
+        />
         <Route path="questions" element={<Question />} />
         <Route path="questions/:questionId" element={<QuestionDetail />} />
         <Route path="profile/:userId" element={<Profile />} />

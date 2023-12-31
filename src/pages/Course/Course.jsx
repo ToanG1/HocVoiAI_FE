@@ -4,7 +4,6 @@ import styles from "./Course.scss";
 import CourseBox from "../../components/CourseBox/CourseBox";
 import Header from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
-import BgComp from "../../components/BgComp/BgComp";
 import defaultImg from "../../assets//images/default-img.png";
 import Pagination from "../Pagination/Pagination";
 
@@ -66,7 +65,6 @@ export default function Course() {
   return (
     <>
       <Header />
-      <BgComp />
       <div className="course-container">
         <ToastContainer />
         <div className="course-header">

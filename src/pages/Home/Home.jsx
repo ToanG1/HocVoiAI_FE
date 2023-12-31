@@ -11,6 +11,13 @@ import debounce from "https://cdn.skypack.dev/debounce";
 
 import { ToastContainer } from "react-toastify";
 
+import { transformVideoSubtitles } from "../../services/youtubeVideo";
+
+import {
+  getYoutubeVideoSubtitles,
+  summarizeDocument
+} from "../../api/document";
+
 // return a random number within a range
 function random(min, max) {
   return Math.random() * (max - min) + min;
@@ -256,6 +263,28 @@ export default function Home() {
       ]);
     } else return topics;
   }
+
+  // const [subtitles, setSubtitles] = useState([]);
+
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     const res = await getYoutubeVideoSubtitles("hjR-ZveXBpQ");
+  //     if (res.code === 200) setSubtitles(transformVideoSubtitles(res.data));
+  //   };
+  //   fetchData();
+  // }, []);
+  // useEffect(() => {
+  //   const handlSummarizeDocument = async () => {
+  //     const res = await summarizeDocument(subtitles.join(" "));
+  //     if (res.code === 200) {
+  //       console.log(res.data);
+  //     }
+  //   };
+  //   if (subtitles.length > 0) {
+  //     console.log(subtitles.join(" "));
+  //     handlSummarizeDocument();
+  //   }
+  // }, [subtitles]);
 
   return (
     <>

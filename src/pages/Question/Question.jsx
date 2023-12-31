@@ -8,7 +8,6 @@ import Select from "react-select";
 import Pagination from "../Pagination/Pagination";
 import Header from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
-import BgComp from "../../components/BgComp/BgComp";
 import { ToastContainer, toast } from "react-toastify";
 
 import "react-toastify/dist/ReactToastify.css";
@@ -147,7 +146,6 @@ function Question() {
   return (
     <>
       <Header />
-      <BgComp />
       <div className="questions-container">
         <ToastContainer />
 

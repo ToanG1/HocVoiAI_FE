@@ -54,26 +54,6 @@ export default function SuggestedDocument() {
     }
   }, []);
 
-  function handleUpdateData(id, summarizedDocument) {
-    const updatedData = {
-      ...data,
-      suggestion: data.suggestion.map((item) => {
-        if (item.id === id) {
-          return {
-            ...item,
-            summarizedDocument
-          };
-        }
-        return item;
-      })
-    };
-    setData(updatedData);
-    localStorage.setItem(
-      "HOCVOIAI_SUGGESTED_DOCUMENT",
-      JSON.stringify(updatedData)
-    );
-  }
-
   function handleUpdateTime(totalTime) {
     const newContent = content.map((topic) => {
       if (topic.id === Number(milestoneId)) {
@@ -120,9 +100,7 @@ export default function SuggestedDocument() {
         <div className="suggested-document-container">
           <div className="left-side">
             {data.suggestion.map((item, i) => {
-              return (
-                <Resource data={item} updateData={handleUpdateData} key={i} />
-              );
+              return <Resource data={item} key={i} />;
             })}
           </div>
           <div className="right-side">
@@ -149,24 +127,39 @@ export default function SuggestedDocument() {
   }
 }
 
-function Resource({ data, updateData }) {
-  const url = extractUrl(data.content);
+function Resource({ data }) {
+  const urls = extractUrl(data.content);
+
+  return (
+    <>
+      <div className="resource-container">
+        <p>{data.content}</p>
+        {urls.length > 0
+          ? urls.map((url, i) => {
+              if (url.includes("youtube.com"))
+                return <YoutubeVideo url={url} key={i} />;
+            })
+          : null}
+      </div>
+    </>
+  );
+}
+
+function YoutubeVideo({ url }) {
   const [videoId, setVideoId] = useState();
-  const [subsitles, setSubtitles] = useState([]);
+  const [subsitles, setSubtitles] = useState();
+  const [summarizedDocument, setSummarizedDocument] = useState();
 
   useEffect(() => {
-    if (url)
-      if (url.includes("youtube.com")) {
-        const videoId = extractYoutubeVideoId(url);
-        setVideoId(videoId);
-      }
+    if (url) setVideoId(extractYoutubeVideoId(url));
   }, []);
 
   useEffect(() => {
     const fetchData = async () => {
       const res = await getYoutubeVideoSubtitles(videoId);
-      if (res.code === 200)
+      if (res.code === 200) {
         setSubtitles(transformVideoSubtitles(res.data || []));
+      }
     };
     if (videoId) fetchData();
   }, [videoId]);
@@ -178,50 +171,41 @@ function Resource({ data, updateData }) {
       const res = await summarizeDocument(subsitles);
       if (res.code === 200) {
         setIsLoading(false);
-        updateData(data.id, res.data);
+        setSummarizedDocument(res.data);
       }
     };
     summarize();
   }
-
-  if (url)
-    if (url.includes("youtube.com") && !url.includes("playlist"))
-      return (
-        <>
-          <p>{data.content}</p>;
-          <iframe
-            width="100%"
-            height="600px"
-            src={"http://www.youtube.com/embed/" + videoId}
-            allowFullScreen
-            title="youtube video"
-          />
-          <h3
-            onClick={() => {
-              document
-                .getElementById("summarized-document" + data.id)
-                .classList.toggle("active");
-              if (!data.summarizedDocument) handleSummarizeDocument();
-            }}
-          >
-            Summarize this video
-          </h3>
-          <div
-            className="summarized-document"
-            id={"summarized-document" + data.id}
-          >
-            {data.summarizedDocument ? (
-              <p>{data.summarizedDocument}</p>
-            ) : isLoading ? (
-              <p>Summarizing...</p>
-            ) : (
-              <p>{data.summarizedDocument}</p>
-            )}
-          </div>
-        </>
-      );
-
-  return <p>{data.content}</p>;
+  return (
+    <div className="youtube-video-container">
+      <iframe
+        width="100%"
+        height="600px"
+        src={"http://www.youtube.com/embed/" + videoId}
+        allowFullScreen
+        title="youtube video"
+      />
+      <h3
+        onClick={() => {
+          document
+            .getElementById("summarized-document" + videoId)
+            .classList.toggle("active");
+          if (!summarizedDocument) handleSummarizeDocument(videoId);
+        }}
+      >
+        Summarize this video
+      </h3>
+      <div className="summarized-document" id={"summarized-document" + videoId}>
+        {summarizedDocument ? (
+          <span>{summarizedDocument}</span>
+        ) : isLoading ? (
+          <p>Summarizing...</p>
+        ) : (
+          <span>{summarizedDocument}</span>
+        )}
+      </div>
+    </div>
+  );
 }
 
 function TimeCounter({ startTime, saveTime }) {

@@ -1,13 +1,12 @@
 function extractUrl(data) {
-  const urlRegex = /(https?:\/\/[^\s)\n]+)(?=[\s)\n]|(?:\n\n|\n|$))/;
+  const urlRegex = /(https?:\/\/[^\s)\n]+)(?=[\s)\n]|(?:\n\n|\n|$))/g;
 
   const match = data.match(urlRegex);
 
   if (match) {
-    const url = match[1];
-    return url;
+    return match;
   } else {
-    return null;
+    return [];
   }
 }
 

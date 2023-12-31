@@ -14,7 +14,8 @@
     width: 70%;
     overflow-y: scroll;
     p {
-      margin-bottom: 40px;
+      margin: 20px 0;
+      padding: 20px 0;
     }
     .summarized-document {
       display: none;
@@ -24,6 +25,28 @@
     }
     .active {
       display: block !important;
+    }
+
+    .resource-container {
+      border-bottom: 1px solid lightgray;
+
+      .youtube-video-container {
+        margin-bottom: 40px;
+
+        h3 {
+          width: calc(100% - 40px);
+          background-color: rgb(108, 1, 124);
+          color: white;
+          padding: 10px 20px;
+          border-radius: 5px;
+          margin-top: 10px;
+        }
+        .summarized-document {
+          border-radius: 5px;
+          background-color: rgb(240, 227, 249);
+          padding: 10px 20px;
+        }
+      }
     }
   }
   .right-side {

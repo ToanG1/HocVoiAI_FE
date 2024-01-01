@@ -8,16 +8,6 @@ const axiosInstance = axios.create({
   baseURL: BASE_URL
 });
 
-function getToken() {
-  const token = localStorage.getItem("HOCVOIAI_TOKEN");
-  if (token === null) {
-    setInterval(() => {
-      getToken();
-    }, 500);
-  }
-  return token;
-}
-
 const authedAxiosInstance = axios.create({
   baseURL: BASE_URL
 });
@@ -30,7 +20,7 @@ document.addEventListener("newToken", () => {
 });
 
 let retryCounter = 0;
-const MAX_RETRY = 3;
+const MAX_RETRY = 10;
 
 axiosInstance.interceptors.response.use((response) => {
   return response.data;

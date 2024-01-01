@@ -1,4 +1,4 @@
-import { axiosInstance, authedAxiosInstance } from "./API";
+import { axiosInstance, authedAxiosInstance } from ".";
 function getRoadmap(roadmapId) {
   return authedAxiosInstance.get(`/roadmap/${roadmapId}`);
 }

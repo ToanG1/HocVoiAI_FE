@@ -1,4 +1,4 @@
-import { axiosInstance } from "./API";
+import { axiosInstance } from ".";
 
 function getYoutubeVideoSubtitles(videoId) {
   return axiosInstance.get(`/ai/document/subtitles?videoId=${videoId}`);

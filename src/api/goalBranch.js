@@ -1,4 +1,4 @@
-import { authedAxiosInstance, axiosInstance } from "./API";
+import { authedAxiosInstance, axiosInstance } from ".";
 
 function getGoalBranchsById(id) {
   return axiosInstance.get(`/goal-branch/${id}`);

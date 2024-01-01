@@ -20,7 +20,7 @@ import { ToastContainer, toast } from "react-toastify";
 import { authenticateToken } from "../../api/auth";
 import { getUser, updateUser } from "../../api/user";
 import { uploadImage } from "../../api/UploadFile";
-import { IMG_URL } from "../../api/API";
+import { IMG_URL } from "../../api/index";
 
 import Color, { Palette } from "color-thief-react";
 

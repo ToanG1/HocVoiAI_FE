@@ -1,4 +1,4 @@
-import { authedAxiosInstance } from "./API";
+import { authedAxiosInstance } from ".";
 
 async function uploadImage(file) {
   const formData = new FormData();

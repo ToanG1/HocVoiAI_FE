@@ -19,10 +19,14 @@ function getToken() {
 }
 
 const authedAxiosInstance = axios.create({
-  baseURL: BASE_URL,
-  headers: {
-    Authorization: `Bearer ${getToken()}`
-  }
+  baseURL: BASE_URL
+});
+
+document.addEventListener("newToken", () => {
+  console.log("new token received");
+  authedAxiosInstance.defaults.headers.common[
+    "Authorization"
+  ] = `Bearer ${localStorage.getItem("HOCVOIAI_ADMIN_TOKEN")}`;
 });
 
 let retryCounter = 0;
@@ -50,6 +54,7 @@ authedAxiosInstance.interceptors.response.use(
       const { data } = await refreshToken();
       localStorage.removeItem("HOCVOIAI_TOKEN");
       localStorage.setItem("HOCVOIAI_TOKEN", data.access_token);
+      window.dispatchEvent(new Event("newToken"));
 
       // Update the Authorization header with the new token
       authedAxiosInstance.defaults.headers.common[

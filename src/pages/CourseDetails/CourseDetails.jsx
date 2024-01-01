@@ -32,7 +32,7 @@ import {
 import { createPrivilege } from "../../api/privilege";
 import { createRating } from "../../api/rating";
 import { uploadImage } from "../../api/UploadFile";
-import { IMG_URL } from "../../api/API";
+import { IMG_URL } from "../../api/index";
 import { ReportType } from "../../utils/ReportType";
 import { ToastContainer, toast } from "react-toastify";
 

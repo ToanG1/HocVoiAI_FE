@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import styles from "./Editor.scss";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
-import { BASE_URL, IMG_URL } from "../../api/API";
+import { BASE_URL, IMG_URL } from "../../api/index";
 
 import { uploadImage } from "../../api/UploadFile";
 

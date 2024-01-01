@@ -1,4 +1,4 @@
-import { authedAxiosInstance } from "./API";
+import { authedAxiosInstance } from ".";
 
 function createQuestionReply(data) {
   return authedAxiosInstance.post("/question-reply", data);

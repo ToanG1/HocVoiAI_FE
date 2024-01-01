@@ -1,4 +1,4 @@
-import { axiosInstance, authedAxiosInstance } from "./API";
+import { axiosInstance, authedAxiosInstance } from ".";
 async function createQuestion(question) {
   return authedAxiosInstance.post(`/question`, question);
 }

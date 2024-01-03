@@ -13,7 +13,6 @@ import { ToastContainer, toast } from "react-toastify";
 
 export default function ResetPassword() {
   const { token } = useParams();
-
   const navigate = useNavigate();
 
   useEffect(() => {

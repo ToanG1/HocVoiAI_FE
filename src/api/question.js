@@ -17,6 +17,10 @@ function searchQuestions(keyword, page = 0, limit = 10) {
   );
 }
 
+function updateQuestion(id, question) {
+  return authedAxiosInstance.patch(`/question/${id}`, question);
+}
+
 function deleteQuestion(id) {
   return authedAxiosInstance.delete(`/question/${id}`);
 }
@@ -26,5 +30,6 @@ export {
   getAllQuestion,
   getQuestion,
   searchQuestions,
+  updateQuestion,
   deleteQuestion
 };

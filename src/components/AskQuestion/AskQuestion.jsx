@@ -4,24 +4,50 @@ import { useNavigate } from "react-router-dom";
 
 import Select from "react-select";
 import styles from "./AskQuestion.scss";
-import Editor from "../../components/Editor/Editor";
+import Editor from "../Editor/Editor";
 
-import { createQuestion } from "../../api/question";
+import { createQuestion, updateQuestion } from "../../api/question";
 import { toast } from "react-toastify";
 
 import { checkAuthenticationInApp } from "../../services/common";
+import { getAllCategory } from "../../api/category";
 
-function AskQuestion({ onSubmit, topics }) {
-  useEffect(() => {
-    checkAuthenticationInApp();
-  }, []);
-
+function AskQuestion({ onSubmit, data }) {
+  const [topics, setTopics] = useState([]);
   const [selectedTopic, setSelectedTopic] = useState({
     value: 1,
     label: "General"
   });
   const [newQuestion, setNewQuestion] = useState("");
   const [newTitle, setNewTitle] = useState("");
+
+  useEffect(() => {
+    checkAuthenticationInApp();
+    async function fetchCategory() {
+      const res = await getAllCategory();
+      if (res.code === 200)
+        setTopics(
+          res.data.map((item) => {
+            return {
+              value: item.id,
+              label: item.name
+            };
+          })
+        );
+    }
+    fetchCategory().catch((err) => {
+      console.log(err);
+    });
+
+    if (data) {
+      setNewTitle(data.title);
+      setNewQuestion(data.content);
+      setSelectedTopic({
+        value: data.category.id,
+        label: data.category.name
+      });
+    }
+  }, []);
 
   const handleTitleInputChange = (event) => {
     setNewTitle(event.target.value);
@@ -48,13 +74,22 @@ function AskQuestion({ onSubmit, topics }) {
         content: newQuestion,
         categoryId: selectedTopic.value
       };
-      createQuestion(question)
-        .then((res) => {
-          onSubmit(res.data);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+      if (!data)
+        createQuestion(question)
+          .then((res) => {
+            onSubmit(res.data);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      else
+        updateQuestion(data.id, question)
+          .then((res) => {
+            onSubmit(res.data);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
     }
   }
 
@@ -64,14 +99,14 @@ function AskQuestion({ onSubmit, topics }) {
       <div class="modal-row">
         <Select
           placeholder="Select topic"
-          defaultValue={selectedTopic}
+          value={selectedTopic}
           onChange={handleTopicChange}
           options={topics}
           className="select"
         />
       </div>
       <div class="title-container">
-        <h3 class="title-item">Title </h3>
+        <h3 class="title-item">Title</h3>
         <div class="title-item">
           Be specific and imagine you’re asking a question to another person.
         </div>
@@ -91,7 +126,7 @@ function AskQuestion({ onSubmit, topics }) {
           Introduce the problem and expand on what you put in the title.
         </div>
         <div class="question-form">
-          <Editor setData={setNewQuestion} />
+          <Editor setData={setNewQuestion} data={newQuestion} />
           <button
             onClick={handleSubmitQuestion}
             style={{ padding: "5px 10px", marginTop: "20px", fontSize: "15px" }}

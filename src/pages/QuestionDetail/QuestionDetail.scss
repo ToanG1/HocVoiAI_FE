@@ -103,6 +103,9 @@
   animation: titleEffect 1s cubic-bezier(0, 0, 0.3, 1);
   top: -50px;
   left: -45px;
+  p {
+    font-size: 18px;
+  }
 }
 .content-comment {
   font-size: 14px;

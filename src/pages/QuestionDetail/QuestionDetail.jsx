@@ -4,14 +4,23 @@ import styles from "./QuestionDetail.scss";
 import { useParams } from "react-router-dom";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faXmark } from "@fortawesome/free-solid-svg-icons";
+import { faXmark, faEllipsisVertical } from "@fortawesome/free-solid-svg-icons";
+import "react-responsive-modal/styles.css";
+import { Modal } from "react-responsive-modal";
 
 import CommentForm from "./CommentForm";
 import AnswerForm from "./AnswerForm";
 import Header from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
+import ButtonsModal from "../../components/ButtonsModal/ButtonsModal";
+import ReportForm from "../../components/ReportForm/ReportForm";
+import AskQuestion from "../../components/AskQuestion/AskQuestion";
 
-import { getQuestion, deleteQuestion } from "../../api/question";
+import {
+  getQuestion,
+  updateQuestion,
+  deleteQuestion
+} from "../../api/question";
 import {
   getQuestionRepliesByQId,
   deleteQuestionReply
@@ -23,6 +32,8 @@ import {
 
 import moment from "moment";
 import { ToastContainer, toast } from "react-toastify";
+import { ReportType } from "../../utils/ReportType";
+
 function checkIsUserOwner(userId) {
   const userInfo = JSON.parse(localStorage.getItem("USER_INFO") || "{}");
   return userId === userInfo.userId;
@@ -71,6 +82,8 @@ function QuestionDetail_({}) {
     setAnswers(answers.filter((item) => item.id !== answerId));
   }
 
+  const [isButtonsModalOpen, setIsButtonsModalOpen] = useState(false);
+
   function handleDeleteQuestion() {
     deleteQuestion(questionId).then((res) => {
       if (res.code === 200) {
@@ -90,6 +103,42 @@ function QuestionDetail_({}) {
       }
     });
   }
+
+  // Repost Form Modal
+  const [isReportFormOpen, setIsReportFormOpen] = useState(false);
+
+  function handleOpenReportForm() {
+    setIsReportFormOpen(true);
+  }
+  function handleCloseReportForm() {
+    setIsReportFormOpen(false);
+  }
+
+  //Update Question Modal
+  const [isQuestionFormOpen, setIsQuestionFormOpen] = useState(false);
+
+  function handleOpenQuestionForm() {
+    setIsQuestionFormOpen(true);
+  }
+  function handleCloseQuestionForm() {
+    setIsQuestionFormOpen(false);
+  }
+
+  function handleUpdateQuestion() {
+    toast.success("Your question is updated successfully", {
+      position: "top-right",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light"
+    });
+    setInterval(() => {
+      window.location.reload();
+    }, 3000);
+  }
   return (
     <>
       <Header />
@@ -106,14 +155,18 @@ function QuestionDetail_({}) {
             </span>
           </p>
           {checkIsUserOwner(data.userId) && (
-            <i>
-              <FontAwesomeIcon
-                icon={faXmark}
-                className="close-icon"
-                onClick={() => {
-                  handleDeleteQuestion();
-                }}
-              />
+            <i
+              style={{ position: "absolute", height: "20px", padding: "10px" }}
+              onClick={() => setIsButtonsModalOpen(!isButtonsModalOpen)}
+            >
+              <FontAwesomeIcon icon={faEllipsisVertical} />
+              {isButtonsModalOpen && (
+                <ButtonsModal
+                  onReport={handleOpenReportForm}
+                  onUpdate={handleOpenQuestionForm}
+                  onDelete={handleDeleteQuestion}
+                />
+              )}
             </i>
           )}
         </div>
@@ -136,6 +189,30 @@ function QuestionDetail_({}) {
             questionId={data.id}
           />
         </section>
+        <Modal
+          open={isReportFormOpen}
+          onClose={handleCloseReportForm}
+          center
+          classNames={{
+            modal: "customModal"
+          }}
+        >
+          <ReportForm
+            id={questionId}
+            type={ReportType.QUESTION_REPORT}
+            closeForm={handleCloseReportForm}
+          />
+        </Modal>
+        <Modal
+          open={isQuestionFormOpen}
+          onClose={handleCloseQuestionForm}
+          center
+          classNames={{
+            modal: "customModal"
+          }}
+        >
+          <AskQuestion data={data} onSubmit={handleUpdateQuestion} />
+        </Modal>
       </section>
       <Footer />
     </>
@@ -228,8 +305,8 @@ function Comment({ comment, removeComment }) {
     <div className="comment">
       <p className="content content-comment">{comment.content}</p>
       <p className="info-comment">
-        <span className="username"> {comment.user.name} </span>'
-        {moment(comment.createdAt).format("DD/MM/YYYY")}'
+        <span className="username"> {comment.user.name} </span>
+        {moment(comment.createdAt).format("DD/MM/YYYY")}
       </p>
       <hr className="lighter-hr"></hr>
       {checkIsUserOwner(comment.userId) && (

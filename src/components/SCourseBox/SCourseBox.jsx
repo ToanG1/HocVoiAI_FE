@@ -1,6 +1,7 @@
 import React from "react";
 import styles from "./SCourseBox.scss";
 import { Link } from "react-router-dom";
+import { IMG_URL } from "../../api";
 
 import defaultImg from "../../assets/images/roadmap.png";
 
@@ -13,7 +14,7 @@ export default function CourseBox({ course }) {
         <div className="course-box-content">
           <div className="course-box-header">
             <img
-              src={course.avatar ? course.avatar : defaultImg}
+              src={course.avatar ? IMG_URL + course.avatar : defaultImg}
               className="course-box-image"
               alt="course-img"
             />

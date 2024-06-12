@@ -344,7 +344,7 @@ export default function CourseDetails() {
           <div className="course-details-sidebar-content">
             <img
               ref={imageRef}
-              src={detail.avatar ? detail.avatar : defaultImg}
+              src={detail.avatar ? IMG_URL + detail.avatar : defaultImg}
               className="course-details-sidebar-image"
               alt="course-img"
             />

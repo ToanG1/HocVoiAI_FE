@@ -86,10 +86,10 @@ export default function Profile() {
       }
       upload()
         .then(async (res) => {
-          setImage(`${IMG_URL}/${res}`);
+          setImage(`${IMG_URL}${res}`);
           setUserInfo({
             ...userInfo,
-            avartar: IMG_URL + "/" + res
+            avartar: IMG_URL + res
           });
         })
         .catch((err) => {

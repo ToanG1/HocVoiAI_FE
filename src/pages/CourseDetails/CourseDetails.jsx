@@ -32,7 +32,7 @@ import {
 import { createPrivilege } from "../../api/privilege";
 import { createRating } from "../../api/rating";
 import { uploadImage } from "../../api/UploadFile";
-import { IMG_URL } from "../../api/API";
+import { IMG_URL } from "../../api/index";
 import { ReportType } from "../../utils/ReportType";
 import { ToastContainer, toast } from "react-toastify";
 
@@ -162,7 +162,18 @@ export default function CourseDetails() {
       };
       createRating(data)
         .then((res) => {
-          if (res.code === 200) console.log(res);
+          if (res.code === 200)
+            toast.success("Rating successfully !", {
+              position: "top-right",
+              autoClose: 5000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "light"
+            });
+          setIsRatingFormOpen(false);
         })
         .catch((err) => {
           toast.error(err.response.data.message, {
@@ -229,6 +240,8 @@ export default function CourseDetails() {
     const [language, setLanguage] = useState("english");
     const [img, setImg] = useState(detail.avatar);
 
+    console.log(detail);
+
     function handleUpdateDetail() {
       let durationValue = document.getElementById("duration").value;
       durationValue = durationValue + (durationValue > 1 ? " weeks" : " week");
@@ -237,7 +250,8 @@ export default function CourseDetails() {
         avatar: img,
         level: level,
         language: language,
-        duration: durationValue
+        duration: durationValue,
+        isPublic: document.getElementById("isPublic").checked
       };
       updateRoadmapDetail(detail.id, data)
         .then((res) => {
@@ -330,7 +344,7 @@ export default function CourseDetails() {
           <div className="course-details-sidebar-content">
             <img
               ref={imageRef}
-              src={detail.avatar ? detail.avatar : defaultImg}
+              src={detail.avatar ? IMG_URL + detail.avatar : defaultImg}
               className="course-details-sidebar-image"
               alt="course-img"
             />
@@ -494,6 +508,18 @@ export default function CourseDetails() {
                       <option value="japan">Japan</option>
                       <option value="chinese">Chinese</option>
                     </select>
+                  </li>
+                </ul>
+                <ul className="course-details-short-description-row">
+                  <li className="course-details-short-description-key">
+                    Public this roadmap
+                  </li>
+                  <li className="course-details-short-description-value">
+                    <input
+                      id="isPublic"
+                      type="checkbox"
+                      defaultChecked={detail.isPublic}
+                    />
                   </li>
                 </ul>
               </div>

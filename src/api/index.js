@@ -1,32 +1,26 @@
 import axios from "axios";
 
 const BASE_URL = "http://localhost:5001/api";
-const IMG_URL = "http://localhost:9000";
+const IMG_URL = "https://hva-bucket.s3.ap-southeast-1.amazonaws.com/";
 const WS_SERVER = "ws://localhost:5001/";
 
 const axiosInstance = axios.create({
   baseURL: BASE_URL
 });
 
-function getToken() {
-  const token = localStorage.getItem("HOCVOIAI_TOKEN");
-  if (token === null) {
-    setInterval(() => {
-      getToken();
-    }, 500);
-  }
-  return token;
-}
-
 const authedAxiosInstance = axios.create({
-  baseURL: BASE_URL,
-  headers: {
-    Authorization: `Bearer ${getToken()}`
-  }
+  baseURL: BASE_URL
+});
+
+document.addEventListener("newToken", () => {
+  console.log("new token received");
+  authedAxiosInstance.defaults.headers.common[
+    "Authorization"
+  ] = `Bearer ${localStorage.getItem("HOCVOIAI_ADMIN_TOKEN")}`;
 });
 
 let retryCounter = 0;
-const MAX_RETRY = 3;
+const MAX_RETRY = 10;
 
 axiosInstance.interceptors.response.use((response) => {
   return response.data;
@@ -50,6 +44,7 @@ authedAxiosInstance.interceptors.response.use(
       const { data } = await refreshToken();
       localStorage.removeItem("HOCVOIAI_TOKEN");
       localStorage.setItem("HOCVOIAI_TOKEN", data.access_token);
+      window.dispatchEvent(new Event("newToken"));
 
       // Update the Authorization header with the new token
       authedAxiosInstance.defaults.headers.common[

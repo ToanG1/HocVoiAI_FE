@@ -1,4 +1,4 @@
-import { authedAxiosInstance } from "./API";
+import { authedAxiosInstance } from ".";
 
 function searchPrivilege(searchString) {
   return authedAxiosInstance.get(`/privilege/${searchString}`);

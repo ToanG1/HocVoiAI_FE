@@ -53,7 +53,6 @@ export default function ChatBotHelper() {
 
   async function handleCreateMessage(role, content) {
     if (content && !loading) {
-      console.log(content);
       setLoading(true);
       const objectChatBotMessages = JSON.parse(
         localStorage.getItem("HOCVOIAI_CHATBOT_OBJECT")

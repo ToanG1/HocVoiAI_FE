@@ -3,7 +3,9 @@
 
 .footer {
   position: relative;
-
+  a {
+    color: white;
+  }
   .footer-container {
     padding-top: 200px;
     background-color: transparent;
@@ -25,6 +27,7 @@
       button {
         @include mixin.p-btn;
         font-size: 18px;
+        border-radius: 5px;
       }
 
       p {

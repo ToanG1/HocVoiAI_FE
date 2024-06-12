@@ -35,11 +35,14 @@ function QuestionList({ questions }) {
     <div className="question-list">
       <div>
         {questions.map((question, index) => (
-          <div key={index} className="question-container">
+          <div
+            key={index}
+            className="question-container"
+            onClick={() => handleTitleClick(question)}
+          >
             <div
               className="title-question-row"
               style={h3Style}
-              onClick={() => handleTitleClick(question)}
               onMouseEnter={handleMouseEnter}
               onMouseLeave={handleMouseLeave}
             >

@@ -4,7 +4,7 @@ import styles from "./Pagination.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faChevronLeft,
-  faChevronRight,
+  faChevronRight
 } from "@fortawesome/free-solid-svg-icons";
 
 const pageToShow = 5;
@@ -35,6 +35,8 @@ export default function Pagination({ pages, onPageChange }) {
       onPageChange(currentPage + 1);
     }
   }
+
+  console.log(pages);
   return (
     <div className="pagination-container">
       <button onClick={handleBackWardPage}>

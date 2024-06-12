@@ -1,4 +1,4 @@
-import { authedAxiosInstance, axiosInstance } from "./API";
+import { authedAxiosInstance, axiosInstance } from ".";
 
 async function handleLocalStorage(res) {
   return new Promise((resolve) => {
@@ -10,8 +10,9 @@ async function handleLocalStorage(res) {
       localStorage.setItem("HOCVOIAI_TOKEN", res.data.access_token);
       localStorage.setItem("HOCVOIAI_REFRESHTOKEN", res.data.refersh_token);
       localStorage.setItem("USER_INFO", JSON.stringify(res.data.user_info));
+      window.dispatchEvent(new Event("newToken"));
       resolve();
-    }, 500);
+    }, 100);
   });
 }
 
@@ -21,8 +22,9 @@ async function handleRemoveLocalStorage(res) {
       localStorage.removeItem("HOCVOIAI_TOKEN");
       localStorage.removeItem("HOCVOIAI_REFRESHTOKEN");
       localStorage.removeItem("USER_INFO");
+      window.dispatchEvent(new Event("newToken"));
       resolve();
-    }, 500);
+    }, 100);
   });
 }
 

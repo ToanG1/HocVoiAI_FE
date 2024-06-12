@@ -3,6 +3,7 @@ import styles from "./CourseBox.scss";
 import { Link } from "react-router-dom";
 
 import defaultImg from "../../assets/images/roadmap.png";
+import { IMG_URL } from "../../api";
 
 export default function CourseBox({ course }) {
   const detail = course.roadmapDetail;
@@ -15,7 +16,7 @@ export default function CourseBox({ course }) {
         <div className="course-box-content">
           <div className="course-box-header">
             <img
-              src={defaultImg}
+              src={detail.avatar ? IMG_URL + detail.avatar : defaultImg}
               className="course-box-image"
               alt="course-img"
             />

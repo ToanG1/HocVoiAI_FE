@@ -46,7 +46,8 @@ export default function ForgotPwdModal() {
     checkCode(email, code)
       .then((res) => {
         if (res.code === 200) {
-          navigate(`/reset-pwd/${res.data.token}`);
+          console.log(res);
+          navigate(`/reset-pwd/${res.data}`);
         }
       })
       .catch((err) => {

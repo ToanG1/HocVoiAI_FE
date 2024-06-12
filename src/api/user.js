@@ -1,4 +1,4 @@
-import { authedAxiosInstance } from "./API";
+import { authedAxiosInstance } from ".";
 
 function getUser(userId) {
   return authedAxiosInstance.get(`/user/${userId}`);

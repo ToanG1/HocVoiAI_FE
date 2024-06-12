@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useState, useMemo } from "react";
 import styles from "./Question.scss";
 
 import QuestionList from "./QuestionList";
-import AskQuestion from "./AskQuestion";
+import AskQuestion from "../../components/AskQuestion/AskQuestion";
 import { Modal } from "react-responsive-modal";
 import Select from "react-select";
 import Pagination from "../Pagination/Pagination";
@@ -203,7 +203,7 @@ function Question() {
             modal: "customModal"
           }}
         >
-          <AskQuestion onSubmit={handleSubmitQuestion} topics={topics} />
+          <AskQuestion onSubmit={handleSubmitQuestion} />
         </Modal>
       </div>
       <Footer />

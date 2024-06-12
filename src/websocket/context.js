@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { io } from "socket.io-client";
-import { WS_SERVER } from "../api/API";
+import { WS_SERVER } from "../api/index";
 
 import { toast } from "react-toastify";
 

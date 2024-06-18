@@ -26,7 +26,7 @@
     "nanoid": "^5.0.2",
     "parallax-js": "^3.1.0",
     "pexels": "^1.4.0",
-    "pixi.js": "^8.1.7",
+    "pixi.js": "^6.5.10",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-responsive-modal": "^6.4.2",

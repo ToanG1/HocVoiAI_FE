@@ -3,8 +3,7 @@ import styles from "./Roadmap5.scss";
 
 import { useState, useEffect, useRef } from "react";
 import Slider, { slickGoTo } from "react-slick";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
+
 import catImg from "../../../assets/images/cat-img.png";
 
 export default function Roadmap5({ mode }) {

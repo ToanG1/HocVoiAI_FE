@@ -10,8 +10,6 @@ import Header from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
 import { ToastContainer, toast } from "react-toastify";
 
-import "react-toastify/dist/ReactToastify.css";
-
 import { getAllQuestion } from "../../api/question";
 import { getAllCategory } from "../../api/category";
 

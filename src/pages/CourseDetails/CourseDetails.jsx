@@ -12,7 +12,6 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { faStar as faStarRegular } from "@fortawesome/free-regular-svg-icons";
 
-import "react-responsive-modal/styles.css";
 import { Modal } from "react-responsive-modal";
 
 import Header from "../../components/Header/Header";

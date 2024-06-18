@@ -1,4 +1,8 @@
 @use "../../common/sass/style";
+
+@import url("react-toastify/dist/ReactToastify.css");
+@import url("react-responsive-modal/styles.css");
+
 .features-container {
   margin: 80px 5% 100px 5%;
   position: relative;

@@ -1,5 +1,8 @@
 @use "../../common/sass/style.scss";
 @use "../../common/sass/mixin.scss";
+
+@import url("react-responsive-modal/styles.css");
+
 .course-details-container {
   height: auto;
   display: flex;

@@ -13,9 +13,6 @@ import { getAllRoadmap } from "../../api/roadmap";
 
 import { checkAuthenticationInApp } from "../../services/common";
 
-import "react-toastify/dist/ReactToastify.css";
-import "react-responsive-modal/styles.css";
-
 export default function Features() {
   const [roadmaps, setRoadmaps] = useState([]);
 

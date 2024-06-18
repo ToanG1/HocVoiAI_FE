@@ -1,8 +1,8 @@
 import axios from "axios";
 
-const BASE_URL = "http://localhost:5001/api";
+const BASE_URL = "http://18.140.114.159:5001/api";
 const IMG_URL = "https://hva-bucket.s3.ap-southeast-1.amazonaws.com/";
-const WS_SERVER = "ws://localhost:5001/";
+const WS_SERVER = "ws://18.140.114.159:5001/";
 
 const axiosInstance = axios.create({
   baseURL: BASE_URL

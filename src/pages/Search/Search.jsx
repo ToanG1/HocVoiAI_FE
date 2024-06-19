@@ -13,6 +13,7 @@ import { searchQuestions } from "../../api/question";
 import moment from "moment";
 
 import defaultImg from "../../assets/images/roadmap.png";
+import { IMG_URL } from "../../api";
 
 const filterOptions = [
   {
@@ -117,7 +118,7 @@ export default function Search() {
                   >
                     <h3>{item.title}</h3>
                     <img
-                      src={item.avatar ? item.avatar : defaultImg}
+                      src={item.avatar ? IMG_URL + item.avatar : defaultImg}
                       alt={item.title}
                     />
                   </Link>

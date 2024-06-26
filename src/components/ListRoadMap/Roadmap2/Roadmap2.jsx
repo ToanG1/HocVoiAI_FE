@@ -1,7 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
+import { useParams } from "react-router";
 import styles from "./Roadmap2.scss";
 import { useEffect } from "react";
-export default function Roadmap2({mode}) {
+
+export default function Roadmap2({ rMode, content }) {
+  const [mode, setMode] = useState(rMode);
+  const { roadmapId } = useParams();
+  const [roadmap, setRoadmap] = useState(content);
+  const [milestones, setMilestones] = useState(content.milestones);
+  const [milestonesContent, setMilestonesContent] = useState([]);
   var total,
     $slide,
     $slider,
@@ -26,8 +33,8 @@ export default function Roadmap2({mode}) {
       scaleX = 1.3,
       scaleY = 1.3,
       transformOrigin;
-    for (let index = 0; index < $slide.length; index++) {
-      var element = $slide[index];
+    for (let index = 0; index < list.length; index++) {
+      var element = list[index];
       scaleX = scaleY = 1;
       transformOrigin = sliderWidth / 2;
       if (index < half) {
@@ -71,142 +78,109 @@ export default function Roadmap2({mode}) {
     }
   };
 
-  var imageSize = function () {
-    return $slider.offsetWidth / 3;
-  };
-
   var recalculateSizes = function () {
     sliderWidth = $slider.offsetWidth;
     position();
   };
 
   var clickedImage = function (element) {
+    if (
+      element.classList.contains("active") ||
+      document.getElementsByClassName("active")[0] === element
+    )
+      return;
     document.getElementsByClassName("active")[0].classList.remove("active");
     element.classList.add("active");
     position();
   };
+
+  function addMilestoneHandler() {
+    const nameDom = document.getElementById("input-name-new");
+    setMilestones([
+      ...milestones,
+      { name: nameDom.value, description: milestonesContent }
+    ]);
+    nameDom.value = "";
+    setMilestonesContent([]);
+    position();
+  }
+
   useEffect(() => {
     on();
     window.addEventListener("resize", recalculateSizes);
-    // const slides = document.getElementsByClassName("slide");
-    // for (let i = 0; i < slides.length; i++) {
-    //   slides[i].addEventListener("click", clickedImage(slides[i]));
-    // }
-  }, []);
+  }, [mode, milestones]);
 
   return (
     <>
       <div className="roadmap2-container">
-        <h1 className="main-title">Roadmap By Pedalsup</h1>
+        <button
+          id="change-mode-btn"
+          onClick={() => {
+            setMode(mode === "watch" ? "edit" : "watch");
+          }}
+        >
+          {mode === "watch" ? "Edit" : "Watch"}
+        </button>
+        <h1 className="main-title">{roadmap.title}</h1>
         <div className="slider">
-          <div
-            className="slide active"
-            onClick={(e) => clickedImage(e.currentTarget)}
-          >
-            <div className="slide-container">
-              <h2 className="slide-Title">Q1 - 2021</h2>
-              <div className="slide-description">
-                <ul>
-                  <li>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                  </li>
-                  <li>Nunc blandit justo ac dolor lobortis suscipit. </li>
-                  <li>Et tincidunt lectus porta sit amet. </li>
-                  <li>Nulla dignissim ligula nec faucibus feugiat. </li>
-                </ul>
+          {milestones.map((milestone, i) => {
+            return (
+              <div
+                className={`slide ${i === 0 ? "active" : ""}`}
+                onClick={(e) => clickedImage(e.currentTarget)}
+              >
+                <div className="slide-container">
+                  <h2 className="slide-Title">{milestone.name}</h2>
+                  <div className="slide-description">
+                    <ul>
+                      {milestone.description.map((item) => {
+                        return <li>{item}</li>;
+                      })}
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+
+          {mode !== "edit" ? (
+            ""
+          ) : (
+            <div
+              className={`slide ${milestones.length === 0 ? "active" : ""}`}
+              onClick={(e) => clickedImage(e.currentTarget)}
+            >
+              <div className="slide-container new-slide">
+                <input
+                  className="slide-Title input-name"
+                  id="input-name-new"
+                  placeholder="Type name..."
+                />
+                <div className="slide-description">
+                  <ul>
+                    {milestonesContent.map((item) => {
+                      return <li>{item}</li>;
+                    })}
+                    <input
+                      className="input-decription"
+                      id="input-decription-new"
+                      placeholder="Type content..."
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter") {
+                          setMilestonesContent([
+                            ...milestonesContent,
+                            e.target.value
+                          ]);
+                          e.target.value = "";
+                        }
+                      }}
+                    />
+                  </ul>
+                </div>
+                <button onClick={addMilestoneHandler}>Add</button>
               </div>
             </div>
-          </div>
-          <div className="slide" onClick={(e) => clickedImage(e.currentTarget)}>
-            <div className="slide-container">
-              <h2 className="slide-Title">Q2 - 2021</h2>
-              <div className="slide-description">
-                <ul>
-                  <li>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                  </li>
-                  <li>Nunc blandit justo ac dolor lobortis suscipit. </li>
-                  <li>Et tincidunt lectus porta sit amet. </li>
-                  <li>Nulla dignissim ligula nec faucibus feugiat. </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-          <div className="slide" onClick={(e) => clickedImage(e.currentTarget)}>
-            <div className="slide-container">
-              <h2 className="slide-Title">Q3 - 2021</h2>
-              <div className="slide-description">
-                <ul>
-                  <li>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                  </li>
-                  <li>Nunc blandit justo ac dolor lobortis suscipit. </li>
-                  <li>Et tincidunt lectus porta sit amet. </li>
-                  <li>Nulla dignissim ligula nec faucibus feugiat. </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-          <div className="slide" onClick={(e) => clickedImage(e.currentTarget)}>
-            <div className="slide-container">
-              <h2 className="slide-Title">Q4 - 2021</h2>
-              <div className="slide-description">
-                <ul>
-                  <li>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                  </li>
-                  <li>Nunc blandit justo ac dolor lobortis suscipit. </li>
-                  <li>Et tincidunt lectus porta sit amet. </li>
-                  <li>Nulla dignissim ligula nec faucibus feugiat. </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-          <div className="slide" onClick={(e) => clickedImage(e.currentTarget)}>
-            <div className="slide-container">
-              <h2 className="slide-Title">Q1 - 2022</h2>
-              <div className="slide-description">
-                <ul>
-                  <li>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                  </li>
-                  <li>Nunc blandit justo ac dolor lobortis suscipit. </li>
-                  <li>Et tincidunt lectus porta sit amet. </li>
-                  <li>Nulla dignissim ligula nec faucibus feugiat. </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-          <div className="slide" onClick={(e) => clickedImage(e.currentTarget)}>
-            <div className="slide-container">
-              <h2 className="slide-Title">Q2 - 2022</h2>
-              <div className="slide-description">
-                <ul>
-                  <li>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                  </li>
-                  <li>Nunc blandit justo ac dolor lobortis suscipit. </li>
-                  <li>Et tincidunt lectus porta sit amet. </li>
-                  <li>Nulla dignissim ligula nec faucibus feugiat. </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-          <div className="slide" onClick={(e) => clickedImage(e.currentTarget)}>
-            <div className="slide-container">
-              <h2 className="slide-Title">Q3 - 2022</h2>
-              <div className="slide-description">
-                <ul>
-                  <li>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                  </li>
-                  <li>Nunc blandit justo ac dolor lobortis suscipit. </li>
-                  <li>Et tincidunt lectus porta sit amet. </li>
-                  <li>Nulla dignissim ligula nec faucibus feugiat. </li>
-                </ul>
-              </div>
-            </div>
-          </div>
+          )}
         </div>
       </div>
     </>

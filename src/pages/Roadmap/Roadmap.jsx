@@ -41,7 +41,7 @@ function loadRoadmap(type, mode, content) {
 export default function Roadmap() {
   const { state } = useLocation();
 
-  const content = state.content;
+  const content = state ? state.content : null;
   const roadmap = {
     title: content ? content.title : "Roadmap Title",
     milestones: content && content.topics ? JSON.parse(content.topics) : []

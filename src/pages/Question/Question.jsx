@@ -76,7 +76,7 @@ function Question() {
         setQuestions(res.data.data);
         setPageCount(Math.ceil(res.data.totalItems / res.data.limit));
         setTotalItems(res.data.totalItems);
-      } else console.log(res.data);
+      }
     }
     fetchData().catch((err) => {
       console.log(err);

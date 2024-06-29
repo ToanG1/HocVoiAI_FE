@@ -2,6 +2,10 @@ import React, { useState } from "react";
 import { useParams } from "react-router";
 import styles from "./Roadmap2.scss";
 import { useEffect } from "react";
+import ChatBotHelper from "../../ChatBotHelper/ChatBotHelper";
+
+import { updateRoadmap } from "../../../api/roadmap";
+import { ToastContainer, toast } from "react-toastify";
 
 export default function Roadmap2({ rMode, content }) {
   const [mode, setMode] = useState(rMode);
@@ -84,25 +88,62 @@ export default function Roadmap2({ rMode, content }) {
   };
 
   var clickedImage = function (element) {
-    if (
-      element.classList.contains("active") ||
-      document.getElementsByClassName("active")[0] === element
-    )
-      return;
-    document.getElementsByClassName("active")[0].classList.remove("active");
+    if (element.classList.contains("active")) return;
+    const elements = document.getElementsByClassName("slide active");
+    for (let index = 0; index < elements.length; index++) {
+      elements[index].classList.remove("active");
+    }
     element.classList.add("active");
     position();
   };
 
   function addMilestoneHandler() {
     const nameDom = document.getElementById("input-name-new");
+    if (nameDom.value === "") return;
     setMilestones([
       ...milestones,
       { name: nameDom.value, description: milestonesContent }
     ]);
     nameDom.value = "";
+    document.getElementById("input-decription-new").value = "";
+
     setMilestonesContent([]);
     position();
+  }
+
+  function updateRoadmapHandler() {
+    const nameDom = document.getElementById("roadmap-title");
+    if (nameDom.value === "") return;
+    setRoadmap({ ...roadmap, title: nameDom.value });
+    updateRoadmap({ title: nameDom.value, milestones }, roadmapId)
+      .then((res) => {
+        if (res.code === 200) {
+          setMode("watch");
+          toast.success("Update roadmap successfuly!", {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light"
+          });
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+        toast.error("Something wrong happen, please try again", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light"
+        });
+      });
   }
 
   useEffect(() => {
@@ -112,16 +153,43 @@ export default function Roadmap2({ rMode, content }) {
 
   return (
     <>
+      <ChatBotHelper />
+      <ToastContainer />
       <div className="roadmap2-container">
-        <button
-          id="change-mode-btn"
-          onClick={() => {
-            setMode(mode === "watch" ? "edit" : "watch");
-          }}
-        >
-          {mode === "watch" ? "Edit" : "Watch"}
-        </button>
-        <h1 className="main-title">{roadmap.title}</h1>
+        <div id="change-mode-btn">
+          <button
+            onClick={() => {
+              setMode(mode === "watch" ? "edit" : "watch");
+            }}
+          >
+            {mode === "watch" ? "Edit" : "Watch"}
+          </button>
+          {mode === "edit" ? (
+            <button
+              onClick={() => {
+                updateRoadmapHandler();
+              }}
+            >
+              Save
+            </button>
+          ) : (
+            ""
+          )}
+        </div>
+
+        <div>
+          {mode === "watch" ? (
+            <h1 className="main-title">{roadmap.title}</h1>
+          ) : (
+            <input
+              className="input-roadmap-title"
+              type="text"
+              id="roadmap-title"
+              value={roadmap.title}
+            />
+          )}
+        </div>
+
         <div className="slider">
           {milestones.map((milestone, i) => {
             return (

@@ -42,15 +42,13 @@ export function WebSocketProvider({ children }) {
 
     //Listen when generate roadmap finished
     newSocket.on("generated", (data) => {
-      console.log("Received data from WebSocket:", data);
       toast.success(
         "Your requested roadmap has been generated successfully !",
         {
           position: "top-right",
           autoClose: 3000,
           hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
+          closeOnClick: true,          pauseOnHover: true,
           draggable: true,
           progress: undefined,
           theme: "light"

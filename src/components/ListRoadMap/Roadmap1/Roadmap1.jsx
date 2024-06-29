@@ -16,10 +16,8 @@ import { ToastContainer, toast } from "react-toastify";
 
 function removeActiveOnContent() {
   const content = document.getElementsByClassName("roadmap1-milestone-content");
-  console.log(content);
   for (let i = 0; i < content.length; i++) {
     content[i].classList.remove("active");
-    console.log("remove");
   }
 }
 

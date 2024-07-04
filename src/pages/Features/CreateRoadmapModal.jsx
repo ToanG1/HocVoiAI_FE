@@ -114,11 +114,6 @@ export default function CreateRoadmapModal({}) {
         }
       );
     } else {
-      console.log({
-        title: e.currentTarget.value,
-        type: type.value,
-        categoryId: cate.value
-      });
       createRoadmap({
         title: e.currentTarget.value,
         type: type.value,
@@ -148,7 +143,8 @@ export default function CreateRoadmapModal({}) {
         {
           topic: document.getElementById("topic-input").value,
           level: level.value,
-          language: language.value
+          language: language.value,
+          type: type.value
         }
       ],
       userId: JSON.parse(localStorage.getItem("USER_INFO")).userId

@@ -1,9 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
+import { useParams } from "react-router";
 import styles from "./Roadmap3.scss";
 
 import { useEffect } from "react";
 
-export default function Roadmap3({ mode }) {
+export default function Roadmap3({ rMode, content }) {
+  const [mode, setMode] = useState(rMode);
+  const { roadmapId } = useParams();
+  const [roadmap, setRoadmap] = useState(content);
   function isElementInViewport(el) {
     var rect = el.getBoundingClientRect();
     return (
@@ -28,30 +32,45 @@ export default function Roadmap3({ mode }) {
     }
   }
   useEffect(() => {
+    reArrangeMilestones();
     window.addEventListener("load", callbackFunc);
     window.addEventListener("scroll", callbackFunc);
   }, []);
+
+  function reArrangeMilestones() {
+    const milestones = document.getElementsByClassName("milestone");
+    for (let i = 0; i < milestones.length; i++) {
+      const width = milestones[i].offsetWidth;
+      if (i % 2 === 0) {
+        milestones[i].style.left = "45px";
+      } else {
+        milestones[i].style.left = -(width + 39) + "px";
+      }
+    }
+  }
 
   return (
     <>
       <div class="timeline-container">
         <section className="timeline">
           <ul>
-            {[...Array(10)].map((_, i) => (
-              <li>
-                <div>
-                  <time>1687</time>
-                  <div className="discovery">
-                    <h1>Discovery</h1>
-                    <p>Laws of motion</p>
+            {roadmap.milestones.map((milestone) => {
+              return (
+                <li>
+                  <div className="milestone">
+                    <time>{milestone.duration}</time>
+                    {milestone.content.map((content) => {
+                      return (
+                        <div>
+                          <h1>{content.title}</h1>
+                          <p>{content.description}</p>
+                        </div>
+                      );
+                    })}
                   </div>
-                  <div className="scientist">
-                    <h1>Scientist</h1>
-                    <span>Newton</span>
-                  </div>
-                </div>
-              </li>
-            ))}
+                </li>
+              );
+            })}
           </ul>
         </section>
       </div>

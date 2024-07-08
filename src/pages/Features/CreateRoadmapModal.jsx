@@ -117,7 +117,9 @@ export default function CreateRoadmapModal({}) {
       createRoadmap({
         title: e.currentTarget.value,
         type: type.value,
-        categoryId: cate.value
+        categoryId: cate.value,
+        language: language.value,
+        level: level.value
       })
         .then((res) => {
           if (res.code === 200) {
@@ -144,7 +146,8 @@ export default function CreateRoadmapModal({}) {
           topic: document.getElementById("topic-input").value,
           level: level.value,
           language: language.value,
-          type: type.value
+          type: type.value,
+          categoryId: cate.value
         }
       ],
       userId: JSON.parse(localStorage.getItem("USER_INFO")).userId

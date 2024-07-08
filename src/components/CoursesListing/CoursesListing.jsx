@@ -18,7 +18,7 @@ export default function CoursesListing({ data }) {
                 className="thumb"
                 style={{
                   backgroundImage: data[0].avatar
-                    ? data[0].avatar
+                    ? `url(${IMG_URL + data[0].avatar})`
                     : `url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/210284/flex-1.jpg)`
                 }}
               ></div>

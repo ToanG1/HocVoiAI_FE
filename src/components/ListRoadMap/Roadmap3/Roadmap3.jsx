@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useParams } from "react-router";
 import styles from "./Roadmap3.scss";
+import ChatBotHelper from "../../ChatBotHelper/ChatBotHelper";
 
 import { useEffect } from "react";
 
@@ -20,6 +21,7 @@ export default function Roadmap3({ rMode, content }) {
   }
 
   function callbackFunc() {
+    removeActiveSuggestionHandler();
     var items = document.querySelectorAll("section.timeline li");
     for (var i = 0; i < items.length; i++) {
       if (isElementInViewport(items[i])) {
@@ -49,14 +51,27 @@ export default function Roadmap3({ rMode, content }) {
     }
   }
 
+  function removeActiveSuggestionHandler(e) {
+    const elements = document.getElementsByTagName("li");
+    for (let i = 0; i < elements.length; i++) {
+      elements[i].classList.remove("active");
+    }
+  }
+
   return (
     <>
+      <ChatBotHelper />
       <div class="timeline-container">
         <section className="timeline">
           <ul>
-            {roadmap.milestones.map((milestone) => {
+            {roadmap.milestones.map((milestone, index) => {
               return (
-                <li>
+                <li
+                  onClick={(e) => {
+                    removeActiveSuggestionHandler();
+                    e.currentTarget.classList.add("active");
+                  }}
+                >
                   <div className="milestone">
                     <time>{milestone.duration}</time>
                     {milestone.content.map((content) => {
@@ -67,6 +82,11 @@ export default function Roadmap3({ rMode, content }) {
                         </div>
                       );
                     })}
+                    {milestone.suggestion ? (
+                      <div className="suggestion">
+                        <span>{milestone.suggestion}</span>
+                      </div>
+                    ) : null}
                   </div>
                 </li>
               );

@@ -19,6 +19,19 @@
   // STYLING
   .timeline {
     ul {
+      li:hover .suggestion,
+      li.active .suggestion {
+        display: block;
+      }
+
+      li:nth-child(even) .suggestion {
+        right: -400px;
+      }
+
+      li:nth-child(odd) .suggestion {
+        left: -400px;
+      }
+
       li {
         list-style-type: none;
         position: relative;
@@ -72,6 +85,31 @@
           }
           & > div:not(:last-child) {
             margin-right: 10px;
+          }
+        }
+
+        .suggestion::-webkit-scrollbar {
+          width: 0px;
+        }
+
+        .suggestion {
+          display: none;
+          position: absolute;
+          top: 0;
+          z-index: 10;
+          width: 380px;
+          height: 400px;
+          overflow-y: scroll;
+          span {
+            width: 400px;
+            background-color: rgba(255, 255, 255, 0.25);
+            padding: 20px;
+            border-radius: 10px;
+            text-align: left;
+            font-size: 14px;
+            white-space: pre-line;
+            margin-bottom: 40px;
+            color: black;
           }
         }
       }

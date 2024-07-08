@@ -207,6 +207,11 @@ export default function Roadmap2({ rMode, content }) {
                     </ul>
                   </div>
                 </div>
+                {milestone.suggestion ? (
+                  <div className="suggestion">
+                    <span>{milestone.suggestion}</span>
+                  </div>
+                ) : null}
               </div>
             );
           })}

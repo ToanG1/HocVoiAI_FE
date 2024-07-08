@@ -393,7 +393,6 @@ export default function Roadmap1({ rMode, content }) {
   async function handleUpdateContent() {
     updateRoadmap(roadmap, roadmapId)
       .then((res) => {
-        console.log(res);
         if (res.code === 200) {
           setMode("watch");
           toast.success("Update roadmap successfuly!", {

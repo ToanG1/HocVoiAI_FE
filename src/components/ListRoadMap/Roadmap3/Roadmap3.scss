@@ -2,7 +2,6 @@
   $primary-color: #fff;
   $background-color: linear-gradient(54deg, #9164ff, #8bfff4);
   $text-color: #3c3f64;
-
   *,
   *::before,
   *::after {
@@ -20,6 +19,19 @@
   // STYLING
   .timeline {
     ul {
+      li:hover .suggestion,
+      li.active .suggestion {
+        display: block;
+      }
+
+      li:nth-child(even) .suggestion {
+        right: -400px;
+      }
+
+      li:nth-child(odd) .suggestion {
+        left: -400px;
+      }
+
       li {
         list-style-type: none;
         position: relative;
@@ -41,18 +53,18 @@
         div {
           position: relative;
           bottom: 0;
-          width: 400px;
+          width: fit-content;
           padding: 20px;
           background: $primary-color;
           box-shadow: 4px 13px 30px 1px rgba(252, 56, 56, 0.2);
           border-radius: 5px;
           display: flex;
-          align-items: center;
           time {
             position: absolute;
             background: #f5af19;
-            width: 80px;
-            height: 30px;
+            width: fit-content;
+            height: fit-content;
+            padding: 2px 10px;
             top: -15px;
             border-radius: 5px;
             display: flex;
@@ -61,29 +73,43 @@
             letter-spacing: 2px;
           }
           div {
-            height: 100px;
+            height: fit-content;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
+            width: 300px;
             p {
               text-align: center;
             }
           }
-          .discovery {
+          & > div:not(:last-child) {
             margin-right: 10px;
           }
-          .scientist {
-          }
         }
-        &:nth-of-type(odd) {
-          > div {
-            left: 45px;
-          }
+
+        .suggestion::-webkit-scrollbar {
+          width: 0px;
         }
-        &:nth-of-type(even) {
-          > div {
-            left: -439px;
+
+        .suggestion {
+          display: none;
+          position: absolute;
+          top: 0;
+          z-index: 10;
+          width: 380px;
+          height: 400px;
+          overflow-y: scroll;
+          span {
+            width: 400px;
+            background-color: rgba(255, 255, 255, 0.25);
+            padding: 20px;
+            border-radius: 10px;
+            text-align: left;
+            font-size: 14px;
+            white-space: pre-line;
+            margin-bottom: 40px;
+            color: black;
           }
         }
       }

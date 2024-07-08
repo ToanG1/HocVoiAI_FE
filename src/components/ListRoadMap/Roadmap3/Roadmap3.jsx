@@ -1,9 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
+import { useParams } from "react-router";
 import styles from "./Roadmap3.scss";
+import ChatBotHelper from "../../ChatBotHelper/ChatBotHelper";
 
 import { useEffect } from "react";
 
-export default function Roadmap3({mode}) {
+export default function Roadmap3({ rMode, content }) {
+  const [mode, setMode] = useState(rMode);
+  const { roadmapId } = useParams();
+  const [roadmap, setRoadmap] = useState(content);
   function isElementInViewport(el) {
     var rect = el.getBoundingClientRect();
     return (
@@ -16,6 +21,7 @@ export default function Roadmap3({mode}) {
   }
 
   function callbackFunc() {
+    removeActiveSuggestionHandler();
     var items = document.querySelectorAll("section.timeline li");
     for (var i = 0; i < items.length; i++) {
       if (isElementInViewport(items[i])) {
@@ -28,171 +34,63 @@ export default function Roadmap3({mode}) {
     }
   }
   useEffect(() => {
+    reArrangeMilestones();
     window.addEventListener("load", callbackFunc);
     window.addEventListener("scroll", callbackFunc);
   }, []);
 
+  function reArrangeMilestones() {
+    const milestones = document.getElementsByClassName("milestone");
+    for (let i = 0; i < milestones.length; i++) {
+      const width = milestones[i].offsetWidth;
+      if (i % 2 === 0) {
+        milestones[i].style.left = "45px";
+      } else {
+        milestones[i].style.left = -(width + 39) + "px";
+      }
+    }
+  }
+
+  function removeActiveSuggestionHandler(e) {
+    const elements = document.getElementsByTagName("li");
+    for (let i = 0; i < elements.length; i++) {
+      elements[i].classList.remove("active");
+    }
+  }
+
   return (
     <>
+      <ChatBotHelper />
       <div class="timeline-container">
         <section className="timeline">
           <ul>
-            <li>
-              <div>
-                <time>1687</time>
-                <div className="discovery">
-                  <h1>Discovery</h1>
-                  <p>Laws of motion</p>
-                </div>
-                <div className="scientist">
-                  <h1>Scientist</h1>
-                  <span>Newton</span>
-                </div>
-              </div>
-            </li>
-            <li>
-              <div>
-                <time>1785</time>
-                <div className="discovery">
-                  <h1>Discovery</h1>
-                  <p>Law of electrostatic attraction</p>
-                </div>
-                <div className="scientist">
-                  <h1>Scientist</h1>
-                  <span>Coulomb</span>
-                </div>
-              </div>
-            </li>
-            <li>
-              <div>
-                <time>1827</time>
-                <div className="discovery">
-                  <h1>Discovery</h1>
-                  <p>Law of Electric Resistance</p>
-                </div>
-                <div className="scientist">
-                  <h1>Scientist</h1>
-                  <span>G.S Ohm</span>
-                </div>
-              </div>
-            </li>
-            <li>
-              <div>
-                <time>1831</time>
-                <div className="discovery">
-                  <h1>Discovery</h1>
-                  <p>Electromagnetic Induction</p>
-                </div>
-                <div className="scientist">
-                  <h1>Scientist</h1>
-                  <span>Michael Faraday</span>
-                </div>
-              </div>
-            </li>
-            <li>
-              <div>
-                <time>1867</time>
-                <div className="discovery">
-                  <h1>Discovery</h1>
-                  <p>Dynamite</p>
-                </div>
-                <div className="scientist">
-                  <h1>Scientist</h1>
-                  <span>Alfred Nobel</span>
-                </div>
-              </div>
-            </li>
-            <li>
-              <div>
-                <time>1895</time>
-                <div className="discovery">
-                  <h1>Discovery</h1>
-                  <p>X Rays</p>
-                </div>
-                <div className="scientist">
-                  <h1>Scientist</h1>
-                  <span>Roentgen</span>
-                </div>
-              </div>
-            </li>
-            <li>
-              <div>
-                <time>1897</time>
-                <div className="discovery">
-                  <h1>Discovery</h1>
-                  <p>Electron</p>
-                </div>
-                <div className="scientist">
-                  <h1>Scientist</h1>
-                  <span>J.J.Thomson</span>
-                </div>
-              </div>
-            </li>
-            <li>
-              <div>
-                <time>1898</time>
-                <div className="discovery">
-                  <h1>Discovery</h1>
-                  <p>Radium</p>
-                </div>
-                <div className="scientist">
-                  <h1>Scientist</h1>
-                  <span>Madam Curie</span>
-                </div>
-              </div>
-            </li>
-            <li>
-              <div>
-                <time>1900</time>
-                <div className="discovery">
-                  <h1>Discovery</h1>
-                  <p>Quantum Theory</p>
-                </div>
-                <div className="scientist">
-                  <h1>Scientist</h1>
-                  <span>Max Plank</span>
-                </div>
-              </div>
-            </li>
-            <li>
-              <div>
-                <time>1905</time>
-                <div className="discovery">
-                  <h1>Discovery</h1>
-                  <p>Principle of Relativity</p>
-                </div>
-                <div className="scientist">
-                  <h1>Scientist</h1>
-                  <span>Albert Einstein</span>
-                </div>
-              </div>
-            </li>
-            <li>
-              <div>
-                <time>1905</time>
-                <div className="discovery">
-                  <h1>Discovery</h1>
-                  <p>Photo electric effect</p>
-                </div>
-                <div className="scientist">
-                  <h1>Scientist</h1>
-                  <span>Albert Einstein</span>
-                </div>
-              </div>
-            </li>
-            <li>
-              <div>
-                <time>1942</time>
-                <div className="discovery">
-                  <h1>Discovery</h1>
-                  <p>Nuclear Reactor</p>
-                </div>
-                <div className="scientist">
-                  <h1>Scientist</h1>
-                  <span>Anrico Fermi</span>
-                </div>
-              </div>
-            </li>
+            {roadmap.milestones.map((milestone, index) => {
+              return (
+                <li
+                  onClick={(e) => {
+                    removeActiveSuggestionHandler();
+                    e.currentTarget.classList.add("active");
+                  }}
+                >
+                  <div className="milestone">
+                    <time>{milestone.duration}</time>
+                    {milestone.content.map((content) => {
+                      return (
+                        <div>
+                          <h1>{content.title}</h1>
+                          <p>{content.description}</p>
+                        </div>
+                      );
+                    })}
+                    {milestone.suggestion ? (
+                      <div className="suggestion">
+                        <span>{milestone.suggestion}</span>
+                      </div>
+                    ) : null}
+                  </div>
+                </li>
+              );
+            })}
           </ul>
         </section>
       </div>

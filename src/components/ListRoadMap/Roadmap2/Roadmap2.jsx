@@ -1,7 +1,18 @@
-import React from "react";
+import React, { useState } from "react";
+import { useParams } from "react-router";
 import styles from "./Roadmap2.scss";
 import { useEffect } from "react";
-export default function Roadmap2({mode}) {
+import ChatBotHelper from "../../ChatBotHelper/ChatBotHelper";
+
+import { updateRoadmap } from "../../../api/roadmap";
+import { ToastContainer, toast } from "react-toastify";
+
+export default function Roadmap2({ rMode, content }) {
+  const [mode, setMode] = useState(rMode);
+  const { roadmapId } = useParams();
+  const [roadmap, setRoadmap] = useState(content);
+  const [milestones, setMilestones] = useState(content.milestones);
+  const [milestonesContent, setMilestonesContent] = useState([]);
   var total,
     $slide,
     $slider,
@@ -26,8 +37,8 @@ export default function Roadmap2({mode}) {
       scaleX = 1.3,
       scaleY = 1.3,
       transformOrigin;
-    for (let index = 0; index < $slide.length; index++) {
-      var element = $slide[index];
+    for (let index = 0; index < list.length; index++) {
+      var element = list[index];
       scaleX = scaleY = 1;
       transformOrigin = sliderWidth / 2;
       if (index < half) {
@@ -71,142 +82,178 @@ export default function Roadmap2({mode}) {
     }
   };
 
-  var imageSize = function () {
-    return $slider.offsetWidth / 3;
-  };
-
   var recalculateSizes = function () {
     sliderWidth = $slider.offsetWidth;
     position();
   };
 
   var clickedImage = function (element) {
-    document.getElementsByClassName("active")[0].classList.remove("active");
+    if (element.classList.contains("active")) return;
+    const elements = document.getElementsByClassName("slide active");
+    for (let index = 0; index < elements.length; index++) {
+      elements[index].classList.remove("active");
+    }
     element.classList.add("active");
     position();
   };
+
+  function addMilestoneHandler() {
+    const nameDom = document.getElementById("input-name-new");
+    if (nameDom.value === "") return;
+    setMilestones([
+      ...milestones,
+      { name: nameDom.value, description: milestonesContent }
+    ]);
+    nameDom.value = "";
+    document.getElementById("input-decription-new").value = "";
+
+    setMilestonesContent([]);
+    position();
+  }
+
+  function updateRoadmapHandler() {
+    const nameDom = document.getElementById("roadmap-title");
+    if (nameDom.value === "") return;
+    setRoadmap({ ...roadmap, title: nameDom.value });
+    updateRoadmap({ title: nameDom.value, milestones }, roadmapId)
+      .then((res) => {
+        if (res.code === 200) {
+          setMode("watch");
+          toast.success("Update roadmap successfuly!", {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light"
+          });
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+        toast.error("Something wrong happen, please try again", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light"
+        });
+      });
+  }
+
   useEffect(() => {
     on();
     window.addEventListener("resize", recalculateSizes);
-    // const slides = document.getElementsByClassName("slide");
-    // for (let i = 0; i < slides.length; i++) {
-    //   slides[i].addEventListener("click", clickedImage(slides[i]));
-    // }
-  }, []);
+  }, [mode, milestones]);
 
   return (
     <>
+      <ChatBotHelper />
+      <ToastContainer />
       <div className="roadmap2-container">
-        <h1 className="main-title">Roadmap By Pedalsup</h1>
-        <div className="slider">
-          <div
-            className="slide active"
-            onClick={(e) => clickedImage(e.currentTarget)}
+        <div id="change-mode-btn">
+          <button
+            onClick={() => {
+              setMode(mode === "watch" ? "edit" : "watch");
+            }}
           >
-            <div className="slide-container">
-              <h2 className="slide-Title">Q1 - 2021</h2>
-              <div className="slide-description">
-                <ul>
-                  <li>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                  </li>
-                  <li>Nunc blandit justo ac dolor lobortis suscipit. </li>
-                  <li>Et tincidunt lectus porta sit amet. </li>
-                  <li>Nulla dignissim ligula nec faucibus feugiat. </li>
-                </ul>
+            {mode === "watch" ? "Edit" : "Watch"}
+          </button>
+          {mode === "edit" ? (
+            <button
+              onClick={() => {
+                updateRoadmapHandler();
+              }}
+            >
+              Save
+            </button>
+          ) : (
+            ""
+          )}
+        </div>
+
+        <div>
+          {mode === "watch" ? (
+            <h1 className="main-title">{roadmap.title}</h1>
+          ) : (
+            <input
+              className="input-roadmap-title"
+              type="text"
+              id="roadmap-title"
+              value={roadmap.title}
+            />
+          )}
+        </div>
+
+        <div className="slider">
+          {milestones.map((milestone, i) => {
+            return (
+              <div
+                className={`slide ${i === 0 ? "active" : ""}`}
+                onClick={(e) => clickedImage(e.currentTarget)}
+              >
+                <div className="slide-container">
+                  <h2 className="slide-Title">{milestone.name}</h2>
+                  <div className="slide-description">
+                    <ul>
+                      {milestone.description.map((item) => {
+                        return <li>{item}</li>;
+                      })}
+                    </ul>
+                  </div>
+                </div>
+                {milestone.suggestion ? (
+                  <div className="suggestion">
+                    <span>{milestone.suggestion}</span>
+                  </div>
+                ) : null}
+              </div>
+            );
+          })}
+
+          {mode !== "edit" ? (
+            ""
+          ) : (
+            <div
+              className={`slide ${milestones.length === 0 ? "active" : ""}`}
+              onClick={(e) => clickedImage(e.currentTarget)}
+            >
+              <div className="slide-container new-slide">
+                <input
+                  className="slide-Title input-name"
+                  id="input-name-new"
+                  placeholder="Type name..."
+                />
+                <div className="slide-description">
+                  <ul>
+                    {milestonesContent.map((item) => {
+                      return <li>{item}</li>;
+                    })}
+                    <input
+                      className="input-decription"
+                      id="input-decription-new"
+                      placeholder="Type content..."
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter") {
+                          setMilestonesContent([
+                            ...milestonesContent,
+                            e.target.value
+                          ]);
+                          e.target.value = "";
+                        }
+                      }}
+                    />
+                  </ul>
+                </div>
+                <button onClick={addMilestoneHandler}>Add</button>
               </div>
             </div>
-          </div>
-          <div className="slide" onClick={(e) => clickedImage(e.currentTarget)}>
-            <div className="slide-container">
-              <h2 className="slide-Title">Q2 - 2021</h2>
-              <div className="slide-description">
-                <ul>
-                  <li>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                  </li>
-                  <li>Nunc blandit justo ac dolor lobortis suscipit. </li>
-                  <li>Et tincidunt lectus porta sit amet. </li>
-                  <li>Nulla dignissim ligula nec faucibus feugiat. </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-          <div className="slide" onClick={(e) => clickedImage(e.currentTarget)}>
-            <div className="slide-container">
-              <h2 className="slide-Title">Q3 - 2021</h2>
-              <div className="slide-description">
-                <ul>
-                  <li>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                  </li>
-                  <li>Nunc blandit justo ac dolor lobortis suscipit. </li>
-                  <li>Et tincidunt lectus porta sit amet. </li>
-                  <li>Nulla dignissim ligula nec faucibus feugiat. </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-          <div className="slide" onClick={(e) => clickedImage(e.currentTarget)}>
-            <div className="slide-container">
-              <h2 className="slide-Title">Q4 - 2021</h2>
-              <div className="slide-description">
-                <ul>
-                  <li>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                  </li>
-                  <li>Nunc blandit justo ac dolor lobortis suscipit. </li>
-                  <li>Et tincidunt lectus porta sit amet. </li>
-                  <li>Nulla dignissim ligula nec faucibus feugiat. </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-          <div className="slide" onClick={(e) => clickedImage(e.currentTarget)}>
-            <div className="slide-container">
-              <h2 className="slide-Title">Q1 - 2022</h2>
-              <div className="slide-description">
-                <ul>
-                  <li>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                  </li>
-                  <li>Nunc blandit justo ac dolor lobortis suscipit. </li>
-                  <li>Et tincidunt lectus porta sit amet. </li>
-                  <li>Nulla dignissim ligula nec faucibus feugiat. </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-          <div className="slide" onClick={(e) => clickedImage(e.currentTarget)}>
-            <div className="slide-container">
-              <h2 className="slide-Title">Q2 - 2022</h2>
-              <div className="slide-description">
-                <ul>
-                  <li>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                  </li>
-                  <li>Nunc blandit justo ac dolor lobortis suscipit. </li>
-                  <li>Et tincidunt lectus porta sit amet. </li>
-                  <li>Nulla dignissim ligula nec faucibus feugiat. </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-          <div className="slide" onClick={(e) => clickedImage(e.currentTarget)}>
-            <div className="slide-container">
-              <h2 className="slide-Title">Q3 - 2022</h2>
-              <div className="slide-description">
-                <ul>
-                  <li>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                  </li>
-                  <li>Nunc blandit justo ac dolor lobortis suscipit. </li>
-                  <li>Et tincidunt lectus porta sit amet. </li>
-                  <li>Nulla dignissim ligula nec faucibus feugiat. </li>
-                </ul>
-              </div>
-            </div>
-          </div>
+          )}
         </div>
       </div>
     </>

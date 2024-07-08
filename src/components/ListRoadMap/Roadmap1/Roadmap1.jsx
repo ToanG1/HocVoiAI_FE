@@ -16,10 +16,8 @@ import { ToastContainer, toast } from "react-toastify";
 
 function removeActiveOnContent() {
   const content = document.getElementsByClassName("roadmap1-milestone-content");
-  console.log(content);
   for (let i = 0; i < content.length; i++) {
     content[i].classList.remove("active");
-    console.log("remove");
   }
 }
 
@@ -395,7 +393,6 @@ export default function Roadmap1({ rMode, content }) {
   async function handleUpdateContent() {
     updateRoadmap(roadmap, roadmapId)
       .then((res) => {
-        console.log(res);
         if (res.code === 200) {
           setMode("watch");
           toast.success("Update roadmap successfuly!", {

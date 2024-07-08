@@ -21,7 +21,7 @@ export default function Pagination({ pages, onPageChange }) {
       setStartPage(Math.max(0, end - pageToShow + 1));
     } else setStartPage(start);
     setEndPage(end);
-  }, [currentPage]);
+  }, [currentPage, pages]);
 
   function handleBackWardPage() {
     if (currentPage > 0) {
@@ -36,7 +36,6 @@ export default function Pagination({ pages, onPageChange }) {
     }
   }
 
-  console.log(pages);
   return (
     <div className="pagination-container">
       <button onClick={handleBackWardPage}>

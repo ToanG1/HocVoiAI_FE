@@ -17,6 +17,7 @@ import { getGoalBranchsById, createGoalBranch } from "../../api/goalBranch";
 import { searchPrivilege } from "../../api/privilege";
 
 import { toast } from "react-toastify";
+import { IMG_URL } from "../../api";
 
 export default function ListGoal({ userId, mode }) {
   const [listGoal, setListGoal] = useState([]);
@@ -217,7 +218,7 @@ export default function ListGoal({ userId, mode }) {
                       <img
                         src={
                           selectedSearch.roadmapDetail.avatar
-                            ? selectedSearch.roadmapDetail.avatar
+                            ? IMG_URL + selectedSearch.roadmapDetail.avatar
                             : defaultImg
                         }
                         alt="roadmap img"
@@ -250,7 +251,7 @@ export default function ListGoal({ userId, mode }) {
                         <img
                           src={
                             item.roadmapDetail.avatar
-                              ? item.roadmapDetail.avatar
+                              ? IMG_URL + item.roadmapDetail.avatar
                               : defaultImg
                           }
                           alt="roadmap img"

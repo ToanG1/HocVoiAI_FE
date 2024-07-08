@@ -15,6 +15,7 @@ import { searchPrivilege } from "../../api/privilege";
 import { getRoadmap } from "../../api/roadmap";
 
 import moment from "moment";
+import { IMG_URL } from "../../api";
 
 export default function RoadmapBranch({
   roadmap,
@@ -162,7 +163,10 @@ export default function RoadmapBranch({
                 />
               </>
             )}
-            <img src={data.avatar ? data.avatar : defaultImg} alt="avatar" />
+            <img
+              src={data.avatar ? IMG_URL + data.avatar : defaultImg}
+              alt="avatar"
+            />
           </div>
         </div>
       </div>
@@ -181,7 +185,7 @@ export default function RoadmapBranch({
               <img
                 src={
                   item.roadmapDetail.avatar
-                    ? item.roadmapDetail.avatar
+                    ? IMG_URL + item.roadmapDetail.avatar
                     : defaultImg
                 }
                 alt="roadmap img"

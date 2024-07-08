@@ -22,6 +22,7 @@ function getAllRoadmap(page, limit) {
 }
 
 function createRoadmap(roadmap) {
+  console.log(roadmap);
   return authedAxiosInstance.post(`/roadmap`, roadmap);
 }
 

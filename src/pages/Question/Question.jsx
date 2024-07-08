@@ -30,10 +30,9 @@ const months = [
   { value: "12", label: "12" }
 ];
 const years = [
-  { value: "2020", label: "2020" },
-  { value: "2021", label: "2021" },
   { value: "2022", label: "2022" },
-  { value: "2023", label: "2023" }
+  { value: "2023", label: "2023" },
+  { value: "2024", label: "2024" }
 ];
 
 function Question() {
@@ -76,7 +75,7 @@ function Question() {
         setQuestions(res.data.data);
         setPageCount(Math.ceil(res.data.totalItems / res.data.limit));
         setTotalItems(res.data.totalItems);
-      } else console.log(res.data);
+      }
     }
     fetchData().catch((err) => {
       console.log(err);
@@ -100,7 +99,7 @@ function Question() {
   }, [selectedTopic, selectedMonth, selectedYear, questions]);
 
   const handlePageClick = (event) => {
-    setPage(event.selected + 1);
+    setPage(event + 1);
   };
 
   const handleSubmitQuestion = (data) => {

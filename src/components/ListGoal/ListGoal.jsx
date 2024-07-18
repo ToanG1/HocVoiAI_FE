@@ -118,8 +118,8 @@ export default function ListGoal({ userId, mode }) {
     const data = {
       rmId: selectedSearch.roadmapDetail.id,
       goalId: selectedGoal,
-      startDate: document.getElementById("start-date").value,
-      endDate: document.getElementById("start-date").value
+      startDate: document.getElementById("start-date-goal").value,
+      endDate: document.getElementById("end-date-goal").value
     };
     createGoalBranch(data)
       .then((res) => {
@@ -262,11 +262,11 @@ export default function ListGoal({ userId, mode }) {
                 </div>
               </div>
               <div className="right-side">
-                <input type="date" id="start-date" placeholder="Start Date" />
+                <input type="date" id="start-date-goal" placeholder="Start Date" />
                 <i>
                   <FontAwesomeIcon icon={faArrowRight} />
                 </i>
-                <input type="date" id="end-date" placeholder="End Date" />
+                <input type="date" id="end-date-goal" placeholder="End Date" />
               </div>
             </div>
           ) : null}

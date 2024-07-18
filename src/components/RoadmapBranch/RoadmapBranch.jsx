@@ -53,8 +53,8 @@ export default function RoadmapBranch({
       id: roadmap.id,
       rmId: item.roadmapDetail.id,
       goalId: roadmap.goalId,
-      startDate: document.getElementById("start-date").value,
-      endDate: document.getElementById("start-date").value
+      startDate: document.getElementById("start-date-branch").value,
+      endDate: document.getElementById("end-date-branch").value
     };
     updateGoalBranch(data)
       .then((res) => {
@@ -110,7 +110,7 @@ export default function RoadmapBranch({
             <>
               <input
                 type="date"
-                id="start-date"
+                id="start-date-branch"
                 defaultValue={moment(roadmap.startDate).format("YYYY-MM-DD")}
                 onChange={(e) => {
                   handleSearchPrivilege(e.target.value);
@@ -121,12 +121,12 @@ export default function RoadmapBranch({
               </i>
               <input
                 type="date"
-                id="end-date"
+                id="end-date-branch"
                 defaultValue={moment(roadmap.endDate).format("YYYY-MM-DD")}
               />
             </>
           ) : (
-            <p>{moment(data.startDate).format("DD-MM-YYYY")}</p>
+            <p>{moment(roadmap.startDate).format("DD-MM-YYYY")}</p>
           )}
 
           <div className="info">

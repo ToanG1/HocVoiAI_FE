@@ -1,8 +1,10 @@
 import axios from "axios";
 
-const BASE_URL = "http://localhost:5001/api";
+const BASE_URL =
+  "http://HVA-BE-LB-73ebf961d59373fc.elb.ap-southeast-1.amazonaws.com/api";
 const IMG_URL = "https://hva-bucket.s3.ap-southeast-1.amazonaws.com/";
-const WS_SERVER = "ws://localhost:5001/";
+const WS_SERVER =
+  "ws://HVA-BE-LB-73ebf961d59373fc.elb.ap-southeast-1.amazonaws.com/";
 
 const axiosInstance = axios.create({
   baseURL: BASE_URL

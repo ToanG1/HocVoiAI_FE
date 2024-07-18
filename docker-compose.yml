@@ -6,11 +6,3 @@ services:
     ports:
       - "3000:3000"
     restart: unless-stopped
-  nginx:
-    build:
-      context: ./nginx
-      dockerfile: Dockerfile
-    ports:
-      - "80:4040"
-    volumes:
-      - website:/usr/share/nginx/html/website 

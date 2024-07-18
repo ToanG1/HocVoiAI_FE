@@ -24,6 +24,7 @@
     "hsl-to-hex": "^1.0.0",
     "moment": "^2.29.4",
     "nanoid": "^5.0.2",
+    "netlify-cli": "^17.33.4",
     "parallax-js": "^3.1.0",
     "pexels": "^1.4.0",
     "pixi.js": "^6.5.10",
